@@ -1,0 +1,8 @@
+# For all db.migration files set Win-style eol
+src/main/resources/db/migration/*.sql text eol=crlf
+
+#Fix broken icon fonts as described here: https://github.com/Microsoft/fonts/issues/5
+*.eot -text -diff
+*.ttf -text -diff
+*.woff -text -diff
+*.woff2 -text -diff

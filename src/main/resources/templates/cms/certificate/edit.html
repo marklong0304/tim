@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Certificate page</title>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/vendors}">Vendors</a></li>
+                    <li><a th:href="@{/vendors/edit/{id}(id=${policyMeta.vendor.id})}"
+                           th:text="${policyMeta.vendor.name}">Certificates</a></li>
+                    <li><a th:href="@{/vendors/policy/edit/{id}(id=${policyMeta.id})}" th:text="${policyMeta.displayName}">Certificates</a>
+                    </li>
+                    <li><a th:href="@{/cms/certificate/{id}(id=${policyMeta.id})}">Certificates</a></li>
+                    <li th:if="${certificate.id!=null}"><a
+                            th:href="@{/cms/certificate/edit/{policyMetaId}/{id}(id=${certificate.id},policyMetaId=${policyMeta.id})}">Edit</a>
+                    </li>
+                    <li th:if="${certificate.id==null}"><a
+                            th:href="@{/cms/certificate/create/{id}(id=${policyMeta.id})}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <div>
+            <h1 class="adminTitle" th:if="${certificate.id == null}">Create certificate</h1>
+
+            <h1 class="adminTitle" th:if="${certificate.id != null}">Edit certificate</h1>
+        </div>
+        <div>
+            <form id="certificateForm" action="#"
+                  th:action="@{/cms/certificate/edit/{policyMetaId}/{id}(policyMetaId=${policyMeta.id},id=${certificate.id})}"
+                  th:object="${certificate}" method="post"
+                  enctype="multipart/form-data">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${uploadError}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${uploadError}">uploadError</span>
+                </div>
+                <div class="form-group">
+                    <label for="name">Certificate file name: </label>
+                    <input id="name" type="text" th:field="*{fileName}" placeholder="File name" class="form-control"
+                           required="required"/>
+                </div>
+                <div id="countriesStates" class="form-group" th:if="${!certificate.defaultPolicy}">
+                    <label for="countries">Countries:</label>
+                    <select id="countries" multiple="multiple" th:field="*{countries}">
+                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                th:value="${c}" th:text="${c.caption}"> Country
+                        </option>
+                    </select>
+                    <label class="text-center" for="states" style="padding-left: 10px;">States:</label>
+                    <select id="states" multiple="multiple" th:field="*{states}">
+                        <option th:each="c : ${T(com.travelinsurancemaster.model.StateCode).values()}"
+                                th:value="${c}" th:text="${c.caption}"> Country
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="file">Certificate file:</label>
+                        <input type="hidden" id="maxFileSize" th:value="${maxFileSize}"/>
+                        <input id="file" type="file" name="file" th:accept="${allowedFileTypes}"/>
+                        <span id="fileSizeError" style="display: none; color: red;">The files you are trying to upload exceed the maximum size for file uploads on this server</span>
+                    </div>
+                    <div class="form-group" th:if="${certificate.id!=null}">
+                        <a th:href="@{/cms/certificate/show/{uid}(uid=${certificate.uuid})}" target="_blank">view current certificate</a>
+                    </div>
+                    <div class="form-group">
+                        <a th:href="@{/cms/certificate/{id}(id=${policyMeta.id})}"
+                           class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success btn-submit">Save</button>
+                    </div>
+                    <input type="file" name="file" style="display: none;"/>
+                </div>
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" th:field="*{mimeType}"/>
+                <input type="hidden" th:field="*{size}"/>
+                <input type="hidden" th:field="*{uuid}"/>
+                <input type="hidden" th:field="*{defaultPolicy}"/>
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var newFilingClaimPage = [[${certificate.id == null}]];
+        var createUrl = [[@{/cms/certificate/create/{id}(id=${policyMeta.id})}]];
+        /*]]>*/
+        // @formatter:on
+    </script>
+    <script>
+        $(function () {
+            if (newFilingClaimPage) {
+                $('#certificateForm').attr('action', createUrl);
+            }
+            $('form').submit(function (e) {
+                var isOk = true;
+                $('input[type=file]').each(function () {
+                    if (typeof this.files[0] !== 'undefined') {
+                        var maxSize = parseInt($("#maxFileSize").val(), 10),
+                                size = this.files[0].size;
+                        isOk = maxSize > size;
+                        return isOk;
+                    }
+                });
+                if (!isOk) {
+                    $("#fileSizeError").show();
+                }
+                return isOk;
+            });
+            $('#countries,#states').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: 400,
+                buttonWidth: 550,
+                filterStyle: 'beginWith'
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

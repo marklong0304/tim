@@ -1,0 +1,2420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="Travel Guard Soap" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="TGPolicyServiceSoap12" type="wsdl" bindingName="{https://tgpolicy.websvcs.travelguard.com/}TGPolicyServiceSoap12" soapVersion="1_2" anonymous="optional" definition="https://tgpolicy.websvcs.travelguard.com/tgpolicyservice.asmx?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicy" name="CancelPolicy" bindingOperationName="CancelPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:CancelPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:CancelPolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/CancelPolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXml" name="CancelPolicyXml" bindingOperationName="CancelPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:CancelPolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:CancelPolicyXml>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/CancelPolicyXmlRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXmlWithNS" name="CancelPolicyXmlWithNS" bindingOperationName="CancelPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:CancelPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:CancelPolicyXmlWithNS>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/CancelPolicyXmlWithNSRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/DeterminePlanID" name="DeterminePlanID" bindingOperationName="DeterminePlanID" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:DeterminePlanID>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:DeterminePlanID>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/DeterminePlanIDRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/EmailSavedQuote" name="EmailSavedQuote" bindingOperationName="EmailSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:EmailSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:EmailSavedQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/EmailSavedQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuote" name="GetQuote" bindingOperationName="GetQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetQuote>
+         <!--Optional:-->
+         <tgp:xml>
+         <![CDATA[
+         <PolicySpecification xmlns:ns2="https://tgpolicy.websvcs.travelguard.com/">
+         <Policy>
+         <Product>
+         <PlanId>238465</PlanId>
+         <ProductCode>NW9838</ProductCode>
+         <TransactionType>QUOTE</TransactionType>
+         <SubmissionType>MerchantXMLQuote</SubmissionType>
+         <OptionalPackages/></Product><Travelers>
+         <Traveler><TripCost>1200</TripCost>
+         <BirthDate>01/01/1990</BirthDate><Address>
+         <Country>US</Country><State>CO</State></Address>
+         </Traveler></Travelers><Trip>
+         <DepartureDate>12/01/2015</DepartureDate>
+         <ReturnDate>12/20/2015</ReturnDate>
+         <InitialTripDepositDate>02/02/2015</InitialTripDepositDate><Destinations>
+         <Destination><Country>KY</Country><State></State></Destination></Destinations>
+         </Trip></Policy></PolicySpecification>
+         ]]]]>><![CDATA[
+         </tgp:xml>
+      </tgp:GetQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetQuoteRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteDocument" name="GetQuoteDocument" bindingOperationName="GetQuoteDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetQuoteDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:GetQuoteDocument>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetQuoteDocumentRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXml" name="GetQuoteXml" bindingOperationName="GetQuoteXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetQuoteXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:GetQuoteXml>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetQuoteXmlRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXML" name="GetQuoteXML" bindingOperationName="GetQuoteXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetQuoteXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:GetQuoteXML>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetQuoteXMLRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXmlWithNS" name="GetQuoteXmlWithNS" bindingOperationName="GetQuoteXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetQuoteXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:GetQuoteXmlWithNS>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetQuoteXmlWithNSRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionID" name="GetTransactionID" bindingOperationName="GetTransactionID" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetTransactionID/>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetTransactionIDRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionIDLegacy" name="GetTransactionIDLegacy" bindingOperationName="GetTransactionIDLegacy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:GetTransactionIDLegacy/>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/GetTransactionIDLegacyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/LibViewPolicy" name="LibViewPolicy" bindingOperationName="LibViewPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:LibViewPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:LibViewPolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/LibViewPolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/Modify" name="Modify" bindingOperationName="Modify" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:Modify>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:Modify>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ModifyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicy" name="ModifyPolicy" bindingOperationName="ModifyPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ModifyPolicy>
+         <!--Optional:-->
+         <tgp:xmlString>?</tgp:xmlString>
+      </tgp:ModifyPolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ModifyPolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXml" name="ModifyPolicyXml" bindingOperationName="ModifyPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ModifyPolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ModifyPolicyXml>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ModifyPolicyXmlRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXmlWithNS" name="ModifyPolicyXmlWithNS" bindingOperationName="ModifyPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ModifyPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ModifyPolicyXmlWithNS>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ModifyPolicyXmlWithNSRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/Purchase" name="Purchase" bindingOperationName="Purchase" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:Purchase>
+         <!--Optional:-->
+         <tgp:xml>
+		<![CDATA[
+		<PolicySpecification xmlns:ns2="https://tgpolicy.websvcs.travelguard.com/">
+		<Policy>
+		<Product>
+		<PlanId>157176</PlanId>
+		<ProductCode>NW6700</ProductCode>
+		<TransactionType>PURCHASE</TransactionType>
+		<SubmissionType>MerchantXMLPurchase</SubmissionType>
+		<OptionalPackages/></Product><Travelers>
+		<Traveler><TripCost>1200.0</TripCost><BirthDate>05/14/1988</BirthDate>
+		<Email>test@gmail.com</Email>
+		<TravelerName><First>FirstName</First><Last>LastName</Last>
+		</TravelerName><Address><Country>US</Country>
+		<State>FL</State>
+		<City>New York</City><Street>45 Some st.</Street>
+		<Zip>32118</Zip></Address></Traveler></Travelers><Trip>
+		<DepartureDate>12/20/2015</DepartureDate>
+		<ReturnDate>12/23/2015</ReturnDate>
+		<InitialTripDepositDate>02/02/2015</InitialTripDepositDate>
+		<Destinations><Destination><Country>CA</Country><State>AB</State></Destination>
+		</Destinations></Trip><Payment><TotalPremiumAmount>59.0</TotalPremiumAmount>
+		<CreditCardDetails><CreditCard><Amount>59.0</Amount><CreditHolderName>Steve Harris</CreditHolderName><Number>4111111111111111</Number><ExpiryMonth>12</ExpiryMonth><ExpiryYear>2025</ExpiryYear><CreditCardType>Visa</CreditCardType></CreditCard></CreditCardDetails></Payment><Agency><ARC>243356</ARC><Email>info@insurancemaster.com</Email></Agency></Policy></PolicySpecification>
+		]]]]>><![CDATA[	
+		</tgp:xml>
+      </tgp:Purchase>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchaseRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseDocument" name="PurchaseDocument" bindingOperationName="PurchaseDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchaseDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:PurchaseDocument>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchaseDocumentRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicy" name="PurchasePolicy" bindingOperationName="PurchasePolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchasePolicy>
+         <!--Optional:-->
+         <tgp:xmlString>?</tgp:xmlString>
+      </tgp:PurchasePolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchasePolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyWithXmlDocument" name="PurchasePolicyWithXmlDocument" bindingOperationName="PurchasePolicyWithXmlDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchasePolicyWithXmlDocument>
+         <!--Optional:-->
+         <tgp:objXDOC>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXDOC>
+      </tgp:PurchasePolicyWithXmlDocument>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchasePolicyWithXmlDocumentRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXml" name="PurchasePolicyXml" bindingOperationName="PurchasePolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchasePolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:PurchasePolicyXml>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchasePolicyXmlRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXmlWithNS" name="PurchasePolicyXmlWithNS" bindingOperationName="PurchasePolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchasePolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:PurchasePolicyXmlWithNS>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchasePolicyXmlWithNSRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseSavedQuote" name="PurchaseSavedQuote" bindingOperationName="PurchaseSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchaseSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:PurchaseSavedQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchaseSavedQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseXML" name="PurchaseXML" bindingOperationName="PurchaseXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:PurchaseXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:PurchaseXML>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/PurchaseXMLRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ResetCache" name="ResetCache" bindingOperationName="ResetCache" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ResetCache/>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ResetCacheRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/RetrieveSavedQuote" name="RetrieveSavedQuote" bindingOperationName="RetrieveSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:RetrieveSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:RetrieveSavedQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/RetrieveSavedQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuote" name="SaveQuote" bindingOperationName="SaveQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:SaveQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SaveQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/SaveQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteDocument" name="SaveQuoteDocument" bindingOperationName="SaveQuoteDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:SaveQuoteDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:SaveQuoteDocument>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/SaveQuoteDocumentRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteXML" name="SaveQuoteXML" bindingOperationName="SaveQuoteXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:SaveQuoteXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:SaveQuoteXML>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/SaveQuoteXMLRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SearchPolicy" name="SearchPolicy" bindingOperationName="SearchPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:SearchPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SearchPolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/SearchPolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SearchQuote" name="SearchQuote" bindingOperationName="SearchQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:SearchQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SearchQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/SearchQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/UpdateSavedQuote" name="UpdateSavedQuote" bindingOperationName="UpdateSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:UpdateSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:UpdateSavedQuote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/UpdateSavedQuoteRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicy" name="ViewPolicy" bindingOperationName="ViewPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ViewPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:ViewPolicy>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ViewPolicyRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXml" name="ViewPolicyXml" bindingOperationName="ViewPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ViewPolicyXml>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:ViewPolicyXml>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ViewPolicyXmlRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXmlWithNS" name="ViewPolicyXmlWithNS" bindingOperationName="ViewPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soap:Header/>
+   <soap:Body>
+      <tgp:ViewPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ViewPolicyXmlWithNS>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/TGPolicyServiceSoap/ViewPolicyXmlWithNSRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="TGPolicyServiceSoap" type="wsdl" bindingName="{https://tgpolicy.websvcs.travelguard.com/}TGPolicyServiceSoap" soapVersion="1_1" anonymous="optional" definition="https://tgpolicy.websvcs.travelguard.com/tgpolicyservice.asmx?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://tgpolicy.websvcs.travelguard.com/tgpolicyservice.asmx?WSDL"><con:part><con:url>https://tgpolicy.websvcs.travelguard.com/tgpolicyservice.asmx?WSDL</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="https://tgpolicy.websvcs.travelguard.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://tgpolicy.websvcs.travelguard.com/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>TGPolicyService</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://tgpolicy.websvcs.travelguard.com/">
+      <s:element name="GetQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXmlWithNS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXmlWithNSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteXmlWithNSResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDocument">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteDocumentResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQuoteXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetQuoteXMLResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeterminePlanID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeterminePlanIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeterminePlanIDResult" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Purchase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDocument">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseDocumentResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseXMLResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlString" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchasePolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchasePolicyXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyWithXmlDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXDOC">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyWithXmlDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchasePolicyWithXmlDocumentResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyXmlWithNS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchasePolicyXmlWithNSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchasePolicyXmlWithNSResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuoteDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDocument">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuoteDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveQuoteDocumentResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuoteXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveQuoteXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveQuoteXMLResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RetrieveSavedQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RetrieveSavedQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetrieveSavedQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSavedQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSavedQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateSavedQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmailSavedQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmailSavedQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmailSavedQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseSavedQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseSavedQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseSavedQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchQuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LibViewPolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LibViewPolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LibViewPolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchPolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewPolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicyXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDocument">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicyXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewPolicyXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicyXmlWithNS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewPolicyXmlWithNSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewPolicyXmlWithNSResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Modify">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ModifyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlString" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ModifyPolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicyXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicyXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ModifyPolicyXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicyXmlWithNS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPolicyXmlWithNSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ModifyPolicyXmlWithNSResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPolicyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPolicyXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyXmlWithNS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="objXmlDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyXmlWithNSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelPolicyXmlWithNSResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResetCache">
+        <s:complexType/>
+      </s:element>
+      <s:element name="ResetCacheResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ResetCacheResult" type="s:boolean"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionID">
+        <s:complexType/>
+      </s:element>
+      <s:element name="GetTransactionIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionIDResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionIDLegacy">
+        <s:complexType/>
+      </s:element>
+      <s:element name="GetTransactionIDLegacyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionIDLegacyResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuote"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuoteXml"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteXmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXmlWithNSSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuoteXmlWithNS"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXmlWithNSSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteXmlWithNSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuoteDocument"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQuoteXML"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuoteXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQuoteXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeterminePlanIDSoapIn">
+    <wsdl:part name="parameters" element="tns:DeterminePlanID"/>
+  </wsdl:message>
+  <wsdl:message name="DeterminePlanIDSoapOut">
+    <wsdl:part name="parameters" element="tns:DeterminePlanIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseSoapIn">
+    <wsdl:part name="parameters" element="tns:Purchase"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseDocument"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseXML"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicySoapIn">
+    <wsdl:part name="parameters" element="tns:PurchasePolicy"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicySoapOut">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyXml"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyXmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyWithXmlDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyWithXmlDocument"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyWithXmlDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyWithXmlDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyXmlWithNSSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyXmlWithNS"/>
+  </wsdl:message>
+  <wsdl:message name="PurchasePolicyXmlWithNSSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchasePolicyXmlWithNSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveQuote"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveQuoteDocument"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveQuoteDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveQuoteXML"/>
+  </wsdl:message>
+  <wsdl:message name="SaveQuoteXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveQuoteXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RetrieveSavedQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:RetrieveSavedQuote"/>
+  </wsdl:message>
+  <wsdl:message name="RetrieveSavedQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:RetrieveSavedQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateSavedQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSavedQuote"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateSavedQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSavedQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EmailSavedQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:EmailSavedQuote"/>
+  </wsdl:message>
+  <wsdl:message name="EmailSavedQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:EmailSavedQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseSavedQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseSavedQuote"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseSavedQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseSavedQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchQuote"/>
+  </wsdl:message>
+  <wsdl:message name="SearchQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LibViewPolicySoapIn">
+    <wsdl:part name="parameters" element="tns:LibViewPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="LibViewPolicySoapOut">
+    <wsdl:part name="parameters" element="tns:LibViewPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchPolicySoapIn">
+    <wsdl:part name="parameters" element="tns:SearchPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="SearchPolicySoapOut">
+    <wsdl:part name="parameters" element="tns:SearchPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicySoapIn">
+    <wsdl:part name="parameters" element="tns:ViewPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicySoapOut">
+    <wsdl:part name="parameters" element="tns:ViewPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicyXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewPolicyXml"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicyXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewPolicyXmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicyXmlWithNSSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewPolicyXmlWithNS"/>
+  </wsdl:message>
+  <wsdl:message name="ViewPolicyXmlWithNSSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewPolicyXmlWithNSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ModifySoapIn">
+    <wsdl:part name="parameters" element="tns:Modify"/>
+  </wsdl:message>
+  <wsdl:message name="ModifySoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicySoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicySoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicyXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyPolicyXml"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicyXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyPolicyXmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicyXmlWithNSSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyPolicyXmlWithNS"/>
+  </wsdl:message>
+  <wsdl:message name="ModifyPolicyXmlWithNSSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyPolicyXmlWithNSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicySoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicySoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicyXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPolicyXml"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicyXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPolicyXmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicyXmlWithNSSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelPolicyXmlWithNS"/>
+  </wsdl:message>
+  <wsdl:message name="CancelPolicyXmlWithNSSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelPolicyXmlWithNSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ResetCacheSoapIn">
+    <wsdl:part name="parameters" element="tns:ResetCache"/>
+  </wsdl:message>
+  <wsdl:message name="ResetCacheSoapOut">
+    <wsdl:part name="parameters" element="tns:ResetCacheResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactionID"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionIDLegacySoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactionIDLegacy"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionIDLegacySoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionIDLegacyResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="TGPolicyServiceSoap">
+    <wsdl:operation name="GetQuote">
+      <wsdl:input message="tns:GetQuoteSoapIn"/>
+      <wsdl:output message="tns:GetQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXml">
+      <wsdl:input message="tns:GetQuoteXmlSoapIn"/>
+      <wsdl:output message="tns:GetQuoteXmlSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXmlWithNS">
+      <wsdl:input message="tns:GetQuoteXmlWithNSSoapIn"/>
+      <wsdl:output message="tns:GetQuoteXmlWithNSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteDocument">
+      <wsdl:input message="tns:GetQuoteDocumentSoapIn"/>
+      <wsdl:output message="tns:GetQuoteDocumentSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXML">
+      <wsdl:input message="tns:GetQuoteXMLSoapIn"/>
+      <wsdl:output message="tns:GetQuoteXMLSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeterminePlanID">
+      <wsdl:input message="tns:DeterminePlanIDSoapIn"/>
+      <wsdl:output message="tns:DeterminePlanIDSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Purchase">
+      <wsdl:input message="tns:PurchaseSoapIn"/>
+      <wsdl:output message="tns:PurchaseSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseDocument">
+      <wsdl:input message="tns:PurchaseDocumentSoapIn"/>
+      <wsdl:output message="tns:PurchaseDocumentSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseXML">
+      <wsdl:input message="tns:PurchaseXMLSoapIn"/>
+      <wsdl:output message="tns:PurchaseXMLSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicy">
+      <wsdl:input message="tns:PurchasePolicySoapIn"/>
+      <wsdl:output message="tns:PurchasePolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXml">
+      <wsdl:input message="tns:PurchasePolicyXmlSoapIn"/>
+      <wsdl:output message="tns:PurchasePolicyXmlSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyWithXmlDocument">
+      <wsdl:input message="tns:PurchasePolicyWithXmlDocumentSoapIn"/>
+      <wsdl:output message="tns:PurchasePolicyWithXmlDocumentSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXmlWithNS">
+      <wsdl:input message="tns:PurchasePolicyXmlWithNSSoapIn"/>
+      <wsdl:output message="tns:PurchasePolicyXmlWithNSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuote">
+      <wsdl:input message="tns:SaveQuoteSoapIn"/>
+      <wsdl:output message="tns:SaveQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteDocument">
+      <wsdl:input message="tns:SaveQuoteDocumentSoapIn"/>
+      <wsdl:output message="tns:SaveQuoteDocumentSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteXML">
+      <wsdl:input message="tns:SaveQuoteXMLSoapIn"/>
+      <wsdl:output message="tns:SaveQuoteXMLSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSavedQuote">
+      <wsdl:input message="tns:RetrieveSavedQuoteSoapIn"/>
+      <wsdl:output message="tns:RetrieveSavedQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSavedQuote">
+      <wsdl:input message="tns:UpdateSavedQuoteSoapIn"/>
+      <wsdl:output message="tns:UpdateSavedQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="EmailSavedQuote">
+      <wsdl:input message="tns:EmailSavedQuoteSoapIn"/>
+      <wsdl:output message="tns:EmailSavedQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseSavedQuote">
+      <wsdl:input message="tns:PurchaseSavedQuoteSoapIn"/>
+      <wsdl:output message="tns:PurchaseSavedQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SearchQuote">
+      <wsdl:input message="tns:SearchQuoteSoapIn"/>
+      <wsdl:output message="tns:SearchQuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="LibViewPolicy">
+      <wsdl:input message="tns:LibViewPolicySoapIn"/>
+      <wsdl:output message="tns:LibViewPolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPolicy">
+      <wsdl:input message="tns:SearchPolicySoapIn"/>
+      <wsdl:output message="tns:SearchPolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicy">
+      <wsdl:input message="tns:ViewPolicySoapIn"/>
+      <wsdl:output message="tns:ViewPolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXml">
+      <wsdl:input message="tns:ViewPolicyXmlSoapIn"/>
+      <wsdl:output message="tns:ViewPolicyXmlSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXmlWithNS">
+      <wsdl:input message="tns:ViewPolicyXmlWithNSSoapIn"/>
+      <wsdl:output message="tns:ViewPolicyXmlWithNSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Modify">
+      <wsdl:input message="tns:ModifySoapIn"/>
+      <wsdl:output message="tns:ModifySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicy">
+      <wsdl:input message="tns:ModifyPolicySoapIn"/>
+      <wsdl:output message="tns:ModifyPolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXml">
+      <wsdl:input message="tns:ModifyPolicyXmlSoapIn"/>
+      <wsdl:output message="tns:ModifyPolicyXmlSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXmlWithNS">
+      <wsdl:input message="tns:ModifyPolicyXmlWithNSSoapIn"/>
+      <wsdl:output message="tns:ModifyPolicyXmlWithNSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicy">
+      <wsdl:input message="tns:CancelPolicySoapIn"/>
+      <wsdl:output message="tns:CancelPolicySoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXml">
+      <wsdl:input message="tns:CancelPolicyXmlSoapIn"/>
+      <wsdl:output message="tns:CancelPolicyXmlSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXmlWithNS">
+      <wsdl:input message="tns:CancelPolicyXmlWithNSSoapIn"/>
+      <wsdl:output message="tns:CancelPolicyXmlWithNSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCache">
+      <wsdl:input message="tns:ResetCacheSoapIn"/>
+      <wsdl:output message="tns:ResetCacheSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionID">
+      <wsdl:input message="tns:GetTransactionIDSoapIn"/>
+      <wsdl:output message="tns:GetTransactionIDSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionIDLegacy">
+      <wsdl:input message="tns:GetTransactionIDLegacySoapIn"/>
+      <wsdl:output message="tns:GetTransactionIDLegacySoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TGPolicyServiceSoap" type="tns:TGPolicyServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXml">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXml" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXmlWithNS">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteDocument">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXML">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXML" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeterminePlanID">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/DeterminePlanID" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Purchase">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/Purchase" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseDocument">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseXML">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseXML" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXml">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXml" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyWithXmlDocument">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyWithXmlDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXmlWithNS">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteDocument">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuoteDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteXML">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuoteXML" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSavedQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/RetrieveSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSavedQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/UpdateSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailSavedQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/EmailSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseSavedQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchQuote">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SearchQuote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibViewPolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/LibViewPolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SearchPolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXml">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXmlWithNS">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Modify">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/Modify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXml">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXmlWithNS">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXml">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXmlWithNS">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCache">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ResetCache" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionID">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetTransactionID" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionIDLegacy">
+      <soap:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetTransactionIDLegacy" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TGPolicyServiceSoap12" type="tns:TGPolicyServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXml">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXml" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXmlWithNS">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteDocument">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteDocument" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuoteXML">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetQuoteXML" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeterminePlanID">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/DeterminePlanID" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Purchase">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/Purchase" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseDocument">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseDocument" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseXML">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseXML" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXml">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXml" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyWithXmlDocument">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyWithXmlDocument" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchasePolicyXmlWithNS">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteDocument">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuoteDocument" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveQuoteXML">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SaveQuoteXML" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSavedQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/RetrieveSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSavedQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/UpdateSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailSavedQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/EmailSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseSavedQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/PurchaseSavedQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchQuote">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SearchQuote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibViewPolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/LibViewPolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/SearchPolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXml">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewPolicyXmlWithNS">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Modify">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/Modify" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXml">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPolicyXmlWithNS">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXml">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXml" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicyXmlWithNS">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXmlWithNS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetCache">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/ResetCache" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionID">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetTransactionID" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionIDLegacy">
+      <soap12:operation soapAction="https://tgpolicy.websvcs.travelguard.com/GetTransactionIDLegacy" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TGPolicyService">
+    <wsdl:documentation>TGPolicyService</wsdl:documentation>
+    <wsdl:port name="TGPolicyServiceSoap" binding="tns:TGPolicyServiceSoap">
+      <soap:address location="https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="TGPolicyServiceSoap12" binding="tns:TGPolicyServiceSoap12">
+      <soap12:address location="https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicy" name="CancelPolicy" bindingOperationName="CancelPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:CancelPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:CancelPolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXml" name="CancelPolicyXml" bindingOperationName="CancelPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:CancelPolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:CancelPolicyXml>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXml"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXmlWithNS" name="CancelPolicyXmlWithNS" bindingOperationName="CancelPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:CancelPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:CancelPolicyXmlWithNS>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/CancelPolicyXmlWithNS"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/DeterminePlanID" name="DeterminePlanID" bindingOperationName="DeterminePlanID" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:DeterminePlanID>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:DeterminePlanID>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/DeterminePlanID"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/EmailSavedQuote" name="EmailSavedQuote" bindingOperationName="EmailSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:EmailSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:EmailSavedQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/EmailSavedQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuote" name="GetQuote" bindingOperationName="GetQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetQuote>
+         <tgp:xml>
+         <![CDATA[
+         <PolicySpecification xmlns:ns2="https://tgpolicy.websvcs.travelguard.com/">
+         <Policy>
+         <Product>
+         <PlanId>238465</PlanId>
+         <ProductCode>NW9838</ProductCode>
+         <TransactionType>QUOTE</TransactionType>
+         <SubmissionType>MerchantXMLQuote</SubmissionType>
+         <OptionalPackages/></Product><Travelers>
+         <Traveler><TripCost>0</TripCost>
+         <BirthDate>01/01/1990</BirthDate><Address>
+         <Country>US</Country><State>CO</State></Address>
+         </Traveler></Travelers><Trip>
+         <DepartureDate>12/1/2015</DepartureDate>
+         <ReturnDate>12/20/2015</ReturnDate>
+         <InitialTripDepositDate>10/26/2015</InitialTripDepositDate><Destinations>
+         <Destination><Country>KY</Country><State></State></Destination></Destinations>
+         </Trip></Policy></PolicySpecification>
+         ]]]]>><![CDATA[
+         </tgp:xml>
+      </tgp:GetQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetQuote"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteDocument" name="GetQuoteDocument" bindingOperationName="GetQuoteDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetQuoteDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:GetQuoteDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteDocument"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXml" name="GetQuoteXml" bindingOperationName="GetQuoteXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetQuoteXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:GetQuoteXml>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXml"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXML" name="GetQuoteXML" bindingOperationName="GetQuoteXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetQuoteXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:GetQuoteXML>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXML"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXmlWithNS" name="GetQuoteXmlWithNS" bindingOperationName="GetQuoteXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetQuoteXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:GetQuoteXmlWithNS>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetQuoteXmlWithNS"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionID" name="GetTransactionID" bindingOperationName="GetTransactionID" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetTransactionID/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionID"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionIDLegacy" name="GetTransactionIDLegacy" bindingOperationName="GetTransactionIDLegacy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:GetTransactionIDLegacy/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/GetTransactionIDLegacy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/LibViewPolicy" name="LibViewPolicy" bindingOperationName="LibViewPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:LibViewPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:LibViewPolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/LibViewPolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/Modify" name="Modify" bindingOperationName="Modify" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:Modify>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:Modify>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/Modify"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicy" name="ModifyPolicy" bindingOperationName="ModifyPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ModifyPolicy>
+         <!--Optional:-->
+         <tgp:xmlString>?</tgp:xmlString>
+      </tgp:ModifyPolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXml" name="ModifyPolicyXml" bindingOperationName="ModifyPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ModifyPolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ModifyPolicyXml>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXml"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXmlWithNS" name="ModifyPolicyXmlWithNS" bindingOperationName="ModifyPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ModifyPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ModifyPolicyXmlWithNS>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ModifyPolicyXmlWithNS"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/Purchase" name="Purchase" bindingOperationName="Purchase" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:Purchase>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:Purchase>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/Purchase"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseDocument" name="PurchaseDocument" bindingOperationName="PurchaseDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchaseDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:PurchaseDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchaseDocument"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicy" name="PurchasePolicy" bindingOperationName="PurchasePolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchasePolicy>
+         <!--Optional:-->
+         <tgp:xmlString>?</tgp:xmlString>
+      </tgp:PurchasePolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyWithXmlDocument" name="PurchasePolicyWithXmlDocument" bindingOperationName="PurchasePolicyWithXmlDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchasePolicyWithXmlDocument>
+         <!--Optional:-->
+         <tgp:objXDOC>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXDOC>
+      </tgp:PurchasePolicyWithXmlDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyWithXmlDocument"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXml" name="PurchasePolicyXml" bindingOperationName="PurchasePolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchasePolicyXml>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:PurchasePolicyXml>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXml"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXmlWithNS" name="PurchasePolicyXmlWithNS" bindingOperationName="PurchasePolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchasePolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:PurchasePolicyXmlWithNS>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchasePolicyXmlWithNS"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseSavedQuote" name="PurchaseSavedQuote" bindingOperationName="PurchaseSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchaseSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:PurchaseSavedQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchaseSavedQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/PurchaseXML" name="PurchaseXML" bindingOperationName="PurchaseXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:PurchaseXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:PurchaseXML>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/PurchaseXML"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ResetCache" name="ResetCache" bindingOperationName="ResetCache" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ResetCache/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ResetCache"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/RetrieveSavedQuote" name="RetrieveSavedQuote" bindingOperationName="RetrieveSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:RetrieveSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:RetrieveSavedQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/RetrieveSavedQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuote" name="SaveQuote" bindingOperationName="SaveQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:SaveQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SaveQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/SaveQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteDocument" name="SaveQuoteDocument" bindingOperationName="SaveQuoteDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:SaveQuoteDocument>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:SaveQuoteDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteDocument"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteXML" name="SaveQuoteXML" bindingOperationName="SaveQuoteXML" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:SaveQuoteXML>
+         <!--Optional:-->
+         <tgp:data>?</tgp:data>
+      </tgp:SaveQuoteXML>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/SaveQuoteXML"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SearchPolicy" name="SearchPolicy" bindingOperationName="SearchPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:SearchPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SearchPolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/SearchPolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/SearchQuote" name="SearchQuote" bindingOperationName="SearchQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:SearchQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:SearchQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/SearchQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/UpdateSavedQuote" name="UpdateSavedQuote" bindingOperationName="UpdateSavedQuote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:UpdateSavedQuote>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:UpdateSavedQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/UpdateSavedQuote"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicy" name="ViewPolicy" bindingOperationName="ViewPolicy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ViewPolicy>
+         <!--Optional:-->
+         <tgp:xml>?</tgp:xml>
+      </tgp:ViewPolicy>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicy"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXml" name="ViewPolicyXml" bindingOperationName="ViewPolicyXml" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ViewPolicyXml>
+         <!--Optional:-->
+         <tgp:xmlDocument>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:xmlDocument>
+      </tgp:ViewPolicyXml>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXml"/></con:call></con:operation><con:operation isOneWay="false" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXmlWithNS" name="ViewPolicyXmlWithNS" bindingOperationName="ViewPolicyXmlWithNS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://tgpolicy.websvcs.travelguard.com/TGPolicyService.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tgp="https://tgpolicy.websvcs.travelguard.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tgp:ViewPolicyXmlWithNS>
+         <!--Optional:-->
+         <tgp:objXmlDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tgp:objXmlDoc>
+      </tgp:ViewPolicyXmlWithNS>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://tgpolicy.websvcs.travelguard.com/ViewPolicyXmlWithNS"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

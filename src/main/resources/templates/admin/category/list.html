@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Categories management</title>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js" th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script type="application/javascript" th:src="@{/js/custom/admin/category.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/admin/categories}">Categories</a></li>
+                </ol>
+            </div>
+        </div>
+        <input type="hidden" th:value="${activeTab}" id="activeTab"/>
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#categoriesSettings">Categories management</a></li>
+            <li><a data-toggle="tab" href="#PlanDescriptionCategoriesSettings">Plan description categories settings</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="categoriesSettings" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-8"><h1>Categories management</h1></div>
+                    <div class="col-md-4 text-right">
+                        <h1><a th:href="@{/admin/categories/edit}" class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                    </div>
+                </div>
+                <div id="alert-success">
+                    <div class="alert alert-success alert-dismissable" th:classappend="${success}?'':'hide'">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        Success! Well done its submitted.
+                    </div>
+                </div>
+
+                <table class="table table-hover table-bordered" id="categories">
+                    <thead>
+                    <tr class="info">
+                        <th width="17%">Name</th>
+                        <th width="17%">Code</th>
+                        <th width="7%">Filter Type</th>
+                        <th width="10%">Group</th>
+                        <th width="10%">Value type</th>
+                        <th width="3%">Filter</th>
+                        <th width="10%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="category, stats : ${categories}" th:id="'category-' + ${category.id}">
+                        <td th:text="${category.name}"/>
+                        <td th:text="${category.code}"/>
+                        <td th:text="${category.type}"/>
+                        <td th:text="${category.group.name}"/>
+                        <td th:text="${category.valueType != null ? category.valueType.caption:''}"/>
+                        <td th:text="${category.displayAsFilter==true?'Yes':'No'}"/>
+                        <td>
+                            <a title="up" class="link" th:classappend="${stats.index==0?'disabled-link':''}"
+                               th:href="@{/admin/categories/up/{id}(id=${category.id})}">
+                                <span class="glyphicon glyphicon-chevron-up"></span></a>
+                            <a title="down" class="link"
+                               th:classappend="${stats.index==#lists.size(categories)-1?'disabled-link':''}"
+                               th:href="@{/admin/categories/down/{id}(id=${category.id})}">
+                                <span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/admin/categories/edit/{id}(id=${category.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button type="button"
+                                    class="btn btn-danger cant-delete"
+                                    th:classappend="${!category.canDelete} ? 'disabled-button' : ''"
+                                    data-th-title="${category.canDelete} ? 'Delete is possible' : ${category.cantDeleteReason}"
+                                    th:onclick="${category.canDelete} ? 'javascript:deleteCategory(\'' + ${category.id} + '\');' : ''"
+                            >
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="PlanDescriptionCategoriesSettings" class="tab-pane">
+                <div class="alert alert-success alert-dismissable" th:if="${successDescription}">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    Success! Well done its submitted.
+                </div>
+                <div class="alert alert-danger alert-dismissable" th:if="${errorDescription}">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    Error ! Change few things.
+                </div>
+                <div class="row">
+                    <div class="col-md-8"><h1>Plan description categories settings</h1></div>
+                    <div class="col-md-4 text-right">
+                    </div>
+                </div>
+                <form id="planDescriptionForm" th:action="@{/admin/categories}" th:object="${settings}" method="post">
+                    <div class="row">
+                        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <div th:each="e : ${#fields.detailedErrors()}">
+                                <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                                <span th:text="${e.message}">The error message</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category1">Category 1: </label>
+                            <select th:field="*{planDescriptionCategory1}" id="category1" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory1}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category2">Category 2: </label>
+                            <select th:field="*{planDescriptionCategory2}" id="category2" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory2}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category3">Category 3: </label>
+                            <select th:field="*{planDescriptionCategory3}" id="category3" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory3}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category4">Category 4: </label>
+                            <select th:field="*{planDescriptionCategory4}" id="category4" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory4}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category5">Category 5: </label>
+                            <select th:field="*{planDescriptionCategory5}" id="category5" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory5}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label for="category6">Category 6: </label>
+                            <select th:field="*{planDescriptionCategory6}" id="category6" class="form-control">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+                            </select>
+                            <span th:errors="*{planDescriptionCategory6}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" name="planDescriptionCategory" class="btn btn-success btn-submit">Save</button>
+                        </div>
+                        <input type="hidden" th:field="*{id}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <input id="lastModified" type="hidden" th:value="${lastModifiedCategoryId}"/>
+        <script>
+            $(function () {
+                if ($("#activeTab").val() == 2) {
+                    $('.nav-tabs a[href="#PlanDescriptionCategoriesSettings"]').tab('show');
+                } else {
+                    $('.nav-tabs a[href="#categoriesSettings"]').tab('show');
+                }
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

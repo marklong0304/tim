@@ -1,0 +1,92 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+configurations {
+    jaxb
+}
+
+dependencies {
+    // JAXB
+    jaxb("com.sun.xml.bind:jaxb-xjc:2.2.7")
+    jaxb("org.jvnet.jaxb2_commons:jaxb2-basics-ant:0.6.5")
+    jaxb("org.jvnet.jaxb2_commons:jaxb2-basics-annotate:0.6.5")
+}
+
+configurations {
+    jaxb
+}
+
+project.ext.GenJaxb = GenJaxb.class
+
+class GenJaxb extends DefaultTask {
+
+    @Optional
+    @InputFiles
+    FileCollection bindings
+
+    private File sourcesDir
+
+    @Optional
+    @Input
+    String schemaDir
+
+    @Input
+    String schemas
+
+    @Input
+    String packagePrefix
+
+    @OutputDirectory
+    File getSourcesDir() {
+        this.sourcesDir ?: new File("${project.projectDir}/generated-sources/${packagePrefix}")
+    }
+
+    @TaskAction
+    def generate() {
+
+        ext.sourcesDir = "${project.buildDir}/generated-sources/jaxb"
+        ext.classesDir = "${project.buildDir}/classes/jaxb"
+
+        def jaxbClasspath = project.configurations.jaxb.asPath
+
+
+        project.ant {
+            taskdef name: "xjc", classname: "org.jvnet.jaxb2_commons.xjc.XJC2Task",
+                    classpath: jaxbClasspath
+
+            def allBindings = (bindings?.files ?: new LinkedHashSet())*.absoluteFile
+
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            def xjcParams = [
+                    destdir  : sourcesDir,
+                    extension: true,
+                    encoding : 'UTF-8',
+                    package  : "com.travelinsurancemaster.clients.${packagePrefix}"
+            ]
+            if (!schemaDir) {
+                xjcParams << [schema: schemas]
+            }
+
+            xjc(xjcParams) {
+                if (allBindings) {
+                    allBindings.each {
+                        binding(dir: it.parentFile, includes: it.name)
+                    }
+                }
+                if (schemaDir) {
+                    schema(dir: schemaDir, includes: schemas)
+                }
+
+                arg(value: "-Xannotate")
+                arg(value: "-wsdl")
+                arg(value: "-XautoNameResolution")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+        }
+    }
+}

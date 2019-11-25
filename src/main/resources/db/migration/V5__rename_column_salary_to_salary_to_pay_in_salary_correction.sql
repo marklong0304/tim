@@ -1,0 +1,1 @@
+ALTER TABLE salary_correction RENAME COLUMN salary TO salary_to_pay;

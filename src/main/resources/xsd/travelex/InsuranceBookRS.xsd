@@ -1,0 +1,67 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.travelex-insurance/2003/01/InsuranceBookRS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="InsuranceBookRS">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="PolicyDetail">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="PolicyNumber"/>
+                            <xs:element type="xs:string" name="RefNumber"/>
+                            <xs:element type="xs:string" name="GroupNumber"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:dateTime" name="OrderDate"/>
+                        <xs:attribute type="xs:dateTime" name="EffectiveDate"/>
+                        <xs:attribute type="xs:dateTime" name="ExpireDate"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="PlanCost">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:float" name="Amount"/>
+                            <xs:element type="xs:float" name="ProcessingFee"/>
+                            <xs:element type="xs:float" name="Commission"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="CurrencyCode"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Traveler">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute type="xs:string" name="Name"/>
+                                <xs:attribute type="xs:float" name="TripCost"/>
+                                <xs:attribute type="xs:float" name="Rate"/>
+                                <xs:attribute type="xs:float" name="Commission"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Benefit" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute type="xs:string" name="Description" use="optional"/>
+                                <xs:attribute type="xs:string" name="Coverage" use="optional"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Contact">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="Telephone"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="ContactType"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Warnings">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="Warning"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

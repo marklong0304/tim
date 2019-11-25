@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+    <body>
+    <!-- Navbar -->
+        <div class="navigation" id="navigation" th:fragment="navigation">
+            <div class="logo">
+                 <a th:href="@{/}"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-blue.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                   </div>
+                     <div class="pull-right">
+                        <ul class="list">
+                          <li>
+                            <div id="loginMenu" class="btn-group logInOut" sec:authorize="isAnonymous()">
+                              <button type="button" id="loginButton" class="btn btn-default" data-toggle="popover">Login</button>
+                                <ul id="popover-content" class='hide'>
+                                    <!--<li>
+                                        <div id="errorLogin" class="alert alert-danger" role="alert" th:if="${param.error}">
+                                            Invalid email or password.
+                                        </div>
+                                    </li>-->
+                                  <form class="loginForm" th:action="@{/login}" method="post">
+                                    <input type="hidden" name="remember-me" value="true"/>
+                                      <li>
+                                        <div class="form-group">
+                                          <input type="text" class="form-control loginEmail" placeholder="Email" name="username"/>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="form-group">
+                                          <input type="password" class="form-control loginPass" placeholder="Password" name="password"/>
+                                        </div>
+                                      </li>
+                                      <li><button type="submit" id="loginBtn" class="btn btn-primary loginBtn1">Login</button></li>
+                                  </form>
+                                    <li><a class="registration" href="#" th:href="@{/users/registration}">Register now</a></li>
+                                    <li><a class="reset-pass" href="#" th:href="@{/users/requestNewPassword}">Reset account password</a></li>
+                                </ul>
+                            </div>
+                              <div id="logoutMenu" class="btn-group logInOut" sec:authorize="isAuthenticated()">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="username" sec:authentication="principal.user.name">User</span>
+                                      <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                      <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                                      <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                                      <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                                      <li><a href="#" th:href="@{/logout}">Logout</a></li>
+                                  </ul>
+                              </div>
+                          </li>
+                            <li><a class="btn burgerbtn"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/burger.svg}" alt="Burger Open Menu"/></a></li>
+                        </ul>
+                     </div>
+        </div>
+    </body>
+</html>

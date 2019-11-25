@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Page management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/category.js?ver={version}(version=${appVersion.version})}" src="/js/custom/cms/category.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/category_content}">Insurance Terms</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="modal fade" id="chooseCategoryDialog" tabindex="-1" role="dialog" style="color: black;" aria-labelledby="chooseCategoryDialogLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="chooseCategoryDialogLabel">Choose category.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <select id="categoryCode" class="form-control">
+                            <option value="custom">Custom</option>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.code}" th:text="${category.name}"/>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="" class="btn btn-primary" onclick="createPolicyMetaCategory(); return false;">Create category content</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Insurance Terms management</h1></div>
+            <div class="col-md-4 text-right">
+                <a th:href="@{/cms/category_content/create}" class="btn btn-success xcrud-action " onclick="openChooseCategoryDialog(); return false;">
+                    <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a>
+                <a id="sort" class="btn btn-info xcrud-action ">
+                    <i class="glyphicon glyphicon-sort-by-alphabet"></i>&nbsp;&nbsp;Alphabetically sort</a>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="contentCategories">
+            <thead>
+            <tr class="info">
+                <th width="21%">Name</th>
+                <th width="23%">Create date</th>
+                <th width="23%">Modified date</th>
+                <th width="20%">Author</th>
+                <th width="15%">Actions</th>
+                <th>Order</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="categoryContent : ${categoryContentList}" th:id="'categoryContent-' + ${categoryContent.id}">
+                <td th:text="${categoryContent.name}"/>
+                <td th:text="${#dates.format(categoryContent.createDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${#dates.format(categoryContent.modifiedDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${categoryContent.author.name}"/>
+                <td>
+                    <a title="up" class="link" th:classappend="${categoryContent.sortOrder==0?'disabled-link':''}"
+                       th:href="@{/cms/category_content/up/{id}(id=${categoryContent.id})}">
+                        <span class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+                    <a title="down" class="link"
+                       th:classappend="${categoryContent.sortOrder==#lists.size(categoryContentList)-1?'disabled-link':''}"
+                       th:href="@{/cms/category_content/down/{id}(id=${categoryContent.id})}">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <a class="btn btn-primary" type="button" title="Edit"
+                       th:href="@{/cms/category_content/edit/{id}(id=${categoryContent.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <button class="btn btn-danger" type="button" title="Delete"
+                            th:onclick="'javascript:deleteCategoryContent(\'' + ${categoryContent.id} + '\');'">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                </td>
+                <td th:text="${categoryContent.sortOrder}"/>
+            </tr>
+            </tbody>
+        </table>
+        <input id="lastModified" type="hidden" th:value="${lastModifiedPageId}"/>
+    </div>
+</div>
+</body>
+</html>

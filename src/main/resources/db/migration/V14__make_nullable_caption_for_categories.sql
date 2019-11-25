@@ -1,0 +1,1 @@
+ALTER TABLE policy_meta_category_value ALTER COLUMN caption DROP NOT NULL;

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<div class="container-fluid pattern" th:fragment="footer">
+        <div class="container-fluid bgfooter">
+            <div class="container links">
+                <div class="row no-gutter">
+                    <div class="col-md-3" th:each="menu : ${footerMenuItems}">
+                        <h3 th:text="${menu.title}">Sign Up</h3>
+                        <ul>
+                            <li th:each="submenu : ${menu.childMenuItems}">
+                                <th:block th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                                    <a th:case="${false}" th:text="${submenu.title}"
+                                       th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                                    <a th:case="${true}" th:text="${submenu.title}" th:href="${submenu.url}"/>
+                                </th:block>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3 social">
+                        <h3>
+                            Social
+                        </h3>
+                        <ul>
+                            <li><a href="https://www.facebook.com/TravelinsuranceMaster/"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/social/facebook.svg}" alt="Facebook"/></a></li>
+                            <li><a href="https://twitter.com/travelinsurema"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/social/twitter.svg}" alt="Twitter"/></a></li>
+                            <li><a href="https://www.instagram.com/travelinsurema/"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/social/instagram.svg}" alt="Instagram"/></a></li>
+                            <li><a href="https://www.pinterest.com/travelinsurancemaster/"><img th:src="@{/images/newdesign/social/pinterest-white.svg}" alt="Pinterest" class="pinteres"/></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row copyright no-gutter">
+                    <div class="col-md-6 col-md-push-6 text-right"><a th:href="@{/page/Privacy-Policy}">Privacy Policy</a> <span> | </span> <a th:href="@{/page/Legal-Disclaimer}">Legal</a></div>
+                    <div class="col-md-6 col-md-pull-6 text-left" th:if="${appVersion != null}"
+                         th:title="|${appVersion.title} ver. ${appVersion.version}|">© <span th:text="${#dates.year(#dates.createNow())}">2018</span> Travel Insurance Master
+                    </div>
+                    <div class="col-md-6 col-md-pull-6 text-left" th:if="${appVersion == null}">© <span th:text="${#dates.year(#dates.createNow())}">2018</span> Travel Insurance
+                        Master
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+</html>

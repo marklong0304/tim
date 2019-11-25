@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<!-- Policy meta restriction modal-->
+<div th:fragment="restrictionsFragment">
+    <div th:if="${restriction != null}" class="modal fade" id="addRestrictionModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="addRestrictionForm" th:object="${restriction}" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 id="dialogTitle" class="modal-title text-center"><span id="actionName">Create</span>
+                            restriction for
+                            <th:block
+                                    th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}">
+                                <span id="policyMetaName" style="font-weight: bolder;"
+                                      th:text="${policyMeta.displayName}"/> policy
+                            </th:block>
+                            <th:block
+                                    th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCategoryRestriction)}">
+                                <span id="dialogTitleObject" style="font-weight: bolder;"
+                                      th:if="${policyMetaCategory != null}"
+                                      th:text="${policyMetaCategory.category.name}"/>
+                                <span id="dialogTitleObject" style="font-weight: bolder;"
+                                      th:if="${policyMetaCategory == null}"/>
+                                <span id="dialogTitleType">category</span></th:block>
+                            <th:block
+                                    th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCodeRestriction)}">
+                                <span style="font-weight: bolder;" th:text="${policyMetaCode.name}"/> policy meta code
+                            </th:block>
+                            <th:block
+                                    th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaPackageRestriction)}">
+                                <span style="font-weight: bolder;" th:text="${policyMetaPackage.name}"/> policy meta
+                                package
+                            </th:block>
+                            <th:block
+                                    th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyQuoteParamRestriction)}">
+                                policy quote param
+                            </th:block>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="errors"></div>
+                        <div class="form-group">
+                            <label for="restrictionType">Restriction type:</label>
+                            <select th:field="*{restrictionType}" id="restrictionType" class="form-control">
+                                <option th:each="restrictionType : ${T(com.travelinsurancemaster.model.dto.Restriction.RestrictionType).values()}"
+                                        th:value="${restrictionType}" th:text="${restrictionType}"/>
+                            </select>
+                            <span class="errorRed"></span>
+                        </div>
+                        <div id="calculatedRestrictionsBlock" class="form-group">
+                            <label for="calculatedRestrictions">Calculated restriction:</label>
+                            <div style="height: 130px;" id="calculatedRestrictionsEditor"></div>
+                            <textarea style="display: none;" id="calculatedRestrictions" placeholder="Script text"
+                                      th:field="*{calculatedRestrictions}" class="form-control"/>
+                            <span id="calculatedRestrictionsError" class="errorRed"></span>
+                        </div>
+                        <div id="restrictionPermitBlock" class="form-group">
+                            <label for="restrictionPermit">Restriction permit:</label>
+                            <select th:field="*{restrictionPermit}" id="restrictionPermit" class="form-control">
+                                <option th:each="restrictionPermit : ${T(com.travelinsurancemaster.model.dto.Restriction.RestrictionPermit).values()}"
+                                        th:value="${restrictionPermit}" th:text="${restrictionPermit}"/>
+                            </select>
+                            <span class="errorRed"></span>
+                        </div>
+                        <div id="countriesBlock" class="form-group">
+                            <label for="countries">Countries:</label>
+                            <select id="countries" multiple="multiple" th:field="*{countries}">
+                                <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                        th:value="${c}" th:text="${c.caption}"> Country
+                                </option>
+                            </select>
+                            <span class="errorRed"></span>
+                        </div>
+                        <div id="statesBlock" class="form-group">
+                            <label for="states">States:</label>
+                            <select id="states" multiple="multiple" th:field="*{states}">
+                                <option th:each="c : ${T(com.travelinsurancemaster.model.StateCode).values()}"
+                                        th:value="${c}" th:text="${c.caption}"> Country
+                                </option>
+                            </select>
+                            <span class="errorRed"></span>
+                        </div>
+                        <div th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}"
+                             class="form-group">
+                            <label for="policyMeta.name">Policy: </label>
+                            <input type="hidden" th:value="${policyMeta.id}"/>
+                            <input type="text" id="policyMeta.name" th:field="${policyMeta.displayName}"
+                                   readonly="readonly" class="form-control"/>
+                        </div>
+                        <div id="minValDiv" class="form-group">
+                            <label for="minValue">Min value: </label>
+                            <input id="minValue" type="text" th:field="*{minValue}" placeholder="value"
+                                   class="form-control longNumericValue"/>
+                            <span class="errorRed"></span>
+                        </div>
+                        <div id="maxValDiv" class="form-group">
+                            <label for="maxValue">Max value: </label>
+                            <input id="maxValue" type="text" th:field="*{maxValue}" placeholder="value"
+                                   class="form-control longNumericValue"/>
+                            <span class="errorRed"></span>
+                        </div>
+                        <input type="hidden" id="restrictionId" name="id" th:field="*{id}"/>
+                        <input type="hidden" id="tempId" name="id" th:field="*{tempId}"/>
+                        <input th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}"
+                               type="hidden" id="policyMeta" name="policyMeta" th:field="*{policyMeta.id}"/>
+                        <input th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCategoryRestriction)}"
+                               type="hidden" id="policyMetaCategory" name="policyMetaCategory"
+                               th:field="*{policyMetaCategory.id}"/>
+                        <input th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCodeRestriction)}"
+                               type="hidden" id="policyMetaCode" name="policyMetaCode" th:field="*{policyMetaCode.id}"/>
+                        <input th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaPackageRestriction)}"
+                               type="hidden" id="policyMetaPackage" name="policyMetaPackage"
+                               th:field="*{policyMetaPackage.id}"/>
+                        <input th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyQuoteParamRestriction)}"
+                               type="hidden" id="policyQuoteParam" name="policyQuoteParam"
+                               th:field="*{policyQuoteParam.id}"/>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" id="openValidationBtn">Go to
+                                validation form
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="addRestriction" name="addRestriction">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Restriction validation form dialog.-->
+    <div class="modal fade" id="validationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header modal-info">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title text-center" style="font-weight: bolder;">Calculated restrictions
+                            validation (Enable)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="validationForm" th:object="${restrictionValidateQuoteRequest}" method="post">
+                            <div class="row">
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label for="validationFormCalculatedRestrictions">Calculated restriction:</label>
+                                    <div style="height: 130px;" id="validationFormRestrictionsEditor"></div>
+                                    <textarea style="display: none;" id="validationFormCalculatedRestrictions"
+                                              placeholder="Script text" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6><i> Restriction example: <b><label> tripCost &gt; 1200</label></b></i>
+                                        <div><i>Restriction tripLength: <label> tripLength &lt; 30</label></i></div>
+                                        <div><i>Restriction finalPaymentDate: <label> finalPaymentDate - 1 ==
+                                            departDate</label></i></div>
+                                        <div><i>Restriction age: <label> age &lt;= 50</label></i></div>
+                                        <div><i>Restriction travelers: <label> travelers != 3</label></i></div>
+                                        <div><i>Restriction residentState: <label> residentState !=
+                                            &prime;AK&prime;</label></i></div>
+                                        <div><i>Restriction residentCountry: <label>residentCountry !=
+                                            &prime;CU&prime;</label></i>
+                                        </div>
+                                        <div><i>Restriction citizenCountry: <label> citizenCountry !=
+                                            &prime;CA&prime;</label></i>
+                                        </div>
+                                        <div><i>Restriction destinationCountry: <label> destinationCountry != &prime;AU&prime;</label></i>
+                                        </div>
+                                        <div><i>Restriction depositDate: <label> returnDate - depositDate == 15 </label></i>
+                                        </div>
+                                        <div><i>Restriction planPaymentDate: <label> departDate - 1 ==
+                                            planPaymentDate </label></i>
+                                        </div>
+                                        <div><i>Restriction logical multiplication: <label> departDate - 1 ==
+                                            planPaymentDate
+                                            &amp;&amp; age == 25 </label></i>
+                                        </div>
+                                        <div><i>Restriction logical addition: <label> departDate - 1 == planPaymentDate
+                                            &mid;&mid;
+                                            age == 25 </label></i>
+                                        </div>
+                                    </h6>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="departDate">Depart date</label>
+                                    <input type="text" id="departDate" th:field="*{departDate}"
+                                           class="form-control dateInput" required="required"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="returnDate">Return date</label>
+                                    <input type="text" id="returnDate" th:field="*{returnDate}"
+                                           class="form-control dateInput"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="tripLength">Trip length</label>
+                                    <input type="text" id="tripLength" class="form-control" readonly="readonly"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="travelersCount">Travelers count</label>
+                                    <input type="text" id="travelersCount" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="travelersCount">Age</label>
+                                    <input type="text" id="age" th:field="*{travelers[0].age}" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label>Resident country</label>
+                                    <select id="residentCountry" class="form-control" th:field="*{residentCountry}"
+                                            required="required">
+                                        <option value="" th:text="${''}" style="display: none"></option>
+                                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                th:value="${c}" th:text="${c.caption}"> Country
+                                        </option>
+                                    </select>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div id="residentStateUsBlock" style="display: none;"
+                                     class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label>Resident state</label>
+                                    <select class="form-control" th:field="*{residentState}">
+                                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                th:value="${s}" th:text="${s.caption}">State
+                                        </option>
+                                    </select>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div id="residentStateCaBlock" style="display: none;"
+                                     class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label>Resident state</label>
+                                    <select class="form-control" th:field="*{residentState}">
+                                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                th:value="${s}" th:text="${s.caption}">State
+                                        </option>
+                                    </select>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label>Citizen country</label>
+                                    <select class="form-control" id="citizenCountry" th:field="*{citizenCountry}">
+                                        <option value="" th:text="${''}" style="display: none"></option>
+                                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                th:value="${c}" th:text="${c.caption}"> Country
+                                        </option>
+                                    </select>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label>Destination country</label>
+                                    <select class="form-control" id="destination" th:field="*{destinationCountry}">
+                                        <option value="" th:text="${''}" style="display: none"></option>
+                                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                th:value="${c}" th:text="${c.caption}"> Country
+                                        </option>
+                                    </select>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="depositDate">Deposit date</label>
+                                    <input type="text" id="depositDate" th:field="*{depositDate}"
+                                           class="form-control dateInput"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="paymentDate">Final payment date</label>
+                                    <input type="text" id="paymentDate" th:field="*{paymentDate}"
+                                           class="form-control dateInput"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <label for="tripCost">Trip cost</label>
+                                    <input type="text" id="tripCost" th:field="*{tripCost}" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 radioBtnGroup">
+                                    <input type="radio" th:value="true" id="totalCostRadioBtn"
+                                           th:field="*{tripCostTotal}"/><label for="totalCostRadioBtn"> Total for
+                                    All</label>
+                                    <br/>
+                                    <input type="radio" th:value="false" id="perTravelerCostRadioBtn"
+                                           th:field="*{tripCostTotal}"/><label for="perTravelerCostRadioBtn"> Per
+                                    Traveler</label>
+                                </div>
+                            </div>
+                            <input type="hidden" id="fakeTraveler" th:field="*{travelers[0].age}"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a data-dismiss="modal" class="btn btn-default">Close</a>
+                        <a id="testCalculatedRestriction" class="btn btn-primary">Test!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var policyMetaRestrictionInstance = [[${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}]];
+        var policyMetaCategoryRestrictionInstance = [[${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCategoryRestriction)}]];
+        var policyMetaCodeRestrictionInstance = [[${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCodeRestriction)}]];
+        var policyMetaPackageRestrictionInstance = [[${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaPackageRestriction)}]];
+        var policyQuoteParamRestrictionInstance = [[${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyQuoteParamRestriction)}]];
+        var policyMetaName = [[${policyMeta==null ? '' : policyMeta.displayName}]];
+        /*]]>*/
+        // @formatter:on
+    </script>
+    <script type="application/javascript">
+        var restrictionType = $("#restrictionType");
+        var restrictionsEditor;
+        $('document').ready(function () {
+
+            $('#travelersCount').mask('000', {negative: false});
+
+            restrictionsEditor = ace.edit("calculatedRestrictionsEditor");
+            restrictionsEditor.setTheme("ace/theme/chrome");
+            restrictionsEditor.getSession().setMode("ace/mode/groovy");
+            restrictionsEditor.getSession().on('change', function () {
+                var restrictionValue = restrictionsEditor.getSession().getValue();
+                $('#calculatedRestrictions').val(restrictionValue);
+                $('#validationFormCalculatedRestrictions').val(restrictionValue);
+            });
+
+            var formRestrictionsEditor = ace.edit("validationFormRestrictionsEditor");
+            formRestrictionsEditor.setTheme("ace/theme/chrome");
+            formRestrictionsEditor.getSession().setMode("ace/mode/groovy");
+            formRestrictionsEditor.getSession().on('change', function () {
+                var validationFormRestrictionValue = formRestrictionsEditor.getSession().getValue();
+                $('#validationFormCalculatedRestrictions').val(validationFormRestrictionValue);
+                $('#calculatedRestrictions').val(validationFormRestrictionValue);
+            });
+
+            $('#openValidationBtn').click(function () {
+                $('#validationModal').modal('show');
+            });
+
+            var departDatePicker = $('#departDate').datepicker({
+                autoclose: true,
+                container: '#validationModal',
+                startDate: '+1d'
+            }).on('changeDate', function () {
+                var dateMoment = moment(new Date(this.value));
+                dateMoment.add(1, 'd');
+                returnDatePicker.datepicker('setStartDate', dateMoment.toDate());
+                var inputs = $(this).closest('form').find(':input');
+                departDatePicker.datepicker('hide');
+                if (returnDatePicker.val() != '') {
+                    var days = moment.range(new Date(departDatePicker.val()), new Date(returnDatePicker.val())).diff('days');
+                    $('#tripLength').val(days + 1);
+                }
+                inputs.eq(inputs.index(this) + 1).focus();
+            });
+
+            var returnDatePicker = $('#returnDate').datepicker({
+                autoclose: true,
+                container: '#validationModal',
+                startDate: '+1d'
+            }).on('changeDate', function () {
+                var inputs = $(this).closest('form').find(':input');
+                returnDatePicker.datepicker('hide');
+                if (departDatePicker.val() != '') {
+                    var days = moment.range(new Date(departDatePicker.val()), new Date(returnDatePicker.val())).diff('days');
+                    $('#tripLength').val(days + 1);
+                }
+                inputs.eq(inputs.index(this) + 2).focus();
+            });
+
+            var withoutNextFocus = false;
+            var depositDatePicker = $('#depositDate').datepicker({
+                autoclose: true,
+                container: '#validationModal',
+                endDate: "new Date()"
+            }).on('changeDate', function () {
+                if (!moment(depositDatePicker.val(), ["MM/DD/YYYY"], true).isValid()) {
+                    return;
+                }
+                paymentDatePicker.datepicker('setStartDate', this.value);
+                if (paymentDatePicker.datepicker('getDate') == null) {
+                    paymentDatePicker.datepicker('setDate', depositDatePicker.val());
+                }
+                var inputs = $(this).closest('form').find(':input');
+                depositDatePicker.datepicker('hide');
+                if (!withoutNextFocus) {
+                    inputs.eq(inputs.index(this) + 1).focus();
+                }
+
+                withoutNextFocus = false;
+            });
+
+            var paymentDatePicker = $('#paymentDate').datepicker({
+                autoclose: true,
+                container: '#validationModal',
+                startDate: depositDatePicker.val()
+            }).on('changeDate', function () {
+                if (!moment(paymentDatePicker.val(), ["MM/DD/YYYY"], true).isValid()) {
+                    return;
+                }
+                if (depositDatePicker.datepicker('getDate') == null) {
+                    withoutNextFocus = true;
+                    depositDatePicker.datepicker('setDate', paymentDatePicker.val());
+                }
+                var inputs = $(this).closest('form').find(':input');
+                paymentDatePicker.datepicker('hide');
+                inputs.eq(inputs.index(this) + 1).focus();
+            });
+
+            $('#validationModal').on('show.bs.modal', function () {
+                if (departDatePicker.val() == '') {
+                    departDatePicker.val(moment().add(7, 'd').format("MM/DD/YYYY"));
+                }
+                if (returnDatePicker.val() == '') {
+                    returnDatePicker.val(moment().add(14, 'd').format("MM/DD/YYYY"));
+                }
+                if ($('#tripCost').val() == '') {
+                    $('#tripCost').val(1200);
+                }
+                if ($('#residentCountry').val() == '') {
+                    $('#residentCountry').val('US');
+                    $('select[name=residentState]').val('NY');
+                    $('#citizenCountry').val('US');
+                }
+                if ($('#destination').val() == '') {
+                    $('#destination').val('ES');
+                }
+                if ($('#tripLength').val() == '') {
+                    $('#tripLength').val(8);
+                }
+                if ($('#travelersCount').val() == '') {
+                    $('#travelersCount').val(1);
+                }
+                if ($('#age').val() == '') {
+                    $('#age').val(25)
+                }
+                if (depositDatePicker.val() == '') {
+                    depositDatePicker.val(moment().add(-5, 'd').format("MM/DD/YYYY"));
+                }
+                if (paymentDatePicker.val() == '') {
+                    paymentDatePicker.val(moment().add(-1, 'd').format("MM/DD/YYYY"));
+                }
+                if ($('#customRadio1').val() == '') {
+                    $('#customRadio1').prop('checked', true);
+                }
+            });
+
+            $('#countries,#states').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: 400,
+                buttonWidth: 550,
+                filterStyle: 'beginWith'
+            });
+
+            updateDivs();
+            restrictionType.on('change', function () {
+                updateDivs();
+            });
+
+            $('#addRestriction').click(function () {
+                /*<![CDATA[*/
+                clearRestrictionModalErrors();
+                var addRestrictionUrl;
+                var name = $(this).attr('name');
+                if (name == 'addRestrictionToMatrix' || name == 'addRestrictionToPlan') {
+                    if (name == 'addRestrictionToPlan') {
+                        addRestrictionUrl = context + 'vendors/policyMatrix/addPlanRestriction/' + $('#policyMetaId').val();
+                    } else {
+                        addRestrictionUrl = context + 'vendors/policyMatrix/addRestriction/' + $('#policyMetaId').val();
+                    }
+                    var params = $('#addRestrictionForm').serializeArray();
+                    params.push({
+                        name: 'selectedPolicyMetaCategoryId',
+                        value: $('#selectedPolicyMetaCategoryId').val()
+                    });
+                    params.push({
+                        name: 'selectedPolicyMetaCategoryIndex',
+                        value: $('#selectedPolicyMetaCategoryIndex').val()
+                    });
+                    params.push({
+                        name: 'sessionId',
+                        value: $('#sessionId').val()
+                    });
+                    $.post(addRestrictionUrl, params).done(function (data) {
+                        if (data.status == true) {
+                            enableCancelBtn();
+                            $('#addRestrictionModal').modal('hide');
+                            $('#restrictions div').remove();
+                            getRestrictions(name == 'addRestrictionToPlan');
+                        } else {
+                            $.each(data.fieldErrorsList, function (key, responseError) {
+                                $("[id='" + responseError.field + "']").parent().find('span.errorRed').text(responseError.defaultMessage);
+                            });
+                            var errors = '';
+                            $.each(data.globalErrors, function (key, globalError) {
+                                errors += globalError + '<br />';
+                            });
+                            if (errors != '') {
+                                errors = '<div class="alert alert-danger alert-dismissible" role="alert" style="border: none;">' +
+                                    errors + '</div>';
+                                $('#errors').html(errors);
+                            } else {
+                                $('#errors').html('');
+                            }
+                        }
+                    }).fail(function () {
+                        alert('error!');
+                    });
+                } else {
+                    if (policyMetaRestrictionInstance) {
+                        addRestrictionUrl = context + 'vendors/policy/policyMetaRestriction/create/';
+                    } else if (policyMetaCategoryRestrictionInstance) {
+                        addRestrictionUrl = context + 'vendors/policy/policyMetaCategoryRestriction/create/';
+                    } else if (policyMetaCodeRestrictionInstance) {
+                        addRestrictionUrl = context + 'vendors/policy/policyMetaCodeRestriction/create/';
+                    } else if (policyMetaPackageRestrictionInstance) {
+                        addRestrictionUrl = context + 'vendors/policy/policyMetaPackageRestriction/create/';
+                    } else if (policyQuoteParamRestrictionInstance) {
+                        addRestrictionUrl = context + 'vendors/policy/policyQuoteParamRestriction/create/';
+                    }
+                    $.post(addRestrictionUrl, $('#addRestrictionForm').serialize()
+                    ).done(function (data) {
+                        if (data.status == true) {
+                            $('#addRestrictionModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $.each(data.fieldErrorsList, function (key, responseError) {
+                                $("[id='" + responseError.field + "']").parent().find('span.errorRed').text(responseError.defaultMessage);
+                            });
+                            var errors = '';
+                            $.each(data.globalErrors, function (key, globalError) {
+                                errors += globalError + '<br />';
+                            });
+                            if (errors != '') {
+                                errors = '<div class="alert alert-danger alert-dismissible" role="alert" style="border: none;">' +
+                                    errors + '</div>';
+                                $('#errors').html(errors);
+                            } else {
+                                $('#errors').html('');
+                            }
+                        }
+                    }).fail(function () {
+                        alert('error!');
+                    });
+                }
+                /*]]>*/
+            });
+
+            $('#addRestrictionModal').on('hidden.bs.modal', function () {
+                clearRestrictionModalErrors();
+            });
+
+            $('#addRestrictionModal').on('hide.bs.modal', function () {
+                restrictionsEditor.getSession().setValue('');
+            });
+
+            $('#addRestrictionModal').on('show.bs.modal', function () {
+                updateDivs();
+            });
+
+            $('#addRestrictionModal').on('shown.bs.modal', function () {
+                restrictionsEditor.getSession().setValue($('#calculatedRestrictions').val());
+            });
+
+            $('#validationModal').on('shown.bs.modal', function () {
+                clearRestrictionModalErrors();
+                formRestrictionsEditor.getSession().setValue($('#calculatedRestrictions').val());
+            });
+
+            $('#validationModal').on('hidden.bs.modal', function () {
+                clearValidationModalErrors();
+                restrictionsEditor.getSession().setValue($('#validationFormCalculatedRestrictions').val());
+            });
+
+            changeStates();
+
+            $('#fakeTraveler').val(25);
+            $('#testCalculatedRestriction').click(function () {
+                clearValidationModalErrors();
+                var testCalculatedRestrictionUrl = context + 'vendors/policy/testCalculatedRestriction';
+                var params = $('#validationForm').serializeArray();
+                params.push({name: 'tripLength', value: $('#tripLength').val()});
+                params.push({name: 'travelersCount', value: $('#travelersCount').val()});
+                params.push({
+                    name: 'validationFormCalculatedRestrictions',
+                    value: $('#validationFormCalculatedRestrictions').val()
+                });
+                $.post(testCalculatedRestrictionUrl, params).done(function (data) {
+                    if (data.fieldErrorsList.length == 0) {
+                        alert('Evaluation result is ' + data.status + '!');
+                    } else {
+                        $.each(data.fieldErrorsList, function (key, responseError) {
+                            var fieldId = responseError.field;
+                            if(fieldId == 'travelers[0].age') fieldId = 'age';
+                            $("[id='" + fieldId + "']").parent().find('span.errorRed').text(responseError.defaultMessage);
+                        });
+                    }
+                });
+            });
+        });
+
+        function changeStates() {
+            var country = $("#residentCountry");
+            country.change(function () {
+                if (country.val() == 'US') {
+                    $('#residentStateUsBlock').show();
+                    $('#residentStateUsBlock').find('select').prop('disabled', false);
+                    $('#residentStateCaBlock').hide();
+                    $('#residentStateCaBlock').find('select').prop('disabled', true);
+
+                } else if (country.val() == 'CA') {
+                    $('#residentStateUsBlock').hide();
+                    $('#residentStateUsBlock').find('select').prop('disabled', true);
+                    $('#residentStateCaBlock').show();
+                    $('#residentStateCaBlock').find('select').prop('disabled', false);
+                } else {
+                    $('#residentStateUsBlock').hide();
+                    $('#residentStateUsBlock').find('select').prop('disabled', true);
+                    $('#residentStateCaBlock').hide();
+                    $('#residentStateCaBlock').find('select').prop('disabled', true);
+                }
+            });
+        }
+
+        function clearRestrictionModalErrors() {
+            $('#addRestrictionForm span.errorRed').text('');
+            $('#addRestrictionForm #errors').html('');
+        }
+
+        function clearValidationModalErrors() {
+            $('#validationForm span.errorRed').text('');
+            $('#validationForm #errors').html('');
+        }
+
+        function updateDivs() {
+            if (restrictionType.val() == 'CITIZEN' || restrictionType.val() == 'DESTINATION' || restrictionType.val() == 'RESIDENT') {
+                $("#countriesBlock").show().find('select').prop("disabled", false);
+                $("#statesBlock").show().find('select').prop("disabled", false);
+                $("#minValDiv").hide().find('input').prop("disabled", true);
+                $("#maxValDiv").hide().find('input').prop("disabled", true);
+                $("#calculatedRestrictionsBlock").hide().find('textarea').prop("disabled", true);
+                $("#restrictionPermitBlock").show().find('select').prop("disabled", false);
+                $('#openValidationBtn').hide();
+            } else if (restrictionType.val() == 'CALCULATE') {
+                $("#calculatedRestrictionsBlock").show().find('textarea').prop("disabled", false);
+                $("#countriesBlock").hide().find('select').prop("disabled", true);
+                $("#statesBlock").hide().find('select').prop("disabled", true);
+                $("#minValDiv").hide().find('input').prop("disabled", true);
+                $("#maxValDiv").hide().find('input').prop("disabled", true);
+                $("#restrictionPermitBlock").hide().find('select').prop("disabled", true);
+                $('#openValidationBtn').show();
+            } else {
+                $("#calculatedRestrictionsBlock").hide().find('textarea').prop("disabled", true);
+                $("#countriesBlock").hide().find('select').prop("disabled", true);
+                $("#statesBlock").hide().find('select').prop("disabled", true);
+                $("#minValDiv").show().find('input').prop("disabled", false);
+                $("#maxValDiv").show().find('input').prop("disabled", false);
+                $("#restrictionPermitBlock").show().find('select').prop("disabled", false);
+                $('#openValidationBtn').hide();
+            }
+        }
+
+        function clearRestrictionFields() {
+            $('#restrictionType').val($('#restrictionType option:first').val());
+            $('#restrictionPermit').val($('#restrictionPermit option:first').val());
+            $('#minValue').val('');
+            $('#maxValue').val('');
+            $('#calculatedRestrictions').val('');
+            clearBootstrapMultiselect('#countries');
+            clearBootstrapMultiselect('#states');
+            restrictionType.removeClass('disabled-pointer');
+        }
+
+        function changeDialogTitle() {
+            if (policyRestrictionChbx()) {
+                $("#dialogTitleObject").text(policyMetaName);
+                $("#dialogTitleType").text('policy');
+            } else {
+                $("#dialogTitleObject").text($('#categoryName').text());
+                $("#dialogTitleType").text('category');
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

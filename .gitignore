@@ -1,0 +1,14 @@
+.gradle
+build/
+.idea
+*.iml
+gradle-app.setting
+out/
+generated-sources/
+*.log*
+*.orig
+exploded/
+index/
+/src/main/resources/config/application.properties
+certificate/**
+*.ps1

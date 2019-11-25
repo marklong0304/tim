@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+<body>
+<!-- Navbar -->
+<div id="header" th:fragment="navbar" th:classappend="${index!=null?'homePage':''}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 hidden-sm hidden-xs">
+                <div class="logo">
+                    <div>
+                        <a th:href="@{/}">
+                            <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master" class="logo-div-img"/></a>
+                    </div>
+                    <div class="logo-div-a">
+                        <a th:href="@{/}" class="logo-a">
+                            travel insurance master </a>
+                    </div>
+
+                    </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 hidden-sm hidden-xs">
+                <div class="phone" th:text="${defaultSettings.phone}">800-222-3456</div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 col-md-offset-0">
+                <div class="mainMenu">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                        data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="logo visible-xs visible-sm">
+                                    <div class="table">
+                                        <div class="tr">
+                                            <div>
+                                                <div class="logo-tr-img">
+                                                    <a th:href="@{/}">
+                                                        <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master" style="padding-bottom: 0.25rem; padding-right: 0.4375rem; display: inline; margin-top: -22px; height: 33px; width: 36px;"/></a>
+                                                </div>
+                                                <div class="logo-tr">
+                                                    <a th:href="@{/}" class="logophone"> travel insurance master </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="phone visible-sm">800-222-3456</div>
+                                <div class="phone visible-xs">800-222-3456</div>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li th:each="menu : ${headerMenuItems}">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                <span th:text="${menu.title}"/>
+                                                <span class="caret"/>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li th:each="submenu : ${menu.childMenuItems}"
+                                                    th:classappend="${(#lists.size(submenu.childMenuItems) == 0 )?'':'hasMenu'}"
+                                                    th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                                                    <a th:if="${#lists.size(submenu.childMenuItems) == 0}"
+                                                       th:case="${false}" th:text="${submenu.title}"
+                                                       th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                                                    <a th:if="${#lists.size(submenu.childMenuItems) == 0}"
+                                                       th:case="${true}" th:text="${submenu.title}"
+                                                       th:href="${(#strings.startsWith(submenu.url,'www.')?'http://':'')+submenu.url}"/>
+                                                    <span th:unless="${#lists.size(submenu.childMenuItems) == 0}"
+                                                          class="lvl-2"><span
+                                                            th:text="${submenu.title}"></span><span
+                                                            class="caret"></span> </span>
+                                                    <ul class="submenu"
+                                                        th:unless="${#lists.size(submenu.childMenuItems) == 0}">
+                                                        <li th:each="submenu : ${submenu.childMenuItems}"
+                                                            th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                                                            <a th:case="${false}" th:text="${submenu.title}"
+                                                               th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                                                            <a th:case="${true}" th:text="${submenu.title}"
+                                                               th:href="${(#strings.startsWith(submenu.url,'www.')?'http://':'')+submenu.url}"/>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                Quote <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a id="currentQuote" href="#" style="display: none;">See last quote</a></li>
+                                                <li><a th:href="@{/newQuote}">Get a new quote</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li th:fragment="adminMenu" id="admin-menu">
+                                        <div class="btn-group"
+                                             sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                <span sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">Admin</span>
+                                                <span sec:authorize="!hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">Report</span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users}">Users</a></li>
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users/affiliationRequests}">Affiliattion requests</a></li>
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/companies}">Companies</a></li>
+                                                <li class="hasMenu" sec:authorize="hasRole('ROLE_ADMIN')"><span
+                                                        class="lvl-2">API<span
+                                                        class="caret"></span> </span>
+                                                    <ul class="submenu">
+                                                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                                                                th:href="@{/vendors}">Vendors</a></li>
+                                                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                                                                th:href="@{/admin/categories}">Categories</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="hasMenu"
+                                                    sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                                                    <span class="lvl-2">Accounting<span class="caret"></span> </span>
+                                                    <ul class="submenu">
+                                                        <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                                                            <a th:href="@{/commissions/payments}">Bookings</a>
+                                                        </li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                                                            <a th:href="@{/commissions/commission}">Commission</a>
+                                                        </li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                                                            <a th:href="@{/commissions/salary}">Salary</a>
+                                                        </li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                                                            <a th:href="@{/commissions/affiliatePayments}">Affiliate Payments</a>
+                                                        </li>
+                                                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                                                                th:href="@{/reports/sales}">Sales report</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/payments}">My Bookings report</a></li>
+                                                <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/salary}">My Salary report</a></li>
+                                                <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/affiliatePayments}">My Payments report</a></li>
+                                                <li class="hasMenu"
+                                                    sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                                                    <span class="lvl-2">CMS<span class="caret"></span> </span>
+                                                    <ul class="submenu">
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a th:href="@{/cms/page}">CMS: Page</a></li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a th:href="@{/cms/vendor_page}">CMS: Vendor</a></li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a th:href="@{/cms/category_content}">CMS: Insurance Terms</a></li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a th:href="@{/cms/menu}">CMS: Menu</a></li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a th:href="@{/cms/attachment}">CMS: File attachment</a></li>
+                                                        <li sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                                                            <a th:href="@{/cms/filing_claim_page}">CMS: Filing claim</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/settings}">System settings</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="login" sec:authorize="isAnonymous()">
+                                        <div class="dropdown visible-xs visible-sm">
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                                    data-toggle="dropdown" aria-expanded="true">
+                                                Login
+                                                <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <form class="loginForm" th:action="@{/login}" method="post">
+                                                    <input type="hidden" name="remember-me" value="true"/>
+                                                    <input type="email" placeholder="Email" name="username"
+                                                           required="required"/>
+                                                    <input type="password" placeholder="Password" name="password"
+                                                           required="required"/>
+                                                    <input id="loginSubmitSm" type="submit" value="Login"/>
+                                                </form>
+                                                <a href="#" th:href="@{/users/registration}">Register now</a>
+                                                <a href="#" th:href="@{/users/requestNewPassword}">Reset Account Password</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="login log" style="display: none;" sec:authorize="isAnonymous()">
+                                        <div class="dropdown visible-xs visible-sm">
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                                    data-toggle="dropdown" aria-expanded="true">
+                                                <span class="visible-lg-inline">Welcome,</span> <span class="username">John</span>!
+                                                <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                                                <ul>
+                                                    <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                                                    <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                                                    <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                                                    <li><a th:href="@{/logout}">Logout</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="login log" sec:authorize="isAuthenticated()">
+                                        <div class="dropdown visible-xs visible-sm">
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3"
+                                                    data-toggle="dropdown" aria-expanded="true">
+                                                <span class="visible-lg-inline">Welcome,</span>
+                                                    <span class="username" sec:authentication="principal.user.name">John</span>!
+                                                <span class="caret"></span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+                                                <ul>
+                                                    <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                                                    <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                                                    <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                                                    <li><a th:href="@{/logout}">Logout</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="login hidden-xs hidden-sm" sec:authorize="isAnonymous()">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4"
+                                                data-toggle="dropdown" aria-expanded="true">
+                                            Login
+                                        </button>
+                                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
+                                            <form class="loginForm" th:action="@{/login}" method="post">
+                                                <input type="hidden" name="remember-me" value="true"/>
+                                                <input type="email" placeholder="Email" name="username"
+                                                       required="required"/>
+                                                <input type="password" placeholder="Password" name="password"
+                                                       required="required"/>
+                                                <input id="loginSubmit" type="submit" value="Login"/>
+                                            </form>
+                                            <a href="#" th:href="@{/users/registration}">Register now</a>
+                                            <a href="#" th:href="@{/users/requestNewPassword}">Reset Account Password</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="login hidden-xs hidden-sm log" style="display: none;" sec:authorize="isAnonymous()">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu5"
+                                                data-toggle="dropdown" aria-expanded="true">
+                                            <span class="visible-lg-inline">Welcome,</span> <span class="username">John</span>!
+                                        </button>
+                                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu5">
+                                            <ul>
+                                                <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                                                <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                                                <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                                                <li><a th:href="@{/logout}">Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="login hidden-xs hidden-sm log" sec:authorize="isAuthenticated()">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu6"
+                                                data-toggle="dropdown" aria-expanded="true">
+                                            <span class="visible-lg-inline">Welcome,</span>
+                                                <span class="username" sec:authentication="principal.user.name">John</span>!
+                                        </button>
+                                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu6">
+                                            <ul>
+                                                <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                                                <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                                                <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                                                <li><a th:href="@{/logout}">Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

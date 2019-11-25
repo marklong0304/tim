@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Quote</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <h1>Quote</h1>
+
+        <p th:text="|${appVersion.title} ver. ${appVersion.version}|"></p>
+
+        <div th:if="${error}" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">Close</span></button>
+            <span th:text="${error}">errorMessageKey</span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <form action="#" th:action="@{/api/quote}" th:object="${quoteRequest}" method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}"
+                         th:each="e : ${#fields.detailedErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                    <button type="submit" class="btn btn-default btn-primary">Search</button>
+                    <div class="form-group">
+                        <label for="departDate">Depart date(mm/dd/yyyy)</label>
+
+                        <input type="text" id="departDate" class="form-control" placeholder="Depart date(mm/dd/yyyy)" inputmode="numeric"
+                               th:field="*{departDate}"/>
+                        <span th:errors="*{departDate}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="returnDate">Return date(mm/dd/yyyy)</label>
+
+                        <input type="text" id="returnDate" class="form-control" placeholder="Return date(mm/dd/yyyy)" inputmode="numeric"
+                               th:field="*{returnDate}"/>
+                        <span th:errors="*{returnDate}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tripCost">Trip cost</label>
+                        <input id="tripCost" type="text" inputmode="numeric" class="form-control" th:field="*{tripCost}"
+                               placeholder="Trip cost"/>
+                        <span th:errors="*{tripCost}" style="color: red">Name Error</span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="returnDate">Deposit date(mm/dd/yyyy)</label>
+
+                        <input type="text" id="depositDate" class="form-control" placeholder="Deposit date(mm/dd/yyyy)" inputmode="numeric"
+                               th:field="*{depositDate}"/>
+                        <span th:errors="*{depositDate}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destinationCountry">Destination country</label>
+                        <select class="form-control" th:field="*{destinationCountry}">
+                            <option th:each="c : ${countries}" th:value="${c}" th:text="${c.caption}">Country</option>
+                        </select>
+                        <span th:errors="*{destinationCountry}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destinationState">Destination state</label>
+                        <select class="form-control stateUS" th:field="*{destinationState}">
+                            <option th:each="s : ${statesUS}" th:value="${s}" th:text="${s.caption}">State</option>
+                        </select>
+                        <select class="form-control stateCA" th:field="*{destinationState}">
+                            <option th:each="s : ${statesCanada}" th:value="${s}" th:text="${s.caption}">State</option>
+                        </select>
+                        <span th:errors="*{destinationState}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="residentCountry">Resident country(default US)</label>
+                        <select class="form-control" th:field="*{residentCountry}">
+                            <option th:each="c : ${countries}" th:value="${c}" th:text="${c.caption}">Country</option>
+                        </select>
+                        <span th:errors="*{residentCountry}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="residentState">Resident state</label>
+                        <select class="form-control stateUS" th:field="*{residentState}">
+                            <option th:each="s : ${statesUS}" th:value="${s}" th:text="${s.caption}">State</option>
+                        </select>
+                        <select class="form-control stateCA" th:field="*{residentState}">
+                            <option th:each="s : ${statesCanada}" th:value="${s}" th:text="${s.caption}">State</option>
+                        </select>
+                        <span th:errors="*{residentState}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="citizenCountry">Citizen country(default US)</label>
+
+                        <select class="form-control" th:field="*{citizenCountry}">
+                            <option th:each="c : ${countries}" th:value="${c}" th:text="${c.caption}">Country</option>
+                        </select>
+                        <span th:errors="*{citizenCountry}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age" th:text="'Travelers'"></label>
+                        <button type="submit" name="addTraveler" th:text="'Add'" class="btn btn-default">
+                            Add
+                        </button>
+                        <table style="width: 100%;">
+                            <tr>
+                                <th></th>
+                                <th>Age</th>
+                            </tr>
+                            <tr th:each="traveler, row : ${quoteRequest.travelers}">
+                                <td th:text="${row.index + 1}" style="padding: 2px;"></td>
+                                <td>
+                                    <input type="text" class="form-control" inputmode="numeric"
+                                           th:field="*{travelers[__${row.index}__].age}"/>
+                                </td>
+                                <td>
+                                    <button type="submit" name="removeTraveler" th:value="${row.index}"
+                                            th:text="'Remove'" class="btn btn-default">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <span th:errors="*{travelers}" style="color: red">Name Error</span>
+                    </div>
+
+                    <div class="form-group">
+                        <div th:each="group : ${groups}">
+                            <div>
+                                <strong th:text="${group.name}"></strong>
+                            </div>
+                            <div th:each="category : ${group.categoryList}"
+                                 th:with="categoryVal=${#httpServletRequest.getParameter(category.name)}">
+                                <div class="checkbox" th:if="${category.type.name() == 'SIMPLE'}">
+                                    <label>
+                                        <input type="checkbox" th:value="${category.name}"
+                                               th:checked="${categoryVal}"
+                                               th:name="${category.name}"/>
+                                        <span th:text="${category.name}"></span>
+                                    </label>
+                                </div>
+                                <div th:if="${category.type.name() == 'CATALOG'}">
+                                    <div class="checkbox catalog">
+                                        <label>
+                                            <input type="checkbox" th:checked="${!#strings.isEmpty(categoryVal)}"/>
+                                            <span th:text="${category.name}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  style="font-size: 10px;"></span>
+                                        </label>
+                                        <select class="form-control" th:name="${category.name}"
+                                                th:style="${#strings.isEmpty(categoryVal)} ? 'display: none;' : ''">
+                                            <option value="">--All--</option>
+                                            <option th:each="categoryVal : ${category.values}"
+                                                    th:value="${categoryVal.value}" th:text="${categoryVal.caption}"
+                                                    th:selected="${categoryVal == #strings.toString(categoryVal.caption)}"></option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-default btn-primary">Search</button>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <table class="table">
+                    <tr>
+                        <th>Vendor</th>
+                        <th>Product Code</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:if="${products != null and products.empty}">
+                        <td colspan="4">No data</td>
+                    </tr>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.policyMeta.vendor.name}">123</td>
+                        <td th:text="${product.policyMeta.code}">123</td>
+                        <td th:text="${product.policyMeta.name}">123</td>
+                        <td th:text="${product.totalPrice}">123</td>
+                        <td>
+                            <form action="#" th:action="@{/api/details}" method="post" target="_blank">
+                                <input type="hidden" name="vendorCode" th:value="${product.policyMeta.vendor.code}"/>
+                                <input type="hidden" name="productCode" th:value="${product.policyMeta.code}"/>
+                                <input type="hidden" name="totalPrice" th:value="${product.totalPrice}"/>
+                                <button type="submit" class="btn btn-default">Policy detail</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/api/purchasePage}" method="post" target="_blank"
+                                  th:if="${product.policyMeta.purchasable}">
+                                <input type="hidden" name="vendorCode" th:value="${product.policyMeta.vendor.code}"/>
+                                <input type="hidden" name="productCode" th:value="${product.policyMeta.code}"/>
+                                <input type="hidden" name="totalPrice" th:value="${product.totalPrice}"/>
+                                <button type="submit" class="btn btn-default">Purchase</button>
+                            </form>
+                            <div th:if="${not product.policyMeta.purchasable}">
+                                <button type="submit" class="btn btn-default disabled">Purchase</button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function stateChangeFunction(countryId, stateId) {
+            var country = $("#" + countryId);
+            var states = $('select[name=' + stateId + ']');
+
+            country.change(function () {
+                if (country.val() == 'US') {
+                    $(states[0]).parent().show();
+                    states.each(function () {
+                        var dis = $(this).hasClass('stateUS');
+                        $(this).toggle(dis);
+                        $(this).attr('disabled', !dis);
+                    });
+                } else if (country.val() == 'CA') {
+                    $(states[0]).parent().show();
+                    states.each(function () {
+                        var dis = $(this).hasClass('stateCA');
+                        $(this).toggle(dis);
+                        $(this).attr('disabled', !dis);
+                    });
+                } else {
+                    $(states[0]).parent().hide();
+                }
+            });
+            country.trigger('change');
+        }
+
+        $(function () {
+            $('.catalog input[type=checkbox]').click(function (e) {
+                var sel = $(e.target).parent().parent().find('select');
+                sel.val('');
+                sel.toggle();
+            });
+            stateChangeFunction('destinationCountry', 'destinationState');
+            stateChangeFunction('residentCountry', 'residentState');
+            $('#departDate, #returnDate, #depositDate').datepicker({autoclose: true});
+
+            $('#tripCost').attr('readonly', $("#tripCancellation").val() == 'false');
+
+            $("#tripCancellation").click(function () {
+                $('#tripCost').attr('readonly', $(this).val() == 'false');
+            });
+        })
+    </script>
+</div>
+</body>
+</html>

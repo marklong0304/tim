@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Saved Quotes</title>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <!--<link rel="stylesheet" th:href="@{https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css}"/>-->
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="plans purchasing">
+        <div class="plans-box plans-margin plans-address">
+            <h4>Saved quotes</h4>
+
+            <form th:action="@{/planQuotes}" method="get">
+                <div class="row no-gutter">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Date from</label>
+                            <input id="dateFrom" name="dateFrom" type="text" class="dateInput form-control"
+                                   th:value="${#strings.defaultString(#httpServletRequest.getParameter('dateFrom'), '')}"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Date to</label>
+                            <input id="dateTo" name="dateTo" type="text" class="dateInput form-control"
+                                   th:value="${#strings.defaultString(#httpServletRequest.getParameter('dateTo'), '')}"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <button class="btn btnplan" type="submit">Search</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 delete">
+                        <div class="form-group">
+                            <button class="btn deleteChecked">Delete selected quotes</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                <div class="">
+                    <table class="table table-bordered" id="quotes" width="100%">
+                        <thead>
+                        <tr class="info">
+                            <th scope="col">Date &amp; Time</th>
+                            <th>Destination</th>
+                            <th>Departure</th>
+                            <th>Return</th>
+                            <th class="info-traveler">Traveler(s), Age(s)</th>
+                            <!--<th>Cost</th>-->
+                            <th class="info-quote">View Quote</th>
+                            <th class="deleteAll"
+                                th:style="${quotes.empty} ? 'display: table-cell; text-align: right;' : ''">
+                                Delete Quote<br/>
+                                <input th:if="${!quotes.empty}" type="checkbox" name="select_all" value="1"
+                                       id="select-all"/>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${quotes.empty}">
+                            <td colspan="7">No data</td>
+                        </tr>
+                        <tr th:each="quote : ${quotes}" th:unless="${#bools.isTrue(quote.deleted)}">
+                            <td th:text="${#dates.format(quote.createDate, 'MM/dd/yyyy HH:mm')}">Date Time</td>
+                            <td th:text="${quote.quoteRequestObj.destinationCountry.caption}">Destination</td>
+                            <td th:text="${#temporals.format(quote.quoteRequestObj.departDate, 'MM/dd/yyyy')}">
+                                Departure
+                            </td>
+                            <td th:text="${#temporals.format(quote.quoteRequestObj.returnDate, 'MM/dd/yyyy')}">Return
+                            </td>
+                            <td style="text-align: center">
+                                <div th:each="traveler: ${quote.quoteRequestObj.travelers}"
+                                     th:text="${#strings.defaultString(traveler.firstName, '')
+                                      + ' ' + #strings.defaultString(traveler.middleInitials, '')
+                                      + ' ' + #strings.defaultString(traveler.lastName, '')
+                                      + ' ' + traveler.age}">
+                                </div>
+                            </td>
+                            <td style="text-align: right"
+                                th:with="isOldQuote=${T(com.travelinsurancemaster.util.DateUtil).isBeforeOrEqualsCurrentDate(quote.quoteRequestObj.departDate)}">
+                                <a th:if="${quote.type.name()=='RESULTS'}"
+                                   th:style="${#bools.isTrue(isOldQuote)} ? 'pointer-events: none; text-align: right; color: #333;' : ''"
+                                   th:onclick="${#bools.isTrue(isOldQuote)} ? 'return false;' : ''"
+                                   th:href="@{/comparePlans/{quoteId}?restore(quoteId=${quote.id})}"
+                                   th:text="${#bools.isTrue(isOldQuote)} ? 'Expired' : 'View Quote'"></a>
+                                <a th:if="${quote.type.name()=='DETAILS'}"
+                                   th:style="${#bools.isTrue(isOldQuote)} ? 'display: table-cell; text-align: right;' : ''"
+                                   th:onclick="${#bools.isTrue(isOldQuote)} ? 'return false;' : ''"
+                                   th:href="@{/details?(quoteId=${quote.id},plan=${quote.policyUniqueCode},restore)}"
+                                   th:text="${#bools.isTrue(isOldQuote)} ? 'Expired' : 'View Quote'"></a>
+                            </td>
+                            <td th:attr="data-quote-id=${quote.id}" class="dt-body-center"><input type="checkbox"
+                                                                                                  class="delete-checkbox"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="pageScript">
+    <script th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <!--<script th:src="@{https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js}"></script>-->
+    <script th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/custom/account/savedQuotes.js?ver={version}(version=${appVersion.version})}"></script>
+</th:block>
+</body>
+</html>

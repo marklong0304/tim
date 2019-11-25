@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Page management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/page.js?ver={version}(version=${appVersion.version})}" src="/js/custom/cms/page.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/page}">Page</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Page management</h1></div>
+            <div class="col-md-4 text-right">
+                <h1 class="adminTitle"><a th:href="@{/cms/page/create}" class="btn btn-success xcrud-action "><i
+                        class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="pages">
+            <thead>
+            <tr class="info">
+                <th width="10%">Caption</th>
+                <th width="10%">Name</th>
+                <th width="10%">Type</th>
+                <th width="10%">Status</th>
+                <th width="15%">Create date</th>
+                <th width="15%">Modified date</th>
+                <th width="10%">Author</th>
+                <th width="7%">View</th>
+                <th width="5%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="page : ${pages}" th:id="'page-' + ${page.id}">
+                <td th:text="${page.name}"/>
+                <td th:text="${page.caption}"/>
+                <td th:text="${page.pageType.name}"/>
+                <td th:text="${page.status}"/>
+                <td th:text="${#dates.format(page.createDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${#dates.format(page.modifiedDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${page.author.name}"/>
+                <td>
+                    <a th:href="@{${'/page/'+page.name}}" target="_blank">view page</a>
+                </td>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Edit"
+                       th:href="@{/cms/page/edit/{id}(id=${page.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <button class="pull-right btn btn-danger" type="button" title="Delete"
+                            th:onclick="'javascript:deletePage(\'' + ${page.id} + '\');'">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-8"><h1>System pages</h1></div>
+        </div>
+            <table class="table table-hover table-bordered" id="system">
+                <thead>
+                <tr class="info">
+                    <th width="15%">Name</th>
+                    <th width="69%">Caption</th>
+                    <th width="7%">View</th>
+                    <th width="9%">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="page : ${systemPages}" th:id="'page-' + ${page.id}">
+                    <td th:text="${page.name}"/>
+                    <td th:text="${page.caption}"/>
+                    <td>
+                        <a th:if="${page.pageType.name == 'System' and page.name != 'index'}"
+                           th:href="@{${'/page/'+page.name}}"
+                           target="_blank">view page</a>
+                        <a th:unless="${page.pageType.name == 'System' and page.name != 'index'}"
+                           th:href="@{${'/'}}"
+                           target="_blank">view page</a>
+                    </td>
+                    <td>
+                        <a class="pull-left btn btn-primary" type="button" title="Edit"
+                           th:href="@{/cms/page/edit/{id}(id=${page.id})}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <button class="pull-right btn btn-danger disabled" type="button" title="Delete"
+                                th:onclick="'javascript:deletePage(\'' + ${page.id} + '\');'">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        <input id="lastModified" type="hidden" th:value="${lastModifiedPageId}"/>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="BerkshireHathawayTravelProtection-REST" resourceRoot="" soapui-version="4.5.0" id="6696d3c1-555d-4a9c-993f-a8cfc493a13c" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="BerkshireHathawayTravelProtection-REST" type="rest" basePath="" id="f3741242-dea4-4103-8c7f-c9794870f21a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>https://sandbox-api.bhtp.com:443</con:endpoint></con:endpoints><con:resource name="Quote" path="v1/Quote" id="ac55e1a2-7590-45c4-b2ef-bd9e720f98c0"><con:settings/><con:parameters><con:parameter required="true"><con:name>policy</con:name><con:value/><con:style>PLAIN</con:style><con:default/></con:parameter></con:parameters><con:method name="Quote" method="POST" id="676f2e6c-09c3-438f-ac25-42008a6672f0"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>422</con:status><con:params/><con:element xmlns:quot="https://sandbox-api.bhtp.com/v1/Quote">quot:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/></con:representation><con:request name="Request 1" mediaType="application/xml" postQueryString="false" id="5ad563ac-93f9-459c-a03a-6aff1b9d34a2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="content-type" value="application/json"/>
+  &lt;con:entry key="Authorization" value="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJBZ2VudENvZGUiOiJCQTAyNTIiLCJBZ2VuY3lDb2RlIjoiQjAwMzAiLCJDYW5JbnZvaWNlIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9iaHRwdHJuLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1NjYxYTg1OTg5YzE2ZTg0NzU3ZGU2Y2IiLCJhdWQiOiJRM3hlY0Q1S3NTZ3NxMlZaaHdBS2syMzM0T3NMVkJ1biIsImV4cCI6MTQ5MzIzMTIyNiwiaWF0IjoxNDYxNjk1MjI2fQ.iktHCkJ67msUfhch8YYJbWyvyZFsZ3pd8V051Q83xN8"/>
+  &lt;con:entry key="accept" value="application/json"/>
+&lt;/xml-fragment></con:setting></con:settings><con:endpoint>https://sandbox-api.bhtp.com:443</con:endpoint><con:request>{
+  "policy": {
+    "agencyCode": "B0030",
+    "agentCode": "BA0252",
+    "productId": "31",
+    "destinationCountry": "FR",
+    "departureDate": "07-20-2016",
+    "returnDate": "08-10-2016",
+    "tripDepositDate": "05-17-2016",
+    "rentalCarPickupDate":"07-22-2016",
+    "rentalCarReturnDate":"08-01-2016",
+    "isQuickQuote": true,
+    "acceptedTerms": true
+	},
+    
+      "coverages": [
+    {
+      "ratingId": "CRCC"    }
+  ],
+	"travelers": [
+    {
+      "age":29,
+	  "address": {
+        "country": "US",
+        "stateOrProvince": "CA"
+      },
+      "isPrimary": true,
+      "tripCost": 6553
+      }
+  ]
+  
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="Purchase" path="/v1/Purchase"><con:settings/><con:parameters/><con:method name="Purchase" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/xml</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json</con:mediaType><con:status>402</con:status><con:params/><con:element xmlns:pur="https://sandbox-api.bhtp.com/v1/Purchase">pur:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:pur="https://sandbox-api.bhtp.com/v1/Purchase">pur:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="content-type" value="application/json"/>
+  &lt;con:entry key="Authorization" value="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJBZ2VudENvZGUiOiJCQTAyNTIiLCJBZ2VuY3lDb2RlIjoiQjAwMzAiLCJDYW5JbnZvaWNlIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9iaHRwdHJuLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1NjYxYTg1OTg5YzE2ZTg0NzU3ZGU2Y2IiLCJhdWQiOiJRM3hlY0Q1S3NTZ3NxMlZaaHdBS2syMzM0T3NMVkJ1biIsImV4cCI6MTQ5MzIzMTIyNiwiaWF0IjoxNDYxNjk1MjI2fQ.iktHCkJ67msUfhch8YYJbWyvyZFsZ3pd8V051Q83xN8"/>
+  &lt;con:entry key="accept" value="application/json"/>
+&lt;/xml-fragment></con:setting></con:settings><con:endpoint>https://sandbox-api.bhtp.com:443</con:endpoint><con:request>{
+  
+  "policy": {
+    "agencyCode": "B0030",
+    "agentCode": "BA0252",
+    "productId": "31",
+    "destinationCountry": "AU",
+    "departureDate": "08-30-16",
+    "returnDate": "09-30-16",
+    "tripDepositDate": "05-19-16",
+    "isQuickQuote": false,
+    "acceptedTerms": true,
+    "fulfillmentMethod":"Email"
+  },
+  "travelers": [
+    {
+      "age": 39,
+      "firstName": "Egor",
+      "lastName": "Maleev",
+      "birthDate": "06-21-1978",
+      "email": "egor.maleev@gmail.com",
+      "phoneNumber":"18444112487",
+      "address": {
+        "address1": "Park avenue 45",
+        "city": "Miami",
+        "country": "US",
+        "stateOrProvince": "FL",
+        "postalCode": "32301"
+      },
+      "isPrimary": true,
+      "tripCost": 4350
+      
+    },
+	{
+      "age": 15,
+      "firstName": "Sergei",
+      "lastName": "Maleev",
+      "birthDate": "06-21-1978",
+      "email": "egor.maleev@gmail.com",
+      "address": {
+        "address1": "Park avenue 45",
+        "city": "Miami",
+        "country": "US",
+        "stateOrProvince": "FL",
+        "postalCode": "32301"
+      },
+      "isPrimary": false,
+      "tripCost": 4350,
+      "relationship": "child"
+    }
+  ],
+   "paymentInformation": {
+    "cardNumber": "4111111111111111",
+    "expirationDate": "05/18",
+    "cardCode": "678",
+    "firstName": "Egor",
+    "lastName": "Maleev",
+    "nameOnCard": "Egor Maleev",
+    "address": "Park avenue 45",
+    "city": "Miami",
+    "state": "FL",
+    "zip": "32301",
+    "paymentMethod": "CreditCard"
+  }
+}</con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="Authrization" path="v1/Auth/Login/BA0252"><con:settings/><con:parameters/><con:method name="Authorization" method="POST"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ba0="https://sandbox-api.bhtp.com/v1/Auth/Login/BA0252">ba0:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="content-type" value="application/json"/>
+  &lt;con:entry key="accept" value="application/json"/>
+&lt;/xml-fragment></con:setting></con:settings><con:endpoint>https://sandbox-api.bhtp.com:443</con:endpoint><con:request>{
+  "userName": "alexntest@travelinsurancemaster.com",
+  "password": "7f5f8108d7"
+}</con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>

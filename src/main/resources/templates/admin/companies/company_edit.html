@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Company info</title>
+    <script th:src="@{/js/custom/admin/paymentOptions.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Menu</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="adminTitle">Company Info</h1>
+
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+
+                <form id="editCompanyForm" action="#"
+                      th:action="@{/companies/edit/{companyId}(companyId=${company.id})}" th:object="${company}"
+                      method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert"
+                         th:if="${#fields.hasErrors('*')}">
+                        <button type="button" class="close" data-dismiss="alert"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}">
+                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+
+                    <h3>Company</h3>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name" placeholder="Company name"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   required="required"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="name">Tax ID</label>
+                            <input id="taxId" type="text" name="taxId" placeholder="Tax ID"
+                                   th:field="*{taxId}"
+                                   class="form-control"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <h3>Contact</h3>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="contractFirstName">First name</label>
+                            <input id="contractFirstName" type="text" name="contractFirstName" placeholder="First name"
+                                   th:value="*{companyManager?.name}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="contactLastName">Last name</label>
+                            <input id="contactLastName" type="text" name="contactLastName" placeholder="Last name"
+                                   th:value="*{companyManager?.userInfo?.lastName}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="address">Address</label>
+                            <input id="address" class="form-control" type="text" name="address" placeholder="Address"
+                                   th:value="*{companyManager?.userInfo?.address}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="city">City</label>
+                            <input id="city" type="text" name="city" placeholder="City"
+                                   th:value="*{companyManager?.userInfo?.city}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="country">Country</label>
+                            <input id="country" type="text" name="country"
+                                   th:value="*{companyManager?.userInfo?.country}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="state">State</label>
+                            <input id="state" type="text" name="state"
+                                   th:value="*{companyManager?.userInfo?.stateOrProvince}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="zip">Zip Code</label>
+                            <input id="zip" type="text" name="zip" placeholder="ZIP"
+                                   th:value="*{companyManager?.userInfo?.zipCode}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="Contact phone(s)">Phone(s)</label>
+                            <input id="Contact phone(s)" type="text" name="phone" placeholder="Phone"
+                                   th:value="*{companyManager?.userInfo?.phone}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="Contact email">Email</label>
+                            <input id="Contact email" type="text" name="email" placeholder="Email"
+                                   th:value="*{companyManager?.email}"
+                                   class="form-control"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+
+                    <h3>Payment Options</h3>
+
+                    <div id="companyPaymentOption" style="line-height: 1.6" class="">
+                        <ul style="padding: 0;">
+                            <li style="list-style-type:none"
+                                th:each="optionValue: ${T(com.travelinsurancemaster.model.PaymentOption).values()}">
+
+                                <div class="form-row row">
+                                    <div class="form-group col-xs-2" style="width: 117px; padding-right: 0px">
+                                        <input name="paymentOption" type="radio" style="zoom: 130%;"
+                                               th:field="*{paymentOption}"
+                                               th:value="${optionValue}"/>
+                                        <label class="payment-option-label" th:text="${optionValue.value}"></label>
+                                    </div>
+                                    <div class="form-group col-xs-9" style="padding: 4px 0px;"
+                                         th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).CHECK}">
+                                        <label style="font-weight: normal;">will be sent to above address (minimum
+                                            commission/affiliate fee payment applies).</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row row" style="margin-left: 10px;"
+                                     th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).ACH}">
+                                    <div class="form-group col-sm-4">
+                                        <label>Bank Name</label>
+                                        <input style="margin-right: 10px"
+                                               th:readonly="${company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="${company.bankName}" class="form-control bankName" type="text"
+                                               placeholder="Bank name"/>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>Bank Routing</label>
+                                        <input style="margin-right: 10px"
+                                               th:readonly="${company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="${company.bankRouting}" class="form-control bankRouting"
+                                               type="text"
+                                               placeholder="Bank Routing"/>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>Account</label>
+                                        <input style="margin-right: 10px"
+                                               th:readonly="${company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="${company.account}" class="form-control account" type="text"
+                                               placeholder="Account"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-row row" style="margin-left: 10px;"
+                                     th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}">
+                                    <div class="form-group col-sm-12">
+                                        <input style="margin-right: 6px"
+                                               th:readonly="${company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}"
+                                               th:field="${company.paypalEmailAddress}"
+                                               class="form-control paypalEmailAddress" type="text"
+                                               placeholder="PayPal email address"/>
+                                        <label style="font-weight: normal;">Enter the email address associated with your
+                                            PayPal account.</label>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Compensations</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="percentTypeSelect">Compensation type:</label>
+                                <select th:field="*{percentType}" id="percentTypeSelect"
+                                        class="form-control percentType">
+                                    <option th:each="percentType : ${T(com.travelinsurancemaster.model.PercentType).values()}"
+                                            th:value="${percentType}" th:text="${percentType.type}"/>
+                                </select>
+                            </div>
+                            <div th:each="percentInfo, row : ${company.percentInfo}" id="percentInfo">
+                                <div th:id="${'percentPanel' + __${row.index}__}" class="panel panel-info">
+                                    <div class="panel-heading clearfix">
+                                        <div class="panel-title">
+                                            <span th:if="${company.percentType.commissionValueType.name() == 'PERCENT'}"> Percent value (%)</span>
+                                            <span th:if="${company.percentType.commissionValueType.name() == 'FIX'}"> Fixed value (%)</span>
+                                            <span th:if="${company.percentType.commissionValueType.name() == 'CALCULATED'}"> Calculated value</span>
+                                            <button type="submit" th:value="${row.index}" name="removeRange"
+                                                    th:unless="${row.index} == 0"
+                                                    class="btn btn-primary pull-right"
+                                                    onclick="return confirmRemove();">
+                                                <i class="glyphicon glyphicon-remove"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group" th:unless="*{percentType.name() == 'CALCULATED'}">
+                                            <label for="percentValue" th:for="${'percentValue' + __${row.index}__}">Value: </label>
+                                            <input type="text" id="percentValue"
+                                                   th:id="${'percentValue' + __${row.index}__}" name="percentValue"
+                                                   th:placeholder="${company.percentType.commissionValueType.name() == 'FIX'?'Fixed value ($)':'Percent value (%)'}"
+                                                   th:field="*{percentInfo[__${row.index}__].value}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{percentInfo[__${row.index}__].value}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group"
+                                             th:if="*{percentType.name() == 'RANGE_PERCENT' || percentType.name() == 'RANGE_FIXED'}">
+                                            <label for="valueFrom" th:for="${'valueFrom' + __${row.index}__}">Value From
+                                                ($): </label>
+                                            <input id="valueFrom" th:id="${'valueFrom' + __${row.index}__}" type="text"
+                                                   name="valueFrom" placeholder="Value from"
+                                                   th:field="*{percentInfo[__${row.index}__].valueFrom}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{percentInfo[__${row.index}__].valueFrom}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group"
+                                             th:if="*{percentType.name() == 'RANGE_PERCENT' || percentType.name() == 'RANGE_FIXED'}">
+                                            <label for="valueTo" th:for="${'valueTo' + __${row.index}__}">Value To
+                                                ($): </label>
+                                            <input id="valueTo" th:id="${'valueTo' + __${row.index}__}" type="text"
+                                                   name="valueTo" placeholder="Value to"
+                                                   th:field="*{percentInfo[__${row.index}__].valueTo}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{percentInfo[__${row.index}__].valueTo}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group" th:if="*{percentType.name() == 'CALCULATED'}">
+                                            <label for="textValue" th:for="${'textValue' + __${row.index}__}">Text
+                                                Value: </label>
+                                            <textarea id="textValue" th:id="${'textValue' + __${row.index}__}"
+                                                      type="text" name="textValue" placeholder="Script text"
+                                                      disabled="disabled"
+                                                      th:field="*{percentInfo[__${row.index}__].textValue}"
+                                                      class="form-control"/>
+                                            <h6><i> Use JavaScript syntax. Result variable is used to return value.
+                                                <br/>Such constants can be used: <b>price, destinationCountry,
+                                                    tripCost, departDate, returnDate, residenceState, residenceCountry,
+                                                    citizenShip, ages.</b></i></h6>
+                                            <h6><i> Example expression: <b>var result = price * 0.1 + 20;</b></i></h6>
+                                            <span th:errors="*{percentInfo[__${row.index}__].textValue}"
+                                                  style="color: red"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" class="btn btn-info" id="addRangeButton" value="Add range"
+                                       th:if="*{percentType.name() == 'RANGE_PERCENT' || percentType.name() == 'RANGE_FIXED'}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="id" th:field="*{id}"/>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-12">
+                            <a th:href="@{${backUrl}}" class="btn btn-default back-btn" style="padding: 6px 17px;">Back</a>
+                            <button type="submit" class="btn btn-success" style="margin-left: 4px; padding: 6px 17px;">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('#percentTypeSelect').change(function () {
+            $('#editCompanyForm').append('<input type="hidden" name="changePercentType" value="1"/>').submit();
+        });
+        $('#addRangeButton').click(function () {
+            $('#editCompanyForm').append('<input type="hidden" name="addRange" value="1"/>').submit();
+        });
+    });
+</script>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title th:text="|Edit Quote Param|"></title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" href="/css/lib/bootstrap-multiselect.css"
+          th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script  src="/js/lib/bootstrap-multiselect.js"
+             th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/percentInfo.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/custom/admin/policies/policies.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+
+<div layout:fragment="content" id="searchResultContent">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ol class="breadcrumb">
+                        <li th:each="b : ${breadcrumb}">
+                            <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="adminTitle" th:text="${quoteParam.id != null?'Edit Policy Quote Param':'New Policy Quote Param'}"/>
+                </div>
+                <div class="col-md-2 text-right">
+                    <a th:href="@{${backUrl}}" href="/vendors" class="btn btn-default">
+                        Back
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <form action="#" th:action="@{/vendors/policy/quoteParam/create/{policyMetaId}(policyMetaId=${quoteParam.policyMeta.id})}" th:object="${quoteParam}" method="post">
+
+            <div class="panel panel-info">
+                <div class="panel-heading clearfix">
+                    <div class="panel-title">
+                        <span>Policy Quote Param</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasGlobalErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}" th:if="${e.global}" >
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quoteParamValue">Value:</label>
+                        <input id="quoteParamValue" th:id="quoteParamValue" type="text" name="quoteParamValue"
+                               placeholder="Param Value"
+                               th:field="*{value}"
+                               class="form-control numericValue"/>
+                        <span th:errors="*{value}" class="errorRed"></span>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Param 1</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quoteParamType" th:for="${'quoteParamType-1'}">Param Type:</label>
+                                <select id="quoteParamType" th:field="*{param1.type}"  th:id="${'quoteParamType-1'}" class="form-control">
+                                    <option th:each="quoteParamType : ${T(com.travelinsurancemaster.model.dto.PolicyQuoteParamValue.QuoteParamType).values()}"
+                                            th:value="${quoteParamType}" th:text="${quoteParamType}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueFrom" th:for="${'quoteParamValueFrom-1'}" th:id="${'labelQuoteParamValueFrom-1'}">Value From:</label>
+                                <input th:field="*{param1.valueFrom}" id="quoteParamValueFrom" th:id="${'quoteParamValueFrom-1'}" placeholder="Value From" class="form-control numericValue"></input>
+                                <span th:errors="*{param1.valueFrom}" class="errorRed"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueTo" th:for="${'quoteParamValueTo-1'}" th:id="${'labelQuoteParamValueTo-1'}">Value To:</label>
+                                <input th:field="*{param1.valueTo}" id="quoteParamValueTo" th:id="${'quoteParamValueTo-1'}" placeholder="Value To" class="form-control numericValue"></input>
+                                <span th:errors="*{param1.valueTo}" class="errorRed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Param 2</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quoteParamType" th:for="${'quoteParamType-2'}">Param Type:</label>
+                                <select id="quoteParamType" th:field="*{param2.type}"  th:id="${'quoteParamType-2'}" class="form-control">
+                                    <option th:each="quoteParamType : ${T(com.travelinsurancemaster.model.dto.PolicyQuoteParamValue.QuoteParamType).values()}"
+                                            th:value="${quoteParamType}" th:text="${quoteParamType}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueFrom" th:for="${'quoteParamValueFrom-2'}" th:id="${'labelQuoteParamValueFrom-2'}">Value From:</label>
+                                <input th:field="*{param2.valueFrom}" id="quoteParamValueFrom" th:id="${'quoteParamValueFrom-2'}" placeholder="Value From" class="form-control numericValue"></input>
+                                <span th:errors="*{param2.valueFrom}" class="errorRed"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueTo" th:for="${'quoteParamValueTo-2'}" th:id="${'labelQuoteParamValueTo-2'}">Value To:</label>
+                                <input th:field="*{param2.valueTo}" id="quoteParamValueTo" th:id="${'quoteParamValueTo-2'}" placeholder="Value To" class="form-control numericValue"></input>
+                                <span th:errors="*{param2.valueTo}" class="errorRed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Param 3</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quoteParamType" th:for="${'quoteParamType-3'}">Param Type:</label>
+                                <select id="quoteParamType" th:field="*{param3.type}"  th:id="${'quoteParamType-3'}" class="form-control">
+                                    <option th:each="quoteParamType : ${T(com.travelinsurancemaster.model.dto.PolicyQuoteParamValue.QuoteParamType).values()}"
+                                            th:value="${quoteParamType}" th:text="${quoteParamType}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueFrom" th:for="${'quoteParamValueFrom-3'}" th:id="${'labelQuoteParamValueFrom-3'}">Value From:</label>
+                                <input th:field="*{param3.valueFrom}" id="quoteParamValueFrom" th:id="${'quoteParamValueFrom-3'}" placeholder="Value From" class="form-control numericValue"></input>
+                                <span th:errors="*{param3.valueFrom}" class="errorRed"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueTo" th:for="${'quoteParamValueTo-3'}" th:id="${'labelQuoteParamValueTo-3'}">Value To:</label>
+                                <input th:field="*{param3.valueTo}" id="quoteParamValueTo" th:id="${'quoteParamValueTo-3'}" placeholder="Value To" class="form-control numericValue"></input>
+                                <span th:errors="*{param3.valueTo}" class="errorRed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Param 4</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quoteParamType" th:for="${'quoteParamType-4'}">Param Type:</label>
+                                <select id="quoteParamType" th:field="*{param4.type}"  th:id="${'quoteParamType-4'}" class="form-control">
+                                    <option th:each="quoteParamType : ${T(com.travelinsurancemaster.model.dto.PolicyQuoteParamValue.QuoteParamType).values()}"
+                                            th:value="${quoteParamType}" th:text="${quoteParamType}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueFrom" th:for="${'quoteParamValueFrom-4'}" th:id="${'labelQuoteParamValueFrom-4'}">Value From:</label>
+                                <input th:field="*{param4.valueFrom}" id="quoteParamValueFrom" th:id="${'quoteParamValueFrom-4'}" placeholder="Value From" class="form-control numericValue"></input>
+                                <span th:errors="*{param4.valueFrom}" class="errorRed"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueTo" th:for="${'quoteParamValueTo-4'}" th:id="${'labelQuoteParamValueTo-4'}">Value To:</label>
+                                <input th:field="*{param4.valueTo}" id="quoteParamValueTo" th:id="${'quoteParamValueTo-4'}" placeholder="Value To" class="form-control numericValue"></input>
+                                <span th:errors="*{param4.valueTo}" class="errorRed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="panel-title">
+                                <span>Param 5</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quoteParamType" th:for="${'quoteParamType-5'}">Param Type:</label>
+                                <select id="quoteParamType" th:field="*{param5.type}"  th:id="${'quoteParamType-5'}" class="form-control">
+                                    <option th:each="quoteParamType : ${T(com.travelinsurancemaster.model.dto.PolicyQuoteParamValue.QuoteParamType).values()}"
+                                            th:value="${quoteParamType}" th:text="${quoteParamType}"/>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueFrom" th:for="${'quoteParamValueFrom-5'}" th:id="${'labelQuoteParamValueFrom-5'}">Value From:</label>
+                                <input th:field="*{param5.valueFrom}" id="quoteParamValueFrom" th:id="${'quoteParamValueFrom-5'}" placeholder="Value From" class="form-control numericValue"></input>
+                                <span th:errors="*{param5.valueFrom}" class="errorRed"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="quoteParamValueTo" th:for="${'quoteParamValueTo-5'}" th:id="${'labelQuoteParamValueTo-5'}">Value To:</label>
+                                <input th:field="*{param5.valueTo}" id="quoteParamValueTo" th:id="${'quoteParamValueTo-5'}" placeholder="Value To" class="form-control numericValue"></input>
+                                <span th:errors="*{param5.valueTo}" class="errorRed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="policyMeta" name="policyMeta" th:field="*{policyMeta.id}"/>
+                    <input type="hidden" id="policyMeta.name" name="policyMetaName" th:field="*{policyMeta.displayName}"/>
+                    <input type="hidden" id="policyMeta.vendor" name="vendor" th:field="*{policyMeta.vendor.id}"/>
+                    <input type="hidden" id="policyMeta.vendor.name" name="vendorName" th:field="*{policyMeta.vendor.name}"/>
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <div class="col-md-12 text-right">
+                        <button type="submit" id="save" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+
+            </div>
+                </form>
+
+            <!-- Policy Quote Param restriction modal-->
+            <th:block th:if="${quoteParam.id != null}">
+                <div th:replace="fragments/restrictions :: restrictionsFragment"></div>
+            </th:block>
+            <!-- Policy Quote Param restriction table-->
+            <div th:if="${quoteParam.id != null and restriction != null}">
+                <div th:replace="fragments/restrictionsTable :: restrictionsTableFragment"></div>
+            </div>
+        </div>
+    <script th:inline="javascript" type="application/javascript">
+        $(document).ready(function () {
+            var listParams = [[${listParams}]];
+            $.each(listParams, function(i, param){
+                var id = i + 1;
+                var quoteParamType = $('#quoteParamType-' + id);
+
+                if (!param || param.type.$name == 'NONE') {
+                    quoteParamType.val('NONE');
+                    $('#quoteParamValueTo-' + id).hide();
+                    $('#quoteParamValueTo-' + id).val('');
+                    $('#quoteParamValueFrom-' + id).hide();
+                    $('#quoteParamValueFrom-' + id).val('');
+                    $('#labelQuoteParamValueTo-' + id).hide();
+                    $('#labelQuoteParamValueFrom-' + id).hide();
+                }
+
+                if (quoteParamType.val() == 'SIMPLE') {
+                    $('#quoteParamValueFrom-' + id).show();
+                    $('#labelQuoteParamValueFrom-' + id).show();
+                    $('#quoteParamValueTo-' + id).hide();
+                    $('#labelQuoteParamValueTo-' + id).hide();
+                }
+
+                quoteParamType.bind("change", function () {
+                    var type = quoteParamType.val();
+
+                    if (type == 'SIMPLE'){
+                        $('#quoteParamValueFrom-' + id).show();
+                        $('#labelQuoteParamValueFrom-' + id).show();
+                        $('#quoteParamValueTo-' + id).val('');
+                        $('#quoteParamValueTo-' + id).hide();
+                        $('#labelQuoteParamValueTo-' + id).hide();
+                    } else if (type == 'NONE') {
+                        $('#quoteParamValueTo-' + id).hide();
+                        $('#quoteParamValueTo-' + id).val('');
+                        $('#quoteParamValueFrom-' + id).hide();
+                        $('#quoteParamValueFrom-' + id).val('');
+                        $('#labelQuoteParamValueTo-' + id).hide();
+                        $('#labelQuoteParamValueFrom-' + id).hide();
+                    } else {
+                        $('#quoteParamValueFrom-' + id).val('');
+                        $('#quoteParamValueFrom-' + id).show();
+                        $('#labelQuoteParamValueFrom-' + id).show();
+                        $('#quoteParamValueTo-' + id).val('');
+                        $('#quoteParamValueTo-' + id).show();
+                        $('#labelQuoteParamValueTo-' + id).show();
+                    }
+                })
+                $(".numericValue").mask('0000000', {negative: false});
+            })
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>My Salary Report</title>
+    <link rel="stylesheet" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-select.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/selectize.bootstrap3.min.css}"/>
+    <link rel="stylesheet" th:href="@{https://nightly.datatables.net/rowgroup/css/rowGroup.dataTables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/customAdmin.css?ver={version}(version=${appVersion.version})}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/jquery.modal.css}"/>
+    <script th:src="@{/js/lib/jquery.modal.js}"></script>
+    <script th:src="@{/js/lib/all.js}"></script>
+    <script th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-select.min.js}"></script>
+    <script th:src="@{/js/lib/selectize.js}"></script>
+    <script th:src="@{/js/lib/hashmap.js}"></script>
+    <script th:src="@{/js/custom/admin/customDataTable.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/createNote.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/createTooltip.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/bootstrapMultiselectInit.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/removeDuplicated.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/drawSelectItputs.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/selectizeSearchInit.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/report/salary.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{https://nightly.datatables.net/rowgroup/js/dataTables.rowGroup.min.js}"></script>
+    <script th:src="@{https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid planDetails b2b quotes" id="searchResultContent">
+        <div id="showNote" class="modal">
+            <a href="#" rel="modal:close">Close</a>
+        </div>
+
+
+        <!-- Modal -->
+        <!--<div class="salary-correction modal fade bs-example-modal-lg  modalAbsPosit" id="addSalary" role="dialog">
+            <div class="modal-dialog">
+
+                &lt;!&ndash; Modal content&ndash;&gt;
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add new salary</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addSalaryCorrectionForm" th:action="@{/commissions/salary}" th:object="${salaryCorrectionJson}" method="post">
+                            <div class="alert alert-danger alert-dismissible" role="alert"
+                                 th:if="${#fields.hasErrors('*')}">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                                        class="sr-only">Close</span></button>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12 affiliates-correction">
+                                    <label>Affiliate</label><br/>
+                                    <input id="affiliates-correction" th:field="*{affiliateId}" class="form-control filter"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <label>Salary</label>
+                                    <input type="text" id="newSalary" th:field="*{salaryToPay}" class="numberInput form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                    <label for="newNote">Note</label>
+                                    <input type="text" id="newNote" th:field="*{note}" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success btn-submit" id="addSalaryBtn" data-dismiss="modal">Add</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="row salary">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row adminDataTables">
+                    <div class="col-lg-6 col-md-6 col-sm-5 col-sm-12">
+                        <h3>My Salary</h3>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-7 col-sm-12">
+                        <div class="clearfix">
+                            <form id="exportForm" th:action="@{/reports/salary/export}" th:method="post"
+                                  class="pull-right mlr10">
+                                <a class="btn btn-success from-control" id="export" role="button" style="float: right;">Export to excel</a>
+                                <input type="hidden" name="filterData" id="filterData"/>
+                            </form>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <!-- jq dataTable -->
+                    <div class="formBlockLine clearfix">
+                        <div class="col-lg-3 col-md-12 col-sm-12 ">
+                            <div class="panel-group">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Filters</div>
+                                    <div class="panel-body">
+                                        <div class="formBlockLine clearfix travellers">
+                                            <div class="col-lg-6 col-md-4 col-xs-12 fullWidth">
+                                                <input id="travellers"
+                                                       class="form-control filter"/>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <div class="col-lg-6 col-md-4 col-xs-12" style="width: 50%;">
+                                                <label style="font-size:13px"><b>Vendor</b></label><br/>
+                                                <select class="form-control filter" id="vendors" multiple="multiple">
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                                 style="margin-bottom: 10px; width: 50%;">
+                                                <label style="font-size:13px"><b>Policies</b></label><br/>
+                                                <select class="form-control filter" id="policies" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Purchase Date:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="purchaseDateFrom" type="text"
+                                                           title="From"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div>
+                                                    <input id="purchaseDateTo" type="text"
+                                                           title="To"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Policy $:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="policyPriceFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div>
+                                                    <input id="policyPriceTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Salary $:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="salaryFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div>
+                                                    <input id="salaryTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Expected Salary $:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="expectedSalaryFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div>
+                                                    <input id="expectedSalaryTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel"></p>
+                                            <div class="col-lg-6 col-md-10 col-sm-12 col-xs-12 ">
+                                                <div>
+                                                    <label style="font-size:13px"><b>Policy Number</b></label>
+                                                    <input id="policyNumber" type="text"
+                                                           class="form-control input-sm filter"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-10 col-sm-12 col-xs-12 ">
+                                                <div>
+                                                    <label style="font-size:13px"><b>Notes</b></label>
+                                                    <input id="note" type="text" class="form-control input-sm filter"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix" style="margin-top: 20px; margin-left:5px;">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-check">
+                                                <input class="form-check-input" type="radio" name="isPaid"
+                                                       id="notPaidRadio" value="NOT_PAID" checked="checked"/>
+                                                <label class="form-check-label" for="notPaidRadio">
+                                                    <b>Not paid</b>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-check">
+                                                <input class="form-check-input" type="radio" name="isPaid"
+                                                       id="paidRadio" value="PAID"/>
+                                                <label class="form-check-label" for="paidRadio">
+                                                    <b>Paid</b>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix cancelled">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-control input-sm form-check-input"
+                                                       id="cancellation"/>
+                                                <label class="form-check-label" for="cancellation">
+                                                    <b>Cancelled</b>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 formApply">
+                                            <div class="purchaseFormBlock"
+                                                 style="border: none; margin: 0; padding-right: 10px; padding-left: 10px">
+                                                <button id="doFilter" class="btn btn-success">Apply</button>
+                                                <button id="reset" class="btn btn-default">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table hover table-striped" id="salaries" cellspacing="0"
+                                       width="100%"
+                                       style="font-size:12px">
+                                    <thead>
+                                    <tr class="info">
+                                        <th>Affiliate</th>
+                                        <th>Vendor</th>
+                                        <th>Policy</th>
+                                        <th>Policy #</th>
+                                        <th>Policy $</th>
+                                        <th>Purch Date</th>
+                                        <th>Exp. Salary $</th>
+                                        <th>Salary</th>
+                                        <th>Pay</th>
+                                        <th>Note</th>
+                                        <th>View</th>
+                                        <th>Company</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="updatedFieldName"/>
+                    <input type="hidden" id="updatedFieldValue"/>
+                    <input type="hidden" id="updatedFieldId"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE policy_meta ADD COLUMN show_on_quotes BOOLEAN DEFAULT TRUE;

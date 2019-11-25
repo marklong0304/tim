@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${page.caption}"> | Travel Insurance Master</title>
+    <meta name="description" th:content="${page.description}" />
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row">
+            <div class="col-lg-11 col-md-11 col-sm-11">
+                <h1 th:text="${page.caption}">Title</h1>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1">
+                <div class="pull-right panel-controls" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                    <a id="edit" th:href="@{/cms/page/edit/{id}(id=${page.id})}" data-toggle="tooltip" data-placement="top" title="Edit page">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div th:utext="${page.content}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

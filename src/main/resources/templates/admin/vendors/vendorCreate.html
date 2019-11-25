@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Create Vendor</title>
+    <script th:src="@{/js/custom/admin/percentInfo.js?ver={version}(version=${appVersion.version})}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container create">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                    <li><a th:href="@{/vendors/create}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <h1 class="adminTitle">Create Vendor</h1>
+                </div>
+                <div>
+                    <form action="#" th:action="@{/vendors/create}" th:object="${vendor}" method="post" style="padding-top: 40px;">
+                        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <div th:each="e : ${#fields.detailedErrors()}">
+                                <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                                <span th:text="${e.message}">The error message</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="name">Vendor Name: </label>
+                                <input id="name" type="text" th:field="*{name}"
+                                       placeholder="Name" class="form-control"/>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="code">Vendor Code: </label>
+                                <input id="code" type="text" th:field="*{code}"
+                                       placeholder="Code" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="unsupportedCardTypes">Not supported cards:</label>
+                                <select th:field="*{unsupportedCardTypes}" id="unsupportedCardTypes" class="form-control" multiple="multiple">
+                                    <option th:each="unsupportedCardType : ${T(com.travelinsurancemaster.model.webservice.common.CardType).values()}"
+                                            th:value="${unsupportedCardType}" th:text="${unsupportedCardType}"/>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="active">Vendor Active: </label>
+                                <select th:field="*{active}" id="active" class="form-control">
+                                    <option th:value="${'true'}" th:text="${'True'}"/>
+                                    <option th:value="${'false'}" th:text="${'False'}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="ageFromDepartDate">Count age from depart date: </label>
+                                <select th:field="*{ageFromDepartDate}" id="ageFromDepartDate" class="form-control">
+                                    <option th:value="${'true'}" th:text="${'True'}"/>
+                                    <option th:value="${'false'}" th:text="${'False'}"/>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="beneficiaryType">Beneficiary type:</label>
+                                <select th:field="*{beneficiaryType}" id="beneficiaryType" class="form-control">
+                                    <option th:each="beneficiaryType : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryType).values()}"
+                                            th:value="${beneficiaryType}" th:text="${beneficiaryType}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row row" style="padding-top: 20px;">
+                            <div class="form-group col-sm-12">
+                                <a th:href="@{${backUrl}}" class="btn btn-default back-btn" style="padding: 6px 17px;">Back</a>
+                                <button type="submit" class="btn btn-success"
+                                        style="margin-left: 4px; padding: 6px 17px;">Create
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#unsupportedCardTypes').multiselect({
+                buttonWidth: '100%',
+                maxHeight: 372,
+                enableCaseInsensitiveFiltering: true,
+                includeSelectAllOption: true,
+                filterStyle: 'beginWith'
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

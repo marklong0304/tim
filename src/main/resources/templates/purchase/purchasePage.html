@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Purchase</title>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <style>
+        .date-picker {
+            background: url(https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg) no-repeat 95% 50%;
+            background-size: 15px;
+            padding-right: 10px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body class="pr0">
+
+<div class="bgWhite" layout:fragment="content" th:remove="tag">
+    <div class="modal noPadding" id="certificateDialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog custom-dialog-category">
+            <div class="container-fluid popup-nav">
+                <div class="logo">
+                    <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}"
+                            alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                    <button id="closeCertificateDialog" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span>&times;</span></button>
+                </div>
+            </div>
+
+            <div class="container-fluid popup-inner">
+                <div class="img-box"><img
+                        th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${policyMeta.vendor.code})}"
+                        alt="Safe Travels International Trip Protection" width="110px" height=""/></div>
+                <p class="plan-name" th:text="${policyMeta.displayName}">Safe Travels International Trip Protection</p>
+            </div>
+            <div class="container-fluid popup-text">
+                <h1 id="modalCategory" class="popup-head">Financial Default</h1>
+                <p id="modalContent" class="popup-info">
+                    Bankruptcy or Default causing a complete cessation of travel services provided the Bankruptcy or
+                    Default occurs more than 14 days following Your Effective Date. Benefits will be paid due to
+                    Bankruptcy or Default of an airline only if no alternate transportation is available. If alternate
+                    transportation is available, benefits will be limited to the change fee charged to allow you to
+                    transfer to another airline in order to get to Your intended destination. Coverage for this Other
+                    Covered Event only applies if Your payment for this policy is received within the Time Sensitive
+                    Period.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Purchase response -->
+
+    <div class="container planPurchase2" id="searchResultContent" th:if="${purchaseResponse != null}">
+        <div class="row">
+            <div th:switch="${purchaseResponse.status.name()}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:case="'SUCCESS'">
+                    <div class="row">
+                        <div class="standartOrderPosition clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+                                        <h3>Success!</h3>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+                                        <p>You purchased Plan <span
+                                                th:text="${purchaseRequest.product.policyMetaCode.name}">test</span>
+                                            from
+                                            <span th:text="${purchaseRequest.product.policyMeta.vendor.name}"></span>
+                                            for <span class="green"
+                                                      th:text="${'$' + #numbers.formatDecimal(totalPrice, 1, 2, 'POINT')}">$87.00</span>
+                                            total for
+                                            <span class="forPeople"
+                                                  th:if="${purchaseRequest.quoteRequest.travelers.size() == 1}"
+                                                  th:text="${purchaseRequest.quoteRequest.travelers.size() + ' person.'}">total for 1 person</span>
+                                            <span class="forPeople"
+                                                  th:if="${purchaseRequest.quoteRequest.travelers.size() > 1}"
+                                                  th:text="${purchaseRequest.quoteRequest.travelers.size() + ' people.'}">total for 2 people</span>
+                                        </p>
+                                        <hr/>
+                                    </div>
+
+                                    <div class="infoNameGroup clearfix"
+                                         th:each="traveler : ${purchaseRequest.travelers}">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+                                            <b th:text="${traveler.firstName + ' ' + traveler.lastName}"></b>
+                                            <br/>
+                                            <b th:if="${traveler.birthday!=null}"
+                                               th:text="${#temporals.format(traveler.birthday,'MM/dd/yyyy')+' ('+traveler.getAge() + ' year old)'}"></b>
+                                            <b th:if="${traveler.birthday==null}"
+                                               th:text="${traveler.getAge() + ' year old'}"></b>
+                                            <br/>
+
+                                            <b th:if="${quoteRequest.residentState != null}"
+                                               th:text="${quoteRequest.residentState?.getCaption()+', '}">Texas,</b>
+                                            <b th:text="${quoteRequest.residentCountry.getCaption()}"> United States</b>
+                                        </div>
+                                    </div>
+                                    <div class="infoDepartureGroup clearfix">
+                                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                            <p>Departure Date<br/> <b
+                                                    th:text="${#temporals.format(purchaseRequest.quoteRequest.departDate,'MM/dd/yyyy')}"></b>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                            <p>Return Date<br/> <b
+                                                    th:text="${#temporals.format(purchaseRequest.quoteRequest.returnDate,'MM/dd/yyyy')}"></b>
+                                            </p>
+                                            <!--<p>Resident of:<br/> <b th:if="${quoteRequest.residentState != null}" th:text="${quoteRequest.residentState?.getCaption()+','}">Texas,</b>
+                                                <b th:text="${quoteRequest.residentCountry.getCaption()}"> United States</b></p>
+-->
+                                            <!--<p>Destination: <b th:if="${quoteRequest.destinationState != null}"
+                                                               th:text="${quoteRequest.destinationState?.getCaption()+','}">Texas,</b>
+                                                <b th:text="${quoteRequest.destinationCountry.getCaption()}"></b></p>-->
+                                        </div>
+                                        <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                             &lt;!&ndash;<p>Travelers Ages: <b th:each="traveler,iterationStatus : ${quoteRequest.travelers}"
+                                                                   th:text="${traveler.age} + (${iterationStatus.last==false} ? ', ' : '')">30, 27</b></p>&ndash;&gt;
+                                         </div>-->
+                                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                            <p>Policy number <b th:text="${purchaseResponse.policyNumber}">917828384</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="infoPolicyGroup clearfix">
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                             <p>Policy number <b th:text="${purchaseResponse.policyNumber}">917828384</b></p>
+                                         </div>-->
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <p>
+                                                Please <a
+                                                    th:href="@{/results/purchase/getPdf/{purchaseUuid}(purchaseUuid=${purchaseUuid})}"
+                                                    class="downloadLink" target="_blank">view your purchase
+                                                confirmation</a>. You will receive a confirmation email which will include a Confirmation of Coverage and the Policy from the insurance provider. Please review the Policy for the full coverage terms and details, including limitations and exclusions.
+                                                <!--Please <a th:href="@{/results/purchase/print/{purchaseUuid}(purchaseUuid=${purchaseUuid})}" class="printLink" target="_blank">print this page</a> or <a th:href="@{/results/purchase/getPdf/{purchaseUuid}(purchaseUuid=${purchaseUuid})}" class="downloadLink" target="_blank">download your purchase confirmation</a>.-->
+                                            </p>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:case="'ERROR'" align="center"
+                     class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+
+                    <h2>Error!</h2>
+
+                    <hr/>
+
+                    <div th:each="error : ${purchaseResponse.errors}">
+                        <p th:text="${error.errorMsg}"></p>
+                    </div>
+                    <form id="purchaseForm" th:action="@{/results/purchasePage/{quoteId}(quoteId=${quoteId})}"
+                          method="get">
+                        <input id="purchaseUniqueCode" name="uniqueCode" th:value="${uniqueCode}" type="hidden"/>
+                        <input id="purchaseQuoteId" name="purchaseQuoteId" th:value="${purchaseQuoteId}" type="hidden"/>
+                        <input id="purchaseRequestId" name="purchaseRequestId" th:value="${purchaseRequestId}"
+                               type="hidden"/>
+                        <input type="hidden" name="timezoneOffset" class="timezoneOffset"/>
+                        <button id="purchaseFormButton" type="submit" class="btn btnplan">Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Purchase request -->
+    <th:block th:if="${purchaseResponse eq null}">
+        <main class="purchasing">
+            <section class="summary">
+                <div class="container-fluid pattern">
+                    <div class="container-fluid summary-inner">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <!--<h4 class="heading">Summary</h4> -->
+                                <p><a id="editQuote" th:data="purchase" href="javascript:void(0);"
+                                      onclick="openEditQuote()"><u>Edit Quote</u></a>
+                                </p>
+                                <p><a th:href="@{/comparePlans/(quoteId=${quoteId})}"><u>Back</u></a>
+                                </p>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Destination: <b th:if="${quoteRequest.destinationState != null}"
+                                                        th:text="${quoteRequest.destinationState?.getCaption()+','}">Thailand</b>
+                                        <b th:text="${quoteRequest.destinationCountry.getCaption()}"></b></li>
+                                    <li>Departure Date: <b
+                                            th:text="${#temporals.format(quoteRequest.departDate,'MM/dd/yyyy')}">10/28/2016</b>
+                                    </li>
+                                    <li>Return Date: <b
+                                            th:text="${#temporals.format(quoteRequest.returnDate,'MM/dd/yyyy')}">11/11/2016</b>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Trip Cost: <b th:text="${quoteRequest.tripCostText}" class="cost">$9,000</b>
+                                    </li>
+                                    <li>Travelers Ages: <b
+                                            th:each="traveler,iterationStatus : ${quoteRequest.travelers}"
+                                            th:class="${'topTraveler-'+iterationStatus.index}"
+                                            th:text="${traveler.age} + (${iterationStatus.last==false} ? ', ' : '')">30,
+                                        28, 25</b></li>
+                                    <li>Resident of: <b th:if="${quoteRequest.residentState != null}"
+                                                        th:text="${#strings.toUpperCase(quoteRequest.residentState?.getCaption())+','}">California</b>
+                                        <b th:text="${#strings.toUpperCase(quoteRequest.residentCountry.getCaption())}">
+                                            United States</b></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Citizen of: <b th:text="${quoteRequest.citizenCountry.getCaption()}">United
+                                        States</b></li>
+                                    <li>Deposit Date: <b
+                                            th:text="${quoteRequest.depositDate!=null ? #temporals.format(quoteRequest.depositDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                                    </li>
+                                    <li>Final Payment Date: <b
+                                            th:text="${quoteRequest.paymentDate!=null ? #temporals.format(quoteRequest.paymentDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="errors" class="errors-div"/>
+            <section class="plans">
+                <section class="plans-plans plans-box">
+                    <h4>Plans</h4>
+                    <p>You are about to purchase this plan. Please fill out the form below and click "Place Order" to
+                        complete the purchase.<br id="deskbreak"/>You will receive immediate confirmation on-screen and
+                        by email.</p>
+                    <div class="row plans-row">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-lg-push-9 col-md-push-9 col-sm-push-9 price entry-price"
+                             data-spy="affix"> <!--data-spy="affix"-->
+                            <p class="sum cost"
+                               th:text="'$' + ${#numbers.formatDecimal(purchasePlan.totalPrice, 1, 2, 'POINT')}">
+                                $302</p>
+                            <p class="total" th:if="${purchaseRequest.quoteRequest.travelers.size() == 1}"
+                               th:text="${'Total for '+ purchaseRequest.quoteRequest.travelers.size() + ' person'}">
+                                total for 1 person</p>
+                            <p class="total" th:if="${purchaseRequest.quoteRequest.travelers.size() > 1}"
+                               th:text="${'Total for ' + purchaseRequest.quoteRequest.travelers.size() + ' people'}">
+                                total for 2 people</p>
+                            <a href="javascript:void(0)" th:attr="data=${purchaseRequest.product.policyMeta.uniqueCode}"
+                               class="btn btnplan purchaseDetails" data-toggle="modal">Plan
+                                Details</a>
+                            <a th:href="${purchaseRequest.product.certificate}"
+                               th:if="${purchaseRequest.product.certificate != null}" target="_blank"
+                               class="certificate">View Certificate</a>
+                            <a th:if="${purchaseRequest.product.certificate == null and certificate!=null}"
+                               th:href="@{/cms/certificate/show/{uuid}(uuid=${certificate.uuid})}" class="certificate"
+                               target="_blank">View Certificate</a>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 col-sm-pull-3 hidden-xs">
+                            <div class="img-box"><img
+                                    th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${purchasePlan.policyMeta.vendor.code})}"
+                                    alt="Safe Travels"/></div>
+                            <p class="plan-name" th:text="${purchaseRequest.product.policyMetaCode.name}">Safe
+                                Travels<br/>International<br/>Trip Protection</p>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 col-sm-pull-3">
+                            <ul class="plan-features">
+                                <li th:each="category, i : ${productCardLeft}">
+                                    <h6 th:text="${category.categoryName}">TRIP CANCELLATION</h6>
+                                    <p th:text="${category.categoryCaption}" th:id="${'pex'+(i.index+1)}">100%</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 col-sm-pull-3">
+                            <ul class="plan-features">
+                                <li th:each="category, i : ${productCardRight}">
+                                    <h6 th:text="${category.categoryName}">TRIP CANCELLATION</h6>
+                                    <p th:text="${category.categoryCaption}" th:id="${'pex'+(i.index+4)}">100%</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="plans-additional plans-box plans-margin"
+                         th:if="${not #lists.isEmpty(upsaleCategories)}">
+
+                    <h4>Additional Plan Options</h4>
+                    <p>Review the options you’ve selected for your plan. You can make changes, and your plan cost will
+                        update automatically.</p>
+                    <form id="purchaseUpsaleForm" action="#" th:action="@{/details/detailsUpsale}" method="post"
+                          class="newTableStyle">
+                        <input type="hidden" name="policyUniqueCode"
+                               th:value="${purchaseRequest.product.policyMeta.uniqueCode}"/>
+                        <input type="hidden" class="quoteRequestJson" name="quoteRequestJson"
+                               th:value="${quoteRequestJson}"/>
+                        <input id="quoteId" type="hidden" name="quoteId" th:value="${quoteId}"/>
+                        <input type="hidden" name="purchaseRequestId" th:value="${requestId}"/>
+                        <input type="hidden" id="showRentalCarDates" th:value="${showRentalCarDates}"/>
+                        <div class="row upgrade">
+                            <div class="col-sm-3 upgrade-type" th:each="upsale : ${upsaleCategories}" role="radiogroup"
+                                 th:if="${upsale.policyMetaPackageValues.isEmpty()}">
+                                <a href="#" onclick="openChooseCategoryDialog(this); return false;"
+                                   th:id="${upsale.category.code}">
+                                    <h6 th:text="${upsale.category.name}"
+                                        class="flight-upgrade">Flight Upgrade
+                                        <req>*</req>
+                                    </h6>
+                                </a>
+                                <div class="form-group"
+                                     th:each="categoryVal,iterStat : ${upsale.ValuesAfterConditions}">
+                                    <input th:id="${upsale.category.code+'-'+iterStat.index}"
+                                           th:name="${upsale.category.code}"
+                                           th:value="${#strings.toUpperCase(categoryVal.value)}"
+                                           th:checked="${(upsaleValues.get(upsale.category.code) != null
+                                                        and #strings.toUpperCase(upsaleValues.get(upsale.category.code).value) == #strings.toUpperCase(categoryVal.value))
+                                                        || (upsaleValues.get(upsale.category.code) == null
+                                                        and iterStat.index == 0)}"
+                                           th:attr="data-fixed-cost=${categoryVal.fixedCost}"
+                                           class="radio-custom upsale" name="radio-group-upgrade" type="radio"/>
+                                    <label th:for="${upsale.category.code+'-'+iterStat.index}"
+                                           th:text="${categoryVal.caption+(categoryVal.fixedCost>0?' (+$'+categoryVal.fixedCost+')':'')}"
+                                           th:attr="tdata=${upsale.category.id+'-'+#strings.toUpperCase(categoryVal.value)}"
+                                           class="radio-custom-label blue-tooltip-right"
+                                           data-toggle-cus="upsale-tooltip">$0</label>
+                                </div>
+                                <div class="form-group form-inline" id="rentalCarStartDateDiv"
+                                     th:if="${upsale.category.code} == 'rental-car'"
+                                     th:classappend="${showRentalCarDates and upsaleValues.get(upsale.category.code)?.value != null and upsaleValues.get(upsale.category.code)?.value != '' ? '' : 'hidden'}">
+                                    <label for="rentalCarStartDatePicker">From</label>
+                                    <input id="rentalCarStartDatePicker" name="rentalCarStartDate"
+                                           th:value="${#temporals.format((quoteRequest.rentalCarStartDate != null ? quoteRequest.rentalCarStartDate : quoteRequest.departDate), 'MM/dd/yyyy')}"
+                                           data-date-format="mm/dd/yyyy" class="form-control date-picker dateInput"
+                                           type="text"
+                                    />
+                                </div>
+                                <div class="form-group form-inline" id="rentalCarEndDateDiv"
+                                     th:if="${upsale.category.code} == 'rental-car'"
+                                     th:classappend="${showRentalCarDates and upsaleValues.get(upsale.category.code)?.value != null and upsaleValues.get(upsale.category.code)?.value != '' ? '' : 'hidden'}">
+                                    <label for="rentalCarEndDatePicker">&nbsp;&nbsp;&nbsp;&nbsp;To</label>
+                                    <input id="rentalCarEndDatePicker" name="rentalCarEndDate"
+                                           th:value="${#temporals.format((quoteRequest.rentalCarEndDate != null ? quoteRequest.rentalCarEndDate : quoteRequest.returnDate), 'MM/dd/yyyy')}"
+                                           data-date-format="mm/dd/yyyy" class="form-control date-picker dateInput"
+                                           type="text"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="plans-additional plans-box plans-margin" th:if="${not #lists.isEmpty(packages)}">
+
+                    <h4>Packages</h4>
+                    <p>Review the options available for your plan. You may change selection and your plan cost will
+                        update automatically.</p>
+                    <div id="packageBlock" class="row upgrade">
+                        <div class="col-sm-3 upgrade-type" th:each="package : ${packages}" role="radiogroup">
+                            <h6 class="backLinks">
+                                <a href="#" onclick="openCmsPackageDialog(this); return false;"
+                                   th:id="${package.id}"
+                                   th:utext="${package.name}"></a>
+                            </h6>
+                            <input th:id="${package.code}" class="checkbox-custom" th:name="${package.code}"
+                                   type="checkbox"
+                                   th:checked="${#lists.contains(quoteRequest.enabledPackages, package.code)}"
+                                   th:attr="data-fixed-cost=${package.fixedCost}"
+                                   onclick="sendUpdatePackagesRequestOnPurchase(this);"/>
+                            <label th:for="${package.code}"
+                                   th:text="${package.name+(package.fixedCost>0?' (+$'+package.fixedCost+')':'')}"
+                                   class="checkbox-custom-label">label</label>
+                            <h6 th:if="${package.fixedCost>0}" class="includes">Includes:</h6>
+                            <div th:if="${package.fixedCost>0}" th:each="value : ${package.policyMetaPackageValues}"
+                                 th:text="${value.policyMetaCategory.category.name+': '+value.policyMetaCategory.valuesAfterConditions[value.policyMetaCategory.valuesAfterConditions.size()-1].caption}"
+                                 class="includes-upsale">upsale
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <th:block th:if="${#lists.isEmpty(upsaleCategories)}">
+                    <input type="hidden" name="policyUniqueCode"
+                           th:value="${purchaseRequest.product.policyMeta.uniqueCode}"/>
+                    <input type="hidden" class="quoteRequestJson" name="quoteRequestJson"
+                           th:value="${quoteRequestJson}"/>
+                    <input type="hidden" id="quoteId" name="quoteId" th:value="${quoteId}"/>
+                    <input type="hidden" name="purchaseRequestId" th:value="${requestId}"/>
+                </th:block>
+
+                <form id="purchaseForm" action="#" th:action="@{/results/purchase/{quoteId}(quoteId=${quoteId})}"
+                      th:object="${purchaseRequest}" method="post">
+                    <input type="hidden" name="timezoneOffset" class="timezoneOffset"/>
+                    <input type="hidden" th:field="*{product.totalPrice}"/>
+                    <input type="hidden" th:field="*{product.quoteIdentifier}"/>
+                    <input type="hidden" th:field="*{product.quoteVersion}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.id}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.uniqueCode}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.requiredDepositDate}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.displayName}"/>
+                    <input type="hidden" th:field="*{product.policyMetaCode.name}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.vendor.code}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.vendor.name}"/>
+                    <input type="hidden" th:field="*{product.policyMeta.vendor.beneficiaryType}"/>
+                    <input type="hidden" id="departDate" th:field="*{quoteRequest.departDate}"/>
+                    <input type="hidden" id="purchaseRentalCarStartDate" name="purchaseRentalCarStartDate"/>
+                    <input type="hidden" id="purchaseRentalCarEndDate" name="purchaseRentalCarEndDate"/>
+                    <input type="hidden" id="returnDate" th:field="*{quoteRequest.returnDate}"/>
+                    <input type="hidden" id="ageFromDepartDate"
+                           th:field="*{product.policyMeta.vendor.ageFromDepartDate}"/>
+                    <input type="hidden" id="quoteRequestJson" class="quoteRequestJson" name="quoteRequestJson"
+                           th:value="${quoteRequestJson}"/>
+                    <input type="hidden" id="purchaseQuoteId" name="purchaseQuoteId" th:value="${purchaseQuoteId}"/>
+                    <section class="plans-box plans-margin plans-travelers">
+                        <h4>Travelers</h4>
+                        <ol>
+                            <li th:each="traveler, row : ${purchaseRequest.travelers}">
+                                <div class="row no-gutter traveler">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="form-group">
+                                            <label th:for="${'firstName-'+row.index}">First Name
+                                                <req>*</req>
+                                                | Traveler
+                                                <th:block th:text="${row.index + 1}">1</th:block>
+                                            </label>
+                                            <input th:id="${'firstName-'+row.index}" type="text" class="form-control"
+                                                   th:field="*{travelers[__${row.index}__].firstName}"/>
+                                            <span th:id="'firstNameError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].firstName}" class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 smallcol">
+                                        <div class="form-group">
+                                            <label th:for="${'travelerM-'+row.index}">MI</label>
+                                            <input th:id="${'travelerM-'+row.index}" type="text" class="form-control"
+                                                   th:field="*{travelers[__${row.index}__].middleInitials}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-11 col-md-3 col-lg-3">
+                                        <div class="form-group">
+                                            <label th:for="${'lastName-'+row.index}">Last Name
+                                                <req>*</req>
+                                            </label>
+                                            <input th:id="${'lastName-'+row.index}" type="text" class="form-control"
+                                                   th:field="*{travelers[__${row.index}__].lastName}"/>
+                                            <span th:id="'lastNameError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].lastName}" class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1 smallcol">
+                                        <div class="form-group">
+                                            <label th:for="${'travelerA-'+row.index}">Age
+                                                <req>*</req>
+                                            </label>
+                                            <input th:id="${'travelerA-'+row.index}" type="text"
+                                                   class="form-control blue-tooltip ageInput"
+                                                   value="30" th:readonly="${true}"
+                                                   th:field="*{travelers[__${row.index}__].age}"/>
+                                            <input th:id="${'travelerAgeOrBirthday-'+row.index}" type="hidden"
+                                                   class="ageOrBirthday"
+                                                   th:field="*{travelers[__${row.index}__].ageOrBirthday}"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-xs-9 col-sm-11 col-md-2 col-lg-2">
+                                        <div class="form-group">
+                                            <label class="control-label" th:for="${'travelerB-'+row.index}">Date of
+                                                Birth
+                                                <req>*</req>
+                                            </label>
+                                            <div class='input-group date'>
+                                                <input th:id="${'travelerB-'+row.index}" type='text'
+                                                       class="form-control dateInput birthday"
+                                                       placeholder="dd/mm/yyyy"
+                                                       th:field="*{travelers[__${row.index}__].birthdayStr}"/>
+                                                <span class="input-group-addon">
+                                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg}"
+                                                         alt="Datepicker"
+                                                         class="datepicker-img"/>
+                                                </span>
+                                            </div>
+                                            <span id="dobError" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].birthday}" class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                        <div class="form-group">
+                                            <input th:id="${'customRadio1' + row.index}" th:value="${row.index}"
+                                                   name="primaryTraveler"
+                                                   th:checked="${traveler.primary}" class="radio-custom" type="radio"/>
+                                            <label th:for="${'customRadio1' + row.index}"
+                                                   class="radio-custom-label contract-label">Primary Contact</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- AirCare block for filling flight information -->
+                                <div th:if="${purchaseRequest.getProduct().getPolicyMeta().getUniqueCode() == 'AirCare'}"
+                                     class="row no-gutter flights">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label th:for="${'flightNumber-'+row.index}">Flight Number
+                                                <req>*</req>
+                                                | Traveler
+                                                <th:block th:text="${row.index + 1}">1</th:block>
+                                            </label>
+                                            <input th:id="${'flightNumber-'+row.index}" type="text" class="form-control"
+                                                   th:field="*{flights[__${row.index}__].flightNumber}"/>
+                                            <span th:id="'flightNumberError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{flights[__${row.index}__].flightNumber}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label th:for="${'departureAirportCode-'+row.index}">Departure Airport Code
+                                                <req>*</req>
+                                            </label>
+                                            <input th:id="${'departureAirportCode-'+row.index}" type="text"
+                                                   class="form-control"
+                                                   th:field="*{flights[__${row.index}__].departureAirportCode}"/>
+                                            <span th:id="'departureAirportCodeError' + ${row.index}"
+                                                  class="errorRed"></span>
+                                            <span th:errors="*{flights[__${row.index}__].departureAirportCode}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label th:for="${'arrivalAirportCode-'+row.index}">Arrival Airport Code
+                                                <req>*</req>
+                                            </label>
+                                            <input th:id="${'arrivalAirportCode-'+row.index}" type="text"
+                                                   class="form-control"
+                                                   th:field="*{flights[__${row.index}__].arrivalAirportCode}"/>
+                                            <span th:id="'arrivalAirportCodeError' + ${row.index}"
+                                                  class="errorRed"></span>
+                                            <span th:errors="*{flights[__${row.index}__].arrivalAirportCode}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <div class="form-group">
+                                            <label th:for="${'airlineCode-'+row.index}">Airline Code
+                                                <req>*</req>
+                                            </label>
+                                            <input th:id="${'airlineCode-'+row.index}" type="text" class="form-control"
+                                                   th:field="*{flights[__${row.index}__].airlineCode}"/>
+                                            <span th:id="'airlineCodeError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{flights[__${row.index}__].airlineCode}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ol>
+                    </section>
+
+                    <section class="plans-box plans-margin plans-beneficiaries"
+                             th:if="${purchaseRequest.product.policyMeta.vendor.beneficiaryType.name() != 'NOT_SUPPORTED'}">
+                        <h4>Beneficiaries </h4>
+
+
+                        <ol th:if="${purchaseRequest.product.policyMeta.vendor.beneficiaryType.name() == 'BENEFICIARY_PER_TRAVELER'}">
+                            <li th:each="traveler, row : ${purchaseRequest.travelers}">
+                                <div class="row no-gutter">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="benef-label">Beneficiary Name | Traveler
+                                                <th:block th:if="${#lists.size(purchaseRequest.travelers) gt 1}"
+                                                          th:text="${row.index + 1}">1
+                                                </th:block>
+                                                <req>*</req>
+                                            </label>
+                                            <input th:field="*{travelers[__${row.index}__].beneficiary}"
+                                                   th:id="'beneficiaryName' + ${row.index}" type="text"
+                                                   class="form-control"/>
+                                            <span th:id="'beneficiaryError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].beneficiary}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label" th:for="'beneficiaryRelation' + ${row.index}">Relationship
+                                                <req>*</req>
+                                            </label>
+                                            <select th:id="'beneficiaryRelation' + ${row.index}"
+                                                    class="selectpicker form-control beneficiaryRelation"
+                                                    data-live-search="true"
+                                                    th:field="*{travelers[__${row.index}__].beneficiaryRelation}"
+                                                    title="Select a Relationship">
+                                                <option th:each="type : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryRelation).values()}"
+                                                        th:value="${type}" th:text="${type}">
+                                                    beneficiary relation
+                                                </option>
+                                            </select>
+                                            <span th:id="'beneficiaryRelError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].beneficiaryRelation}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-fluid separator"></div>
+                            </li>
+                        </ol>
+
+
+                        <ol th:if="${purchaseRequest.product.policyMeta.vendor.beneficiaryType.name() == 'BENEFICIARY_PER_TRAVELER_OPTIONAL'}">
+                            <li th:each="traveler, row : ${purchaseRequest.travelers}">
+                                <div class="row no-gutter">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="benef-label">Beneficiary Name | Traveler
+                                                <th:block th:if="${#lists.size(purchaseRequest.travelers) gt 1}"
+                                                          th:text="${row.index + 1}">1
+                                                </th:block>
+                                            </label>
+                                            <input th:field="*{travelers[__${row.index}__].beneficiary}"
+                                                   th:id="'beneficiaryName' + ${row.index}" type="text"
+                                                   class="form-control"/>
+                                            <span th:id="'beneficiaryError' + ${row.index}" class="errorRed"></span>
+                                            <span th:errors="*{travelers[__${row.index}__].beneficiary}"
+                                                  class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label" th:for="'beneficiaryRelation' + ${row.index}">Relationship</label>
+                                            <select th:id="'beneficiaryRelation' + ${row.index}"
+                                                    class="selectpicker form-control beneficiaryRelation"
+                                                    data-live-search="true"
+                                                    th:field="*{travelers[__${row.index}__].beneficiaryRelation}"
+                                                    title="Select a Relationship">
+                                                <option th:each="type : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryRelation).values()}"
+                                                        th:value="${type}" th:text="${type}">
+                                                    beneficiary relation
+                                                </option>
+                                            </select>
+                                            <!--<span th:id="'beneficiaryRelError' + ${row.index}" class="errorRed"></span>-->
+                                            <!--<span th:errors="*{travelers[__${row.index}__].beneficiaryRelation}"-->
+                                            <!--class="errorRed">Error</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-fluid separator"></div>
+                            </li>
+                        </ol>
+
+
+                        <th:block
+                                th:if="${purchaseRequest.product.policyMeta.vendor.beneficiaryType.name() == 'SINGLE_BENEFICIARY'}">
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="benef-label" for="beneficiaryName0">Beneficiary Name
+                                            <req>*</req>
+                                        </label>
+                                        <input type="text" class="form-control" th:field="*{travelers[0].beneficiary}"
+                                               id="beneficiaryName0"/>
+                                        <span id="beneficiaryError0" class="errorRed"></span>
+                                        <span th:errors="*{travelers[0].beneficiary}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="control-label" for="beneficiaryRelation0">Relationship
+                                            <req>*</req>
+                                        </label>
+                                        <select id="beneficiaryRelation0"
+                                                class="selectpicker form-control beneficiaryRelation"
+                                                data-live-search="true" title="Select a Relationship"
+                                                th:field="*{travelers[0].beneficiaryRelation}">
+                                            <option value=""></option>
+                                            <option th:each="type : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryRelation).values()}"
+                                                    th:value="${type}" th:text="${type}">
+                                                beneficiary relation
+                                            </option>
+                                        </select>
+                                        <span id="beneficiaryRelError0" class="errorRed"></span>
+                                        <span th:errors="*{travelers[0].beneficiaryRelation}"
+                                              class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid separator"></div>
+                        </th:block>
+
+
+                        <th:block
+                                th:if="${purchaseRequest.product.policyMeta.vendor.beneficiaryType.name() == 'SINGLE_BENEFICIARY_OPTIONAL'}">
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="benef-label" for="beneficiaryName0">Beneficiary Name</label>
+                                        <input type="text" class="form-control" th:field="*{travelers[0].beneficiary}"
+                                               id="beneficiaryName0"/>
+                                        <span id="beneficiaryError0" class="errorRed"></span>
+                                        <span th:errors="*{travelers[0].beneficiary}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="control-label" for="beneficiaryRelation0">Relationship</label>
+                                        <select id="beneficiaryRelation0"
+                                                class="selectpicker form-control beneficiaryRelation"
+                                                data-live-search="true" title="Select a Relationship"
+                                                th:field="*{travelers[0].beneficiaryRelation}">
+                                            <option value=""></option>
+                                            <option th:each="type : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryRelation).values()}"
+                                                    th:value="${type}" th:text="${type}">
+                                                beneficiary relation
+                                            </option>
+                                        </select>
+                                        <!--<span id="beneficiaryRelError0" class="errorRed"></span>-->
+                                        <!--<span th:errors="*{travelers[0].beneficiaryRelation}"-->
+                                        <!--class="errorRed">Error</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid separator"></div>
+                        </th:block>
+
+
+                    </section>
+
+                    <section class="plans-box plans-margin plans-supply">
+                        <h4>Travel Suppliers</h4>
+                        <div class="row no-gutter">
+                            <div class="col-sm-8 col-md-7">
+                                <label>Trip Type
+                                    <req>*</req>
+                                </label>
+                                <div class="form-group">
+                                    <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-2"
+                                         th:each="tripType, index : ${T(com.travelinsurancemaster.model.webservice.common.TripType).values()}">
+                                        <input th:id="${'checkbox-'+index.index}" class="checkbox-custom"
+                                               name="tripTypes"
+                                               type="checkbox"
+                                               th:value="${tripType.name()}"/>
+                                        <label th:for="${'checkbox-'+index.index}" class="checkbox-custom-label"
+                                               th:text="${tripType}">Air</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="_tripTypes" value="1"/>
+                                <input type="hidden" class="tripTypesParam" th:value="${tripTypeParam}"
+                                       th:each="tripTypeParam : ${purchaseRequest.getTripTypes()}"/>
+                            </div>
+                        </div>
+                        <span id="tripTypesError" class="errorRed"></span>
+                        <span th:errors="*{tripTypes}" class="errorRed">Error</span>
+                    </section>
+
+                    <section class="plans-box plans-margin plans-address">
+                        <div id="fieldErrors" class="alert alert-danger alert-dismissible" role="alert"
+                             th:if="${#fields.hasErrors('*')}">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <div th:each="e : ${#fields.detailedErrors()}">
+                                <span th:text="${e.message}">The error message</span>
+                            </div>
+                        </div>
+                        <h4>Home Address of Primary Contact</h4>
+                        <div class="row no-gutter">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="address">Address Line 1
+                                        <req>*</req>
+                                    </label>
+                                    <input id="address" th:field="*{address}" type="text" class="form-control"/>
+                                    <span id="addressError" class="errorRed"></span>
+                                    <span th:errors="*{address}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="address2">Address Line 2</label>
+                                    <input id="address2" th:field="*{addressLine2}" type="text" class="form-control"/>
+                                    <span id="address2Error" class="errorRed"></span>
+                                    <span th:errors="*{addressLine2}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutter">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="city">City
+                                        <req>*</req>
+                                    </label>
+                                    <input id="city" th:field="*{city}" type="text" class="form-control"/>
+                                    <span id="cityError" class="errorRed"></span>
+                                    <span th:errors="*{city}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5" th:if="${purchaseRequest.quoteRequest.residentState != null}">
+                                <div class="form-group">
+                                    <label class="control-label" for="state">State/Province/Territory
+                                        <req>*</req>
+                                    </label>
+                                    <input type="text" placeholder="Enter State" id="state"
+                                           th:value="${purchaseRequest.quoteRequest.residentState.caption}"
+                                           readonly="readonly" class="disabled form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutter">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="country">Country
+                                        <req>*</req>
+                                    </label>
+                                    <input type="text" placeholder="Enter Country" id="country"
+                                           th:value="${purchaseRequest.quoteRequest.residentCountry.caption}"
+                                           readonly="readonly" class="disabled form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="postalCode">Zip Code
+                                        <req>*</req>
+                                    </label>
+                                    <input id="postalCode" type="text" class="form-control" th:field="*{postalCode}"/>
+                                    <span id="postalCodeError" class="errorRed"></span>
+                                    <span th:errors="*{postalCode}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutter">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="email">Email
+                                        <req>*</req>
+                                    </label>
+                                    <input id="email" type="text" class="form-control" th:field="*{email}"/>
+                                    <span id="emailError" class="errorRed"></span>
+                                    <span th:errors="*{email}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label for="phone">Phone
+                                        <req>*</req>
+                                    </label>
+                                    <input id="phone" type="text" class="form-control phone" th:field="*{phone}"/>
+                                    <span id="phoneError" class="errorRed"></span>
+                                    <span th:errors="*{phone}" class="errorRed">Error</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5 attention"><span>This policy is only delivered by email. Please print the following confirmation screen for your records.</span><br/>
+                                We value your privacy. Your personal details including your email address is only shared
+                                with the insurance provider and will never be passed on to a third party.
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="plans-box plans-margin plans-billing">
+                        <h4>Billing Address </h4>
+                        <input id="homeAdress" name="billingSameAsHome" class="checkbox-custom" type="checkbox"
+                               th:checked="*{billingSameAsHome}"/><label
+                            for="homeAdress" class="checkbox-custom-label">Same as Home Address</label>
+                        <div id="billingAddr">
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="creditCard.ccAddress">Address Line 1
+                                            <req>*</req>
+                                        </label>
+                                        <input id="creditCard.ccAddress" th:field="*{creditCard.ccAddress}" type="text"
+                                               class="form-control"/>
+                                        <span id="ccAddressError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccAddress}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="ccAddressLine2">Address Line 2</label>
+                                        <input id="ccAddressLine2" th:field="*{creditCard.ccAddressLine2}" type="text"
+                                               class="form-control"/>
+                                        <span id="ccAddressLine2Error" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccAddressLine2}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="city">City
+                                            <req>*</req>
+                                        </label>
+                                        <input type="text" class="form-control" th:field="*{creditCard.ccCity}"/>
+                                        <span id="ccCityError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccCity}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="control-label" for="creditCard.ccStateCode">State/Province/Territory
+                                            <req>*</req>
+                                        </label>
+                                        <select id="creditCard.ccStateCode"
+                                                class="selectpicker form-control state ccState" data-live-search="true"
+                                                title="Select a State/Province/Territory"
+                                                th:field="*{creditCard.ccStateCode}">
+                                            <option value="" th:text="${'Not selected'}"></option>
+                                            <optgroup label="UNITED STATES">
+                                                <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                        th:attr="data=${'US'}"
+                                                        th:value="${s}" th:text="${s.caption}">State
+                                                </option>
+                                            </optgroup>
+                                            <optgroup label="CANADA">
+                                                <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                        th:attr="data=${'CA'}"
+                                                        th:value="${s}" th:text="${s.caption}">State
+                                                </option>
+                                            </optgroup>
+                                        </select>
+                                        <span id="ccStateError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccStateCode}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="control-label" for="creditCard.ccCountry">Country
+                                            <req>*</req>
+                                        </label>
+                                        <select id="creditCard.ccCountry" class="selectpicker form-control ccCountry"
+                                                data-live-search="true" title="Select a Country"
+                                                th:field="*{creditCard.ccCountry}">
+                                            <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                    th:if="${c != T(com.travelinsurancemaster.model.CountryCode).CRI}"
+                                                    th:value="${c}" th:text="${c.caption}">
+                                                Country
+                                            </option>
+                                        </select>
+                                        <span th:errors="*{creditCard.ccCountry}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="creditCard.ccZipCode">Zip Code
+                                            <req>*</req>
+                                        </label>
+                                        <input id="creditCard.ccZipCode" type="text" class="form-control"
+                                               th:field="*{creditCard.ccZipCode}"/>
+                                        <span id="ccZipCodeError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccZipCode}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutter">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="creditCard.ccEmail">Email
+                                            <req>*</req>
+                                        </label>
+                                        <input id="creditCard.ccEmail" type="text" class="form-control"
+                                               th:field="*{creditCard.ccEmail}"/>
+                                        <span id="ccEmailError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccEmail}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="creditCard.ccPhone">Phone
+                                            <req>*</req>
+                                        </label>
+                                        <input id="creditCard.ccPhone" type="text" class="form-control phone"
+                                               th:field="*{creditCard.ccPhone}"/>
+                                        <span id="ccPhoneError" class="errorRed"></span>
+                                        <span th:errors="*{creditCard.ccPhone}" class="errorRed">Error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <div sec:authorize="isAuthenticated()">
+                        <section class="plans-box plans-margin plans-pay">
+                            <h4>Payment Information</h4>
+
+                            <div class="row no-gutter">
+                                <div class="form-group col-sm-5">
+                                    <label for="cName">Card</label><label>holder </label>
+                                    <label>Name <req>*</req></label>
+                                    <input id="cName" type="text" class="form-control"
+                                           th:field="*{creditCard.ccName}"/>
+                                    <span id="ccNameError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccName}" class="errorRed">Error</span>
+                                </div>
+
+                                <div class="form-group col-sm-7">
+                                    <label class="control-label" for="ccards">Supported cards:</label>
+                                    <div id="ccards" class="ccards">
+                                        <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ccards/{cardName}.png(cardName=${#strings.toLowerCase(card.name())})}"
+                                             th:alt="${card.name()}" width="55px" height="34px"
+                                             th:each="card : ${supportedCreditCards}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-5" id="cardType">
+                                    <div class="form-group cnum">
+                                        <label>Card type
+                                            <req>*</req>
+                                        </label>
+                                        <div class="form-group ccTypeGroup">
+                                            <th:block th:each="s : ${supportedCreditCards}">
+                                                <input type="radio" th:field="*{creditCard.ccType}" th:value="${s}"
+                                                       class="radio-custom"/>
+                                                <!--<label th:for="${#ids.prev('creditCard.ccType')}" th:text="${s}" class="radio-custom-label"></label> -->
+                                                <label th:for="${#ids.prev('creditCard.ccType')}" class="radio-custom-label">
+                                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ccards/{cardName}.png(cardName=${#strings.toLowerCase(s.name())})}"
+                                                         th:alt="${s.name()}" width="39px" height="25px"/></label>
+                                            </th:block>
+                                        </div>
+                                        <!--<span id="ccTypeError" class="errorRed"></span>-->
+                                        <!--<span th:errors="*{creditCard.ccType}" class="errorRed">Error</span>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-gutter ccNumberGroup">
+                                <div class="form-group col-lg-5 col-md-3 col-sm-5">
+                                    <label for="bNumber">Card</label>
+                                    <label> Number <req>*</req></label>
+                                    <input autocomplete="new-password" id="bNumber" type="text" class="form-control" maxlength="23"
+                                           th:field="*{creditCard.ccNumber}"/>
+                                    <span id="ccNumberError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccNumber}" class="errorRed">Error</span>
+                                    <span id="ccTypeError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccType}" class="errorRed">Error</span>
+                                </div>
+                                <div class="col-lg-5 col-md-7 col-sm-7">
+                                    <div class="row no-gutter">
+                                        <div class="form-group col-lg-7 col-md-6 col-sm-8">
+                                            <label class="control-label" for="expMonth">Expiration Date
+                                                <req>*</req>
+                                            </label>
+                                            <div class="row no-gutter">
+                                                <div class="form-group col-sm-7">
+                                                    <select id="expMonth" class="selectpicker form-control expir-mth"
+                                                            title="Month"
+                                                            th:field="*{creditCard.ccExpMonth}">
+                                                        <option value="01">January</option>
+                                                        <option value="02">February</option>
+                                                        <option value="03">March</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">June</option>
+                                                        <option value="07">July</option>
+                                                        <option value="08">August</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                    <span id="ccExpMonthError" class="errorRed"></span>
+                                                    <span th:errors="*{creditCard.ccExpMonth}" class="errorRed">Error</span>
+                                                </div>
+
+                                                <div class="form-group col-sm-5">
+                                                    <select id="expYear" class="selectpicker form-control expir-y"
+                                                            title="Year"
+                                                            th:field="*{creditCard.ccExpYear}">
+                                                        <option th:each="year : ${#numbers.sequence(#dates.year(#dates.createNow()), #dates.year(#dates.createNow())+25)}"
+                                                                th:value="${year}" th:text="${year}"></option>
+                                                    </select>
+                                                    <span id="ccExpYearError" class="errorRed"></span>
+                                                    <span th:errors="*{creditCard.ccExpYear}" class="errorRed">Error</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-5 col-md-6 col-sm-4">
+                                            <label for="creditCard.ccCode">Security Code
+                                                <req>*</req>
+                                            </label>
+                                            <input id="creditCard.ccCode" type="text" class="form-control card-code"
+                                                   placeholder="3-digit on the back of your card"
+                                                   th:field="*{creditCard.ccCode}"/>
+                                            <span id="ccCodeError" class="errorRed"></span>
+                                            <span th:errors="*{creditCard.ccCode}" class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div sec:authorize="isAnonymous()">
+                        <section class="plans-box plans-margin plans-pay">
+                            <h4>Payment Information</h4>
+
+                            <div class="row no-gutter">
+                                <div class="form-group col-sm-5">
+                                    <label for="creditCard.ccName">Cardholder Name
+                                        <req>*</req>
+                                    </label>
+                                    <input id="creditCard.ccName" type="text" class="form-control"
+                                           th:field="*{creditCard.ccName}"/>
+                                    <span id="ccNameError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccName}" class="errorRed">Error</span>
+                                </div>
+
+                                <div class="form-group col-sm-7">
+                                    <label class="control-label" for="ccards">Supported cards:</label>
+                                    <div id="ccards" class="ccards">
+                                        <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ccards/{cardName}.png(cardName=${#strings.toLowerCase(card.name())})}"
+                                             th:alt="${card.name()}" width="55px" height="34px"
+                                             th:each="card : ${supportedCreditCards}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-5" id="cardType">
+                                    <div class="form-group cnum">
+                                        <label>Card type
+                                            <req>*</req>
+                                        </label>
+                                        <div class="form-group ccTypeGroup">
+                                            <th:block th:each="s : ${supportedCreditCards}">
+                                                <input type="radio" th:field="*{creditCard.ccType}" th:value="${s}"
+                                                       class="radio-custom"/>
+                                                <!--<label th:for="${#ids.prev('creditCard.ccType')}" th:text="${s}" class="radio-custom-label"></label> -->
+                                                <label th:for="${#ids.prev('creditCard.ccType')}" class="radio-custom-label">
+                                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ccards/{cardName}.png(cardName=${#strings.toLowerCase(s.name())})}"
+                                                         th:alt="${s.name()}" width="39px" height="25px"/></label>
+                                            </th:block>
+                                        </div>
+                                        <!--<span id="ccTypeError" class="errorRed"></span>-->
+                                        <!--<span th:errors="*{creditCard.ccType}" class="errorRed">Error</span>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-gutter ccNumberGroup">
+                                <div class="form-group col-lg-5 col-md-3 col-sm-5">
+                                    <label for="ccNumber">Card Number
+                                        <req>*</req>
+                                    </label>
+                                    <input id="ccNumber" type="text" class="form-control" maxlength="23"
+                                           th:field="*{creditCard.ccNumber}"/>
+                                    <span id="ccNumberError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccNumber}" class="errorRed">Error</span>
+                                    <span id="ccTypeError" class="errorRed"></span>
+                                    <span th:errors="*{creditCard.ccType}" class="errorRed">Error</span>
+                                </div>
+                                <div class="col-lg-5 col-md-7 col-sm-7">
+                                    <div class="row no-gutter">
+                                        <div class="form-group col-lg-7 col-md-6 col-sm-8">
+                                            <label class="control-label" for="expMonth">Expiration Date
+                                                <req>*</req>
+                                            </label>
+                                            <div class="row no-gutter">
+                                                <div class="form-group col-sm-7">
+                                                    <select id="expMonth" class="selectpicker form-control expir-mth"
+                                                            title="Month"
+                                                            th:field="*{creditCard.ccExpMonth}">
+                                                        <option value="01">January</option>
+                                                        <option value="02">February</option>
+                                                        <option value="03">March</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">June</option>
+                                                        <option value="07">July</option>
+                                                        <option value="08">August</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                    <span id="ccExpMonthError" class="errorRed"></span>
+                                                    <span th:errors="*{creditCard.ccExpMonth}" class="errorRed">Error</span>
+                                                </div>
+
+                                                <div class="form-group col-sm-5">
+                                                    <select id="expYear" class="selectpicker form-control expir-y"
+                                                            title="Year"
+                                                            th:field="*{creditCard.ccExpYear}">
+                                                        <option th:each="year : ${#numbers.sequence(#dates.year(#dates.createNow()), #dates.year(#dates.createNow())+25)}"
+                                                                th:value="${year}" th:text="${year}"></option>
+                                                    </select>
+                                                    <span id="ccExpYearError" class="errorRed"></span>
+                                                    <span th:errors="*{creditCard.ccExpYear}" class="errorRed">Error</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-5 col-md-6 col-sm-4">
+                                            <label for="creditCard.ccCode">Security Code
+                                                <req>*</req>
+                                            </label>
+                                            <input id="creditCard.ccCode" type="text" class="form-control card-code"
+                                                   placeholder="3-digit on the back of your card"
+                                                   th:field="*{creditCard.ccCode}"/>
+                                            <span id="ccCodeError" class="errorRed"></span>
+                                            <span th:errors="*{creditCard.ccCode}" class="errorRed">Error</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section class="encrypt">
+                        <div class="row encrypt-inner no-gutter">
+                            <div class="col-sm-5">
+                                <div class="pci">
+                                    <img th:src="@{/images/pci-logo.svg}"
+                                         th:alt="PCILogo"/>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="plans-box plans-margin plans-order">
+                        <h4>Place Order</h4>
+                        <div class="price final-price">
+                            <p class="sum"
+                               th:text="'$' + ${#numbers.formatDecimal(purchasePlan.totalPrice, 1, 2, 'POINT')}">
+                                $302</p>
+                            <p><b th:text="${purchaseRequest.product.policyMeta.vendor.name}">SEVEN CORNERS</b></p>
+                            <p class="safe" th:text="${purchaseRequest.product.policyMetaCode.name}">Safe Travels</p>
+                            <input id="agreeTerms" name="agreeTerms" class="checkbox-custom" type="checkbox"/>
+                            <label for="agreeTerms" class="checkbox-custom-label agreecheck">I agree with the
+                                Travel Insurance Master
+                                <a target="_blank" class="downloadLink" href="/page/Legal-Disclaimer">
+                                    Terms and Conditions</a>
+                                <req>*</req>
+                            </label><br/>
+                            <th:block th:if="${policyMeta.vendor.termsAndConditionsIsActive}">
+                                <input id="agreeVendorTerms" name="agreeVendorTerms" class="checkbox-custom"
+                                       type="checkbox"/>
+                                <label for="agreeVendorTerms" class="checkbox-custom-label agreecheck">I agree with the
+                                    <span th:text="${policyMeta.vendor.name}"></span>
+                                    <th:block
+                                            th:if="${#strings.equals(policyMeta.vendor.termsAndConditionsType,'LINK')}">
+                                        <a target="_blank" class="downloadLink"
+                                           th:href="${policyMeta.vendor.termsAndConditionsText}">Terms and
+                                            Conditions</a>
+                                        <req>*</req>
+                                    </th:block>
+                                    <th:block
+                                            th:if="${#strings.equals(policyMeta.vendor.termsAndConditionsType,'TEXT')}">
+                                        <a class="downloadLink" href="javascript:showTermsAndConditions()">Terms and
+                                            Conditions</a>
+                                        <req>*</req>
+                                    </th:block>
+                                </label>
+                                <br/>
+                            </th:block>
+                            <th:block th:if="${!policyMeta.vendor.termsAndConditionsIsActive}">
+                                <input id="agreeVendorTerms" name="agreeVendorTerms" class="checkbox-custom"
+                                       type="checkbox" checked="checked"/>
+                            </th:block>
+                            <span id="agreeTermsError" class="errorRed">You must agree with Terms and Conditions!</span><br/>
+                            <a id="validatePurchase" class="btn btnplan purchaseBtn">Place Order</a>
+                        </div>
+                    </section>
+                </form>
+                <form id="editPurchaseForm" th:action="@{/results/purchasePage/{quoteId}(quoteId=${quoteId})}"
+                      method="get">
+                    <input id="editUniqueCode" type="hidden" name="uniqueCode"/>
+                    <input id="editPurchaseQuoteId" name="purchaseQuoteId" th:value="${purchaseQuoteId}" type="hidden"/>
+                    <input id="editPurchaseRequestId" name="purchaseRequestId" th:value="${requestId}" type="hidden"/>
+                </form>
+            </section>
+
+        </main>
+    </th:block>
+
+</div>
+
+<!-- modal -->
+<div layout:fragment="pageModal" th:remove="tag">
+    <div id="plandetailsModal" class="modal fade" role="dialog"></div>
+    <div id="editQuoteModal" class="modal"></div>
+
+    <div class="modal fade update-age" id="confirmModal" tabindex="-1" role="dialog"
+         aria-labelledby="confirmModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="confirmModalLabel">Update age</h4>
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">My age seems to be different from what I initially said and that may affect
+                        the price quoted. Please consider DOB I entered now</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btnmodal" onclick="cancelUpdateAge()">Re-enter DOB
+                    </button>
+                    <button type="button" class="btn btnmodal" onclick="updateAge()">Yes, proceed!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog"
+         aria-labelledby="errorModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="errorModalLabel">Error</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="termsAndConditionsModal" tabindex="-1" role="dialog"
+         aria-labelledby="errorModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" th:text="${policyMeta.vendor.name + ' Terms and Conditions'}"></h4>
+                </div>
+                <div class="modal-body popup-text"
+                     th:if="${#strings.equals(policyMeta.vendor.termsAndConditionsType,'TEXT')}">
+                    <p class="popup-info-terms" th:utext="${policyMeta.vendor.termsAndConditionsText}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="pageScript" th:remove="tag">
+    <script th:src="@{/js/lib/handlebars.min-latest.js}"></script>
+    <script th:src="@{/js/templates/templates.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/lib/js.cookie.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"></script>
+    <script th:src="@{/js/custom/details.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/results/editQuote.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/cookies.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/purchase.js?ver={version}(version=${appVersion.version})}"></script>
+    <script sec:authorize="isAuthenticated()">
+        const inputs = $('input');
+        window.chrome ? inputs.attr('autocomplete', 'new-password') : inputs.attr('autocomplete', 'disabled');
+    </script>
+    <script type="text/javascript">
+        //fix IE bug - input cursor
+        $(window).scroll(function () {
+            $('input').blur();
+        });
+    </script>
+    <script>
+        /*Purchasing Page - Affixed price*/
+        $('.entry-price').affix({
+            offset: {
+                top: $('.entry-price').offset().top
+            }
+        });
+        $(document).ready(function () {
+            myaffix();
+            $(window).on("resize", function () {
+                myaffix();
+            });
+        });
+    </script>
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var policyMetaId = [[${policyMeta.id}]];
+        var vendorPageName = [[${policyMeta.vendor.vendorPage.name}]];
+        var policyMetaPageName = [[${policyMeta.policyMetaPage.name}]]
+        /*]]>*/
+        // @formatter:on
+    </script>
+</div>
+</body>
+</html>

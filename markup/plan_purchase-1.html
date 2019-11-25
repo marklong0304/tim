@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TIM</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link href="css/jquery.bxslider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid" id="header">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 hidden-sm hidden-xs">
+                    <div class="logo">
+                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 hidden-sm hidden-xs">
+                    <div class="phone">800-222-3456</div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                    <div class="mainMenu">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <div class="logo visible-xs visible-sm">
+                                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                                    </div>
+                                    <div class="phone visible-sm">800-222-3456</div>
+                                    <div class="phone visible-xs">800-222-3456</div>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Learn <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Learn1</a></li>
+                                                    <li><a href="#">Learn2</a></li>
+                                                    <li><a href="#">Learn3</a></li>
+                                                </ul>
+                                            </div></li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Quote <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Quote1</a></li>
+                                                    <li><a href="#">Quote2</a></li>
+                                                    <li><a href="#">Quote3</a></li>
+                                                </ul>
+                                            </div>  
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="login">
+                                            <div class="dropdown visible-xs visible-sm">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    Login
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="login hidden-xs hidden-sm">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    <span class="hidden-md">Welcome, <span class="username">Adminnnnnnnn</span>!</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid planPurchase1" id="searchResultContent">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 backLinks">
+                            <a href="#" class="back">Back to all Plans</a>
+                        </div>
+                        <div class="standartOrderPosition clearfix">
+                            <div class="col-lg-9 col-md-9">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 imgPurchase">
+                                            <img src="img/partner4.png" alt="" />
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <h3>Platinum NW6600</h3>
+                                        <p>You are about to purchase Patinum NW6600 from AIG Travel Guard for 2 travelers for a cost of $216.00. Please fill out the form below and click "Buy Plan" to complete the purchase. You will receive immediate confirmation on-screen and by email.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 allSummForOrder col-lg-offset-0 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+                                <div class="costTrip clearfix">
+                                    <span class="cost">$87.00</span>
+                                    <span class="forPeople">total for 2 people</span>
+                                </div>
+                                <a href="#" class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2 purchase">Purchase</a>
+                            </div>
+                        </div>
+                        <div class="orderInfo clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <h5>Summary</h5>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Departure Date: <b>03/29/2015</b></p>
+                                <p>Return Date: <b>03/31/2015</b></p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Resident of: <b>Texas, United States</b></p>
+                                <p>Destination: <b>Mexico</b></p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Trip Cost: <b>$5,000</b></p>
+                                <p>Travelers Ages: <b>30, 27</b></p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>If any of this information is incorrect, please <a href="#">quote again</a></p>
+                            </div>
+                        </div> 
+                        <div class="purchaseFormBlock clearfix first">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h5>Travelers Details</h5></div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-2 col-md-7 col-sm-12 col-xs-12">
+                                    <label>First Name</label><span class="nes">*</span>
+                                    <div class="clearfix"></div>
+                                    <i>1</i>
+                                    <input type="text" placeholder="Enter First Name" />
+                                    <div class="clearfix"></div>
+                                    <i>2</i>
+                                    <input type="text" placeholder="Enter First Name" />
+                                </div>
+                                <div class="col-lg-1 col-md-5 col-sm-12 col-xs-12">
+                                    <label>MI</label><span class="nes">*</span>
+                                    <input type="text" placeholder="" />
+                                    <input type="text" placeholder="" />
+                                </div>
+                                <div class="col-lg-2 col-md-7 col-sm-12 col-xs-12">
+                                    <label>Last Name</label><span class="nes">*</span>
+                                    <input type="text" placeholder="Enter Last Name" />
+                                    <input type="text" placeholder="Enter Last Name" />
+                                </div>
+                                <div class="col-lg-1 col-md-5 col-sm-12 col-xs-12">
+                                    <label>Age</label><span class="nes">*</span>
+                                    <input type="text" placeholder="" class="ageInput" />
+                                    <input type="text" placeholder="" class="ageInput" />
+                                </div>
+                                <div class="col-lg-2 col-md-7 col-sm-12 col-xs-12">
+                                    <label>Date of Birth</label><span class="nes">*</span>
+                                    <input type="text" placeholder="" class="dateInput" />
+                                    <input type="text" placeholder="" class="dateInput" />
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+                                    <input type="radio" name="customRadio" id="customRadio1" ><label for="customRadio1"> Primary Contact</label> 
+                                    <input type="radio" name="customRadio" id="customRadio2"><label for="customRadio2"> Primary Contact</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="purchaseFormBlock clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h5>Home address</h5></div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Address</label><span class="nes">*</span>
+                                </div>
+                                <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12"><input type="text" placeholder="Enter Address" /></div>
+                                <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12"><input type="text" placeholder="2nd line" /></div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>City</label><span class="nes">*</span>
+                                    <input type="text" placeholder="Enter City" />
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>State</label><span class="nes">*</span>
+                                    <input type="text" placeholder="Enter State" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Country</label><span class="nes">*</span>
+                                    <select class="selectpicker dropup" id="country">
+                                        <option>Costa Rica</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Zip Code</label><span class="nes">*</span>
+                                    <input type="text" placeholder="Enter Code" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Phone</label><span class="nes">*</span>
+                                    <input type="text" class="phone_with_ddd" placeholder="" />
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Email</label><span class="nes">*</span>
+                                    <input type="text" placeholder="Enter Email" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12"><p>This policy is only delivered by email. Please print the following confirmation screen for your records.
+                                        We value your privacy. Your personal details including your email address is only shared with the insurance provider and will never be passed on to a third party. </p></div>
+                            </div>
+                        </div>
+                        <div class="purchaseFormBlock clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h5>Billing</h5></div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Card type</label><span class="nes">*</span>
+                                    <select class="selectpicker dropup" id="cardType">
+                                        <option>Costa Rica</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Card number</label><span class="nes">*</span>
+                                    <input type="text" class="money" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Card name</label><span class="nes">*</span>
+                                    <input type="text" placeholder="" />
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Expiration Month<span class="nes">*</span> / Year<span class="nes">*</span></label>
+                                    <div class="clearfix"></div>
+                                    <input type="text" class="month" placeholder="" />
+                                    <input type="text" class="year" placeholder="" />
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Card code<span class="nes">*</span></label>
+                                    <input type="text" class="code" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12"><p>The date of cards are transmitted over a secure protocol in the bank. </p><p>Information to persist in the system and can not be transferred to third parties.</p></div>
+                            </div>
+                        </div>
+                        <div class="purchaseFormBlock purcaseWithChb clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <h5>Billing address</h5>
+                                <div class="chbWrap">
+                                    <input type="checkbox" id="homeAdress" />
+                                    <label for="homeAdress">The same as Home address</label>
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Address<span class="nes">*</span></label>
+                                    <input type="text" placeholder="Enter Address" />
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>City<span class="nes">*</span></label>
+                                    <input type="text" placeholder="Enter City" />
+                                </div>
+                            </div>
+                            <div class="formBlockLine">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Country<span class="nes">*</span></label>
+                                    <select class="selectpicker dropup" id="country">
+                                        <option>Costa Rica</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                        <option>Colombia</option>
+                                        <option>Croatia</option>
+                                        <option>Curacao</option>
+                                        <option>Cyprus</option>
+                                        <option>Czech Republic</option>
+                                        <option>Democratic Republic of Congo</option>
+                                        <option>Denmark</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <label>State<span class="nes">*</span></label>
+                                    <input type="text" placeholder="" />
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+                                    <label>Zip Code<span class="nes">*</span></label>
+                                    <input type="text" placeholder="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>About Us</h4>
+                        <a href="#">Why Choose Us Customer Testimonials Our Guarantees</a>
+                        <a href="#">Customer Testimonials</a>
+                        <a href="#">Our Guarantees</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Connect With Us</h4>
+                        <a href="#">Affiliate Program</a>
+                        <a href="#">Insurance Providers</a>
+                        <a href="#">Business Partners</a>
+                        <a href="#">Privacy/ Security/ Legal</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Support</h4>
+                        <a href="#">Travel Insurance Basics</a>
+                        <a href="#">Group Insurance</a>
+                        <a href="#">Filing a Claim</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerPhone">+1-800-123-4567</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial facebook"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial twitter"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial google"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial inst"><a href="#"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 copyright">Travel Insurance Master © 2015</div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="js/jquery.bxslider.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="js/jquery.mask.min.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function imgTopMargin(img) {
+                    var imgHeight = img.height();
+                    img.css('margin-top', -imgHeight / 2);
+                }
+                imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                imgTopMargin($('.imgPurchase img'));
+                $(window).resize(function () {
+                    imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                    imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                    imgTopMargin($('.imgPurchase img'));
+                });
+                $('.phone_with_ddd').mask("(000) 000-00-00", {placeholder: "(   )    -  -  "});
+                $('.money').mask('000.000.000.000.000.00', {reverse: true});
+                $('.code').mask('0000');
+                $('.year').mask('0000');
+                $('.month').mask('00');
+                $('.ageInput').mask('000');
+                $('.dateInput').mask("00/00/0000", {placeholder: "  /  /    "});
+                $('#customRadio1').attr('checked', 'checked');
+                $('.selectpicker').selectpicker();
+                
+                $('.bootstrap-select [data-id=country] .filter-option').text('Choose Country');
+                $('.bootstrap-select [data-id=cardType] .filter-option').text('Choose Card Type');
+            });
+        </script>
+<span class="goTopLink" style="display: inline;"><i>Top</i></span>
+    </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Category edit</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Page</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle" th:if="${categoryContent.id != null}">Edit glossary</h1>
+
+        <h1 class="adminTitle" th:if="${categoryContent.id == null}">Create glossary</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form action="#" th:action="@{/cms/category_content/edit/{categoryContentId}(categoryContentId=${categoryContent.id})}" th:object="${categoryContent}" method="post">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="form-group" th:if="${categoryContent.category!=null}">
+                    <label for="category.name">Category: </label>
+                    <input type="hidden" th:field="*{category.id}"/>
+                    <input type="hidden" th:field="*{category.code}"/>
+                    <input type="hidden" th:field="*{code}"/>
+                    <input type="hidden" th:field="*{name}"/>
+                    <input type="text" id="category.name" th:field="*{category.name}" readonly="readonly" class="form-control"/>
+                </div>
+
+                <div class="form-group" th:if="${categoryContent.category==null}">
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control"/>
+                </div>
+
+                <div class="form-group" th:if="${categoryContent.category==null}">
+                    <label for="code">Code: </label>
+                    <input type="text" id="code" th:field="*{code}" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Category content: </label>
+                    <span th:errors="*{content}" style="color: red"/>
+                    <input id="content" type="hidden" th:field="*{content}" class="form-control"/>
+
+                    <div id="summernote"/>
+                    <iframe th:src="@{/cms/page/wysiwyg}" style="border: none; width:100%; height: 560px" onload="init()"/>
+                </div>
+
+                <input type="hidden" name="version" th:field="*{version}"/>
+
+                <input type="hidden" name="id" th:field="*{id}"/>
+
+                <input type="hidden" name="sortOrder" th:field="*{sortOrder}"/>
+
+                <div class="form-group">
+                    <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                    <button type="submit" class="btn btn-success btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".btn-submit").on('click', function (e) {
+                e.preventDefault();
+                if ($('iframe').contents().find("#summernote").code().length > 100000) {
+                    $('label[for="content"]').text("Category content: ");
+                    $('label[for="content"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Content Length is 100000 symbols </span>');
+                } else {
+                    $("#content").val($('iframe').contents().find("#summernote").code());
+                    this.form.submit();
+                }
+            });
+        });
+
+        function init() {
+            $('iframe').contents().find("#summernote").code($("#content").val());
+        }
+
+    </script>
+</div>
+</body>
+</html>

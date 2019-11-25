@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${vendorPage.caption}">provider_page.html</title>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row stickParent">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <ul class="breadcrumb noPadding">
+                    <li><a th:href="@{/page/providers}">Providers</a></li>
+                    <li><a th:href="@{/page/provider/}+${vendorPage.name}" th:text="${vendorPage.caption}">AIG Travel Guard</a></li>
+                    <div class="pull-right panel-controls" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/vendor_page/edit/{id}(id=${vendorPage.id})}" data-toggle="tooltip" data-placement="top" title="Edit provider"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <div class="table-title table">
+                    <div class="tr">
+                        <div class="td td-title">
+                            <h1 th:text="${vendorPage.caption}"></h1>
+                        </div>
+                        <div class="td td-logo">
+                            <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${vendorPage.vendor.code})}" alt="Provider Logo"
+                                 width="240" height=""/>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div th:utext="${vendorPage.content}" class="textBlockWrap" />
+
+                    <div class="tableContainer planDetails">
+                        <h4>Plans</h4>
+
+                        <div class="singlePlan" th:each="plan : ${policyMetaPages}">
+                            <h2><a th:href="@{/page/provider/}+${vendorPage.name}+'/'+${plan.name}" th:text="${plan.caption}">Basic</a></h2>
+
+                            <div th:utext="${plan.description}">
+
+                            </div>
+                            <div class="wrapA">
+                                <a th:href="@{/page/provider/}+${vendorPage.name}+'/'+${plan.name}">More details</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12 positStatic">
+                <div class="stickContainer">
+                    <div class="blueContainer text-center blueMessage">
+                        <span>We are open for reviews.</span>
+                        <button class="btn btn-success">Submit a Review</button>
+                    </div>
+                    <div class="blueContainer providers hidden-sm hidden-xs">
+                        <h4>Providers</h4>
+                        <ul>
+                            <li th:each="page : ${vendorPages}">
+                                <a th:text="${page.key.caption}" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${page.key.id}" class="product"
+                                   th:classappend="${vendorPage.id == page.key.id ? 'open' : ''}"/>
+
+                                <div th:id="${page.key.id}" class="inner panel-collapse collapse" th:classappend="${vendorPage.id == page.key.id ? 'in' : ''}">
+                                    <a th:href="@{/page/provider/}+${page.key.name}+'/'+${plan.name}" th:each="plan : ${page.value}" th:text="${plan.caption}"/>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="blueContainer glossary hidden-sm hidden-xs">
+                        <h4>Insurance Terms</h4>
+                        <ul>
+                            <li th:each="categoryContent : ${categoryContentList}">
+                                <a th:href="@{/page/glossary} +'#'+${categoryContent.code}" th:text="${categoryContent.name}">
+                                    Missed Connection Coverage
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<th:block layout:fragment="pageScript">
+    <script type="text/javascript" th:src="@{/js/lib/jquery.sticky-kit.js}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".stickContainer").stick_in_parent({
+                parent: '.stickParent'
+            });
+
+            $(".product").on('click', function () {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open');
+                } else {
+                    $(this).addClass('open');
+                }
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

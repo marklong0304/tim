@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Page edit</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row" th:if="${page.id != null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Page</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row" th:if="${page.id == null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/page}">Page</a></li>
+                    <li><a th:href="@{/cms/page/create}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle" th:if="${page.id != null}">Edit page</h1>
+
+        <h1 class="adminTitle" th:if="${page.id == null}">Create page</h1>
+
+        <div>
+            <form action="#" th:action="@{/cms/page/edit}" th:object="${page}" method="post">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="form-group" th:classappend="${page.pageType.name == 'System' ? 'hidden':''}">
+                    <label for="name">Page name: </label>
+                    <input id="name" type="text" th:field="*{caption}" placeholder="Name" class="form-control"/>
+                    <span th:errors="*{caption}" style="color: red"/>
+                </div>
+
+                <div class="form-group" th:classappend="${page.pageType.name == 'System' ? 'hidden':''}">
+                    <label for="description">Page description: </label>
+                        <textarea id="description" rows="5" type="text" th:field="*{description}"
+                                  placeholder="Description" class="form-control"/>
+                    <span th:errors="*{description}" style="color: red"/>
+                </div>
+
+                <div class="form-group" th:if="${page.pageType.name != 'System'}">
+                    <label for="type">Page type: </label>
+                    <select th:field="*{pageType}" id="type" class="form-control">
+                        <option th:each="type : ${pageTypes}"
+                                th:value="${type.id}" th:text="${type.name}"/>
+                    </select>
+                    <span th:errors="*{pageType}" style="color: red"/>
+                </div>
+
+                <div th:if="${page.pageType.name == 'System'}">
+                    <input type="hidden" th:field="*{pageType.id}"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Page content: </label>
+                    <span th:errors="*{content}" style="color: red"/>
+                    <input id="content" type="hidden" th:field="*{content}" class="form-control"/>
+
+                    <div id="summernote"/>
+                    <iframe th:src="@{/cms/page/wysiwyg}" style="border: none; width:100%; height: 560px"
+                            onload="init()"/>
+                </div>
+
+                <div class="form-group" th:classappend="${page.pageType.name == 'System' ? 'hidden':''}">
+                    <label for="status">Page status:</label>
+                    <select th:field="*{status}" id="status" class="form-control">
+                        <option th:each="status : ${T(com.travelinsurancemaster.model.dto.cms.page.PageStatus).values()}"
+                                th:value="${status}" th:text="${status}"/>
+                    </select>
+                    <span th:errors="*{status}" style="color: red"/>
+                </div>
+
+                <input type="hidden" name="version" th:field="*{version}"/>
+
+                <input type="hidden" name="id" th:field="*{id}"/>
+
+                <div th:if="${page.id != null}">
+                    <div class="form-group" th:unless="${page.name == 'index'}">
+                        <a th:href="@{${'/page/'+page.name}}" target="_blank">view page</a>
+                    </div>
+                    <div class="form-group" th:if="${page.name == 'index'}">
+                        <a th:href="@{${'/'}}" target="_blank">view page</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                    <button type="submit" class="btn btn-success btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".btn-submit").on('click', function (e) {
+                e.preventDefault();
+                if ($('iframe').contents().find("#summernote").code().length > 100000) {
+                    $('label[for="content"]').text("Page content: ");
+                    $('label[for="content"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Content Length is 100000 symbols </span>');
+                } else {
+                    $("#content").val($('iframe').contents().find("#summernote").code());
+                    this.form.submit();
+                }
+            });
+        });
+
+        function init() {
+            $('iframe').contents().find("#summernote").code($("#content").val());
+        }
+
+    </script>
+</div>
+</body>
+</html>

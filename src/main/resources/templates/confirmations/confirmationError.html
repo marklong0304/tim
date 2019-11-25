@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Confirmation Error</title>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent" class="container">
+    <div class="row">
+        <div class="message message-error">
+            <p th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+            <p th:unless="${errorMessage != null}">Something go wrong.</p>
+            <p>Please, try again later or <a th:href="'mailto:' + ${@environment.getProperty('mail.admin')}">contact to administrator</a>.</p>
+            <a class="goToHome" th:href="@{/}" href="/">Go to Homepage.</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

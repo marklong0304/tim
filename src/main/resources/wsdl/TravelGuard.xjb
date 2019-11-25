@@ -1,0 +1,15 @@
+<jxb:bindings
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+        version="2.1">
+
+    <jxb:bindings schemaLocation="TravelGuard.wsdl">
+        <jxb:bindings node="//xs:element[@name='GetQuoteXML']">
+            <jxb:class name="GetQuoteXml2"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:element[@name='GetQuoteXMLResponse']">
+            <jxb:class name="GetQuoteXmlResponse2"/>
+        </jxb:bindings>
+    </jxb:bindings>
+
+</jxb:bindings>

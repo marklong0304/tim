@@ -1,0 +1,48 @@
+image: java:8
+
+pipelines:
+  default:
+    - step:
+        name: Build project
+        script:
+          - bash ./gradlew clean build
+
+  custom:
+     dev:
+        - step:
+            name: Build project for Dev
+            script:
+              - bash ./gradlew -PactiveProfiles=dev clean build
+            artifacts:
+              - build/libs/insurance-master.war
+        - step:
+            name: Deploy on DEV
+            script:
+              - curl -T "build/libs/insurance-master.war" "https://$DEV_TOMCAT_MANAGER_NAME:$DEV_TOMCAT_MANAGER_PASS@$DEV_SITE_URL/manager/text/deploy?path=/&update=true" 2>&1 | tee response.txt
+              - if ! grep -q "OK - Deployed application at context path" "response.txt"; then exit 1; else exit 0; fi
+
+  branches:
+    master:
+      - step:
+          name: Build project
+          script:
+            - bash ./gradlew -PactiveProfiles=test clean build
+          artifacts:
+            - build/libs/insurance-master.war
+      - step:
+          name: Deploy on TEST
+          script:
+            - curl -T "build/libs/insurance-master.war" "https://$TEST_TOMCAT_MANAGER_NAME:$TEST_TOMCAT_MANAGER_PASS@$TEST_SITE_URL/manager/text/deploy?path=/&update=true" 2>&1 | tee response.txt
+            - if ! grep -q "OK - Deployed application at context path" "response.txt"; then exit 1; else exit 0; fi
+    prod:
+      - step:
+          name: Build project with Prod profile
+          script:
+            - bash ./gradlew -PactiveProfiles=prod clean build
+          artifacts:
+            - build/libs/insurance-master.war
+      - step:
+          name: Deploy on PROD
+          script:
+            - curl -T "build/libs/insurance-master.war" "https://$PROD_TOMCAT_MANAGER_NAME:$PROD_TOMCAT_MANAGER_PASS@$PROD_SITE_URL/manager/text/deploy?path=/&update=true" 2>&1 | tee response.txt
+            - if ! grep -q "OK - Deployed application at context path" "response.txt"; then exit 1; else exit 0; fi

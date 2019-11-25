@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<div id="footer" th:fragment="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" th:each="menu : ${footerMenuItems}">
+                <h4 th:text="${menu.title}"/>
+
+                <div th:each="submenu : ${menu.childMenuItems}">
+                    <div th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                        <a th:case="${false}" th:text="${submenu.title}"
+                           th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                        <a th:case="${true}" th:text="${submenu.title}" th:href="${submenu.url}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerPhone" th:text="${defaultSettings.phone}">
+                        +1-800-123-4567
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial facebook"><a href="#"></a></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial twitter"><a href="#"></a></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial google"><a href="#"></a></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial inst"><a href="#"></a></div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 copyright">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 copyright" th:if="${appVersion != null}"
+                         th:title="|${appVersion.title} ver. ${appVersion.version}|">Travel Insurance Master © 2017
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 copyright" th:if="${appVersion == null}">Travel
+                        Insurance Master © 2017
+                    </div>
+
+<!--
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 copyright">Powered by <a
+                            href="http://www.wave-access.com/" style="text-decoration: underline; display: inline;">WaveAccess</a>
+                    </div>
+-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+INSERT INTO menu_item VALUES ('36863', null, 'Blog', '2109', '/blog', null, '2', '4');

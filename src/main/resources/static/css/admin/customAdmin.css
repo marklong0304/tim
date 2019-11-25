@@ -1,0 +1,341 @@
+
+.adminDataTables .formBlockLine .clearfix {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.adminDataTables .formBlockLine .col-lg-6 div {
+    width: 100%;
+}
+
+.adminDataTables .col-lg-6 div input[type="text"] {
+    height: 27px;
+    width: 100%;
+}
+
+.adminDataTables .formBlockLine b p {
+    display: none;
+}
+
+.cancellation {
+    color: #cc0000;
+}
+
+.fromToLabel {
+    display: inline-block;
+    width: 100%;
+    font-weight: 700;
+    font-size: 13px;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .fromToLabel {
+        display: none;
+    }
+
+    .adminDataTables .formBlockLine b p {
+        display: inline;
+    }
+}
+
+@media (min-width: 1200px) {
+    .adminDataTables .formBlockLine .col-lg-6 {
+        padding: 0;
+        width: 48%;
+    }
+
+    .adminDataTables .panel-body .formApply {
+        width: 100%;
+    }
+}
+
+.adminDataTables .formBlockLine .cancelled {
+    height: 25px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+.salary .adminDataTables .formBlockLine .form-check{
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.adminDataTables .formBlockLine .cancelled:last-of-type {
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+.cancelled label {
+    margin: 0 5px;
+    padding: 0;
+}
+
+.cancelled input {
+    width: 24px;
+    margin-left: 5px;
+}
+
+.adminDataTables .panel-body .formApply .purchaseFormBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.adminDataTables #payments_wrapper #payments tbody tr td,
+.adminDataTables #commissions_wrapper tbody tr td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 5vw;
+}
+
+
+@media (min-width: 1500px) {
+    .adminDataTables #commissions_wrapper tbody tr td {
+        max-width: 5vw;
+    }
+}
+
+.tooltipP {
+    display: none;
+    position: absolute;
+    border: 1px solid #333;
+    background-color: #161616;
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
+    font-size: 12px;
+}
+
+#showNote {
+    color: black;
+    padding: 10px 10px 10px 10px;
+    border-bottom: 1px solid #0099cc;
+}
+
+#showNote a {
+    top: 10px;
+    right: 15px;
+}
+
+#body .blocker {
+    z-index: 2001;
+}
+
+.blocker .modal {
+    max-width: 600px;
+}
+
+.modalData {
+    padding: 10px;
+    border-top: 1px solid #0099cc;
+    border-bottom: 1px solid #0099cc;
+}
+
+.modalContent p {
+    display: block;
+    color: #0099cc;
+    margin-top: 20px;
+}
+
+.modalContent {
+    padding: 20px;
+}
+
+#fullNameSearch {
+    width: 98%;
+    height: 100%;
+}
+
+#fullNameSearch button {
+    height: 27px;
+    border: 1px solid rgb(204, 204, 204);
+    cursor: text;
+}
+
+#fullNameSearch .dropdown-menu {
+    max-height: 168px !important;
+    width: fit-content;
+    position: relative;
+    top: 0;
+    border: 1px solid rgb(204, 204, 204);
+}
+
+#fullNameSearch .bs-searchbox {
+    height: 36px;
+}
+
+.adminDataTables .formBlockLine .col-lg-6.lineInput {
+    width: 100%;
+    height: 35px;
+}
+
+#note {
+    width: 99%
+}
+
+#checkNumber {
+    width: 98%;
+}
+
+.adminDataTables .table > tbody > tr > td,
+.adminDataTables .table > tbody > tr > th,
+.adminDataTables .table > tfoot > tr > td,
+.adminDataTables .table > tfoot > tr > th,
+.adminDataTables .table > thead > tr > td,
+.adminDataTables .table > thead > tr > th {
+    padding: 4px 2px;
+    vertical-align: middle;
+}
+
+.adminDataTables .table > tbody > tr.group > td {
+    cursor: pointer;
+}
+
+.payments .adminDataTables .table > thead > tr > th {
+    width: 10%;
+}
+
+.svg-inline--fa.fa-w-18 {
+    margin-left: 5px;
+}
+
+#payments td, #payments th,
+#salarySearch td:not(.row-group), #salarySearch th {
+    padding: 10px 2px;
+}
+
+#undoNote {
+    position: absolute;
+    left: 32px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 80px;
+    color: black;
+}
+
+#undoNote svg {
+    font-size: 20px;
+}
+
+.adminDataTables .multiselect-container div input[type="text"] {
+    height: 34px
+}
+
+.empty {
+    color: gray;
+}
+
+.adminDataTables a[rel="modal:open"].disable {
+    pointer-events: none;
+}
+
+.adminDataTables .formBlockLine input[type='radio']:first-child + label {
+    margin-top: 5px;
+}
+
+.form-check-label b {
+    font-size: 13px;
+}
+
+.selectize-control .selectize-dropdown div {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.adminDataTables .formBlockLine .col-lg-6.fullWidth .selectize-control .selectize-input {
+    display: flex;
+    align-items: center;
+}
+
+.adminDataTables .formBlockLine .col-lg-6.fullWidth {
+    width: 98%;
+    margin-right: 5px;
+    padding: 5px 0;
+}
+
+.adminDataTables .formBlockLine .col-lg-6.fullWidth div div {
+    display: flex;
+}
+
+.adminDataTables .selectize-input.items.not-full {
+    height: 20px;
+}
+
+.adminDataTables .selectize-input.items.full {
+    max-height: 20px;
+}
+
+.selectize-input div,
+.selectize-input span {
+    width: auto !important;
+}
+
+.selectizeName {
+    text-align: left;
+    font-weight: 700;
+}
+
+.travellerName {
+    font-size: 16px;
+    padding: 2px;
+}
+
+.adminDataTables ::placeholder {
+    color: #939393;
+}
+
+.initial::after {
+    visibility: hidden;
+}
+
+.selectize-dropdown{
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.selectize-dropdown-content {
+    max-height: 100%;
+}
+
+.adminDataTables .formBlockLine .cancelled {
+    margin-top: 0;
+}
+
+.form-check-label {
+    margin-left: 5px;
+}
+
+.adminDataTables .table > tbody > tr.dtrg-start {
+    border-bottom: 5px solid white;
+}
+
+.table-responsive {
+    overflow-x: initial;
+}
+
+a.disabled {
+    pointer-events: none;
+    background-color: transparent;
+    cursor: not-allowed;
+}
+
+.save-message {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    float: right;
+    padding: 5px 15px;
+}
+
+div.dataTables_processing {
+    z-index: 1;
+}

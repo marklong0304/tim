@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Filing claim page management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/filingClaimPage.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/filing_claim_page}">Filing claim page</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Filing claim page management</h1></div>
+            <div class="col-md-4 text-right">
+                <h1 class="adminTitle"><a th:href="@{/cms/filing_claim_page/create}"
+                                          class="btn btn-success xcrud-action "><i
+                        class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="filingClaimPages">
+            <thead>
+            <tr class="info">
+                <th width="20%">Vendor</th>
+                <th width="10%">Caption</th>
+                <th width="10%">Name</th>
+                <th width="10%">Phone</th>
+                <th width="10%">Status</th>
+                <th width="12%">Create date</th>
+                <th width="13%">Modified date</th>
+                <th width="10%">Author</th>
+                <th width="10%">View</th>
+                <th width="5%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filingClaimPage : ${filingClaimPages}" th:id="'filingClaimPage-' + ${filingClaimPage.id}">
+                <td th:text="${filingClaimPage.vendorPage.name}"/>
+                <td th:text="${filingClaimPage.name}"/>
+                <td th:text="${filingClaimPage.caption}"/>
+                <td th:text="${filingClaimPage.phoneNumber}"/>
+                <td th:text="${filingClaimPage.status}"/>
+                <td th:text="${#dates.format(filingClaimPage.createDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${#dates.format(filingClaimPage.modifiedDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${filingClaimPage.author.name}"/>
+                <td>
+                    <a th:href="@{${'/page/filing_claim/'+filingClaimPage.name}}" target="_blank">view page</a>
+                </td>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Edit"
+                       th:href="@{/cms/filing_claim_page/edit/{id}(id=${filingClaimPage.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <button class="pull-right btn btn-danger" type="button" title="Delete"
+                            th:onclick="'javascript:deleteFilingClaimPage(\'' + ${filingClaimPage.id} + '\');'">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input id="lastModified" type="hidden" th:value="${lastModifiedPageId}"/>
+    </div>
+</div>
+</body>
+</html>

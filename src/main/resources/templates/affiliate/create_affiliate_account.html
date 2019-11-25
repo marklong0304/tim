@@ -1,0 +1,514 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row affiliatePage purchaseFormBlock">
+            <div class="row affiliatePage purchaseFormBlock">
+                <div id="initialScroll" class="col-xs-12"><h2>Create your free affiliate account</h2></div>
+                <span class="span-create-affiliate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you complete this form, we'll create a unique Affiliate ID for you so that you can start making money by promoting Travel Insurance Master Website and products! You will also receive an email with instructions on how to login to track your sales and earnings.</span>
+            </div>
+            <ul class="nav nav-tabs centered">
+                <li class="nav-item" th:classappend="${defaultAccount.name() == 'INDIVIDUAL'} ? active : ''">
+
+                    <a id="za" href="#individualTab" data-toggle="tab" aria-expanded="false"><h4>
+                        <span class="glyphicon glyphicon-user">&nbsp;</span>Individual</h4>
+                    </a>
+                </li>
+                <li class="nav-item" th:classappend="${defaultAccount.name() == 'COMPANY'} ? active : ''">
+
+                    <a href="#companyTab" data-toggle="tab" aria-expanded="false"><h4>
+                        <span class="glyphicon glyphicon-briefcase" >&nbsp;</span>Company</h4>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content clearfix">
+                <div class="tab-pane" id="individualTab"
+                     th:classappend="${defaultAccount.name() == 'INDIVIDUAL'} ? active : ''">
+                    <form action="#" th:action="@{/create-affiliate-individual}" th:object="${affiliateIndividualForm}"
+                          method="post">
+                        <br/>
+                        <div class="formBlockLine clearfix alert alert-danger" th:errors="${affiliateIndividualForm}"></div>
+                        <div class="panel-group">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">General Information</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>First Name <span class="mandatory-field"><b>*</b></span></p>
+                                            <input type="text"
+                                                   th:field="*{name}"
+                                                   class="form-control"
+                                                   required="required"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Last Name<span class="mandatory-field"><b>*</b></span></p>
+                                            <input type="text"
+                                                   th:field="*{userInfo.lastName}"
+                                                   placeholder="Last name"
+                                                   class="form-control"
+                                                   required="required"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Telephone</p>
+                                            <input th:field="*{userInfo.phone}" type="tel" placeholder=""
+                                                   class="validate bfh-phone"
+                                                   data-format="+d (ddd) ddd-dddd"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <label class="control-label" for="individualCountrySelect">Country</label>
+                                            <select id="individualCountrySelect" th:field="*{userInfo.country}"
+                                                    class="selectpicker form-control ddown" data-live-search="true"
+                                                    title="Select a Country">
+                                                <option value="" th:text="${''}" class="option-select-country"></option>
+                                                <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                        th:value="${c}" th:text="${c.caption}"
+                                                >
+                                                    Country
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12" id="individualStateDiv">
+                                            <label class="control-label" for="residence">State</label>
+                                            <select id="residence" th:field="*{userInfo.stateOrProvince}"
+                                                    class="selectpicker form-control ddown" data-live-search="true"
+                                                    title="Select a Country">
+                                                <option value="" th:text="${''}" class="option-individual-state"></option>
+                                                <optgroup label="UNITED STATES">
+                                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                            th:value="${s}" th:text="${s.caption}"
+                                                    >
+                                                        State
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="CANADA">
+                                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                            th:value="${s}" th:text="${s.caption}"
+                                                    >
+                                                        State
+                                                    </option>
+                                                </optgroup>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>City</p>
+                                            <input th:field="*{userInfo.city}" type="text"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Street Address</p>
+                                            <input th:field="*{userInfo.address}" type="text"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Postal Code</p>
+                                            <input th:field="*{userInfo.zipCode}" type="text"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Tax ID</p>
+                                            <input th:field="*{userInfo.taxId}" type="text"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Web Site URL</p>
+                                            <input th:field="*{userInfo.website}" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Authorization</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix">
+                                        <div class="formBlockLine clearfix">
+                                            <br/>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Email (Login) <span class="mandatory-field"><b>*</b></span></p>
+                                                <input type="email" placeholder="Email Address"
+                                                       th:field="*{email}"
+                                                       class="form-control"
+                                                       required="required"
+                                                />
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Password <span class="mandatory-field"><b>*</b></span></p>
+                                                <input type="password" th:field="*{password}" class="validate pass" required="true"/>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Password Confirmation <span class="mandatory-field"><b>*</b></span></p>
+                                                <input type="password" th:field="*{repeatPassword}" class="validate confirmPass" required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">Payment Options</div>
+                                <div class="panel-body">
+                                    <ul class="ul-panel-body">
+                                        <li class="li-panel-body"
+                                            th:each="optionValue: ${T(com.travelinsurancemaster.model.PaymentOption).values()}">
+                                            <div class="form-group row">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <input type="radio"
+                                                           th:field="*{userInfo.paymentOption}"
+                                                           th:value="${optionValue}"/>
+
+                                                    <label class="payment-option-label"
+                                                           th:text="${optionValue.value}"></label>
+                                                </div>
+                                                <div class="form-group" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).ACH}">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <label>Bank Name</label>
+                                                        <input th:readonly="*{userInfo.paymentOption.getValue() != T(com.travelinsurancemaster.model.PaymentOption).ACH.getValue()}"
+                                                               th:field="*{userInfo.bankName}"
+                                                               class="form-control bankName"
+                                                               type="text"
+                                                               placeholder="Bank name"
+                                                        ></input>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <label>Bank Routing</label>
+                                                        <input th:readonly="*{userInfo.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                                               th:field="*{userInfo.bankRouting}"
+                                                               class="form-control bankRouting" type="text"
+                                                               placeholder="Bank Routing"
+                                                        ></input>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <label>Account</label>
+                                                        <input th:readonly="*{userInfo.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                                               th:field="*{userInfo.account}"
+                                                               class="form-control account"
+                                                               type="text"
+                                                               placeholder="Account"
+                                                        ></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <input th:readonly="*{userInfo.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}"
+                                                               th:field="*{userInfo.paypalEmailAddress}"
+                                                               class="form-control paypalEmailAddress"
+                                                               type="text"
+                                                               placeholder="PayPal email address"
+                                                        />
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-xs-12">
+                                                        <span class="enter-address">Enter the email address associated with your PayPal account</span>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-check" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).CHECK}">
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        <span class="sent-address">Will be sent to above address (minimum commission/affiliate fee payment applies)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Affiliate Program Terms and Conditions</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-xs-12">
+                                            <div class="rearOnly">
+                                                <strong>Terms of Use for Customers</strong>
+                                                <span class="md-textarea form-control"
+                                                      th:utext="${affiliateProgramAgreement}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-8 col-md-4 col-xs-12">
+                                            <input th:name="conditions" type="checkbox" id="individualSaving"
+                                                   name="saving"
+                                                   class="validate" required="true"/>
+                                            <label for="individualSaving">
+                                                <p>I have read, understand, and accept the terms and conditions<span
+                                                        class="mandatory-field"><b>*</b></span></p>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-4 col-xs-12">
+                                            <div class="g-recaptcha"
+                                                 data-sitekey="6LdI5RcUAAAAAAswURr8ZcTF0L6RgtVEZNPdOgJT">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formBlockLine clearfix formButtons">
+                            <div class="col-xs-12">
+
+                                <input id="affiliateIndividualSubmit" type="submit" class="save" value="Submit"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="companyTab"
+                     th:classappend="${defaultAccount.name() == 'COMPANY'} ? active : ''">
+                    <br/>
+                    <form action="#" th:action="@{/create-affiliate-company}" th:object="${affiliateCompanyForm}"
+                          method="post">
+                        <div class="panel-group">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">General Information</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix alert alert-danger" th:errors="${affiliateCompanyForm}"></div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Company Name <span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{company.name}" type="text" placeholder="" class="companyName"
+                                                   id="companyName"
+                                                   required="true"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Contact First Name<span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{name}" id="companyUserName" type="text" required="true"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Contact Last Name<span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{userInfo.lastName}" id="companyUserLastName" type="text" required="true"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Telephone<span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{userInfo.phone}" id="companyUserPhone" type="tel" placeholder=""
+                                                   class="validate bfh-phone"
+                                                   data-format="+d (ddd) ddd-dddd" required="true"/>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Tax ID/SSN/FEIN</p>
+                                            <input th:field="*{company.taxId}" id="companyUserTaxId" type="text"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <label class="control-label" for="companyCountrySelect">Country</label>
+                                            <select id="companyCountrySelect" th:field="*{userInfo.country}"
+                                                    class="selectpicker form-control ddown" data-live-search="true"
+                                                    title="Select a Country">
+                                                <option value="" th:text="${''}" class="option-select-country"></option>
+                                                <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                        th:value="${c}" th:text="${c.caption}">Country
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12"
+                                             id="companyStateDiv">
+                                            <label class="control-label" for="companyResidence">State</label>
+                                            <select id="companyResidence" th:field="*{userInfo.stateOrProvince}"
+                                                    class="selectpicker form-control ddown" data-live-search="true"
+                                                    title="Select a Country">
+                                                <option value="" th:text="${''}" class="option-company-state"></option>
+                                                <optgroup label="UNITED STATES">
+                                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                            th:value="${s}" th:text="${s.caption}">State
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="CANADA">
+                                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                            th:value="${s}" th:text="${s.caption}">State
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>City <span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{userInfo.city}" id="companyUserCity" type="text" required="true"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Street Address <span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{userInfo.address}" id="companyUserAddress" type="text" required="true"/>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Postal Code <span class="mandatory-field"><b>*</b></span></p>
+                                            <input th:field="*{userInfo.zipCode}" id="companyUserZipCode" type="text" required="true"/>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            <p>Web Site URL</p>
+                                            <input th:field="*{company.website}" id="companyUserWebsite" type="text"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Authorization</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix">
+                                        <div class="formBlockLine clearfix">
+                                            <br/>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Email (Login) <span class="mandatory-field"><b>*</b></span></p>
+                                                <input type="email" placeholder="Email Address"
+                                                       th:field="*{email}"
+                                                       id="companyUserEmail"
+                                                       class="form-control"
+                                                       required="required"/>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Password <span class="mandatory-field"><b>*</b></span></p>
+                                                <input type="password"
+                                                       th:field="*{password}"
+                                                       id="companyUserPassword"
+                                                       class="validate pass"
+                                                       required="true"/>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <p>Password Confirmation <span class="mandatory-field"><b>*</b></span>
+                                                </p>
+                                                <input type="password"
+                                                       th:field="*{repeatPassword}"
+                                                       id="companyUserRepeatPassword"
+                                                       class="validate confirmPass" required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="panel-group">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">Payment Options</div>
+                                    <div class="panel-body">
+                                        <ul class="ul-panel-body">
+                                            <li class="li-panel-body"
+                                                th:each="optionValue: ${T(com.travelinsurancemaster.model.PaymentOption).values()}">
+                                                <div class="form-group form-row custom-form-row">
+                                                    <div class="col-lg-2 col-md-4 col-xs-12">
+                                                        <input type="radio"
+                                                               th:field="*{company.paymentOption}"
+                                                               th:value="${optionValue}"
+                                                        />
+                                                        <label class="payment-option-label" th:text="${optionValue.value}"></label>
+                                                    </div>
+                                                    <div class="custom-inline-form-group" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).ACH}">
+                                                        <div class="col-lg-3 col-md-4 col-xs-12">
+                                                            <label>Bank Name</label>
+                                                            <input th:readonly="*{company.paymentOption.getValue() != T(com.travelinsurancemaster.model.PaymentOption).ACH.getValue()}"
+                                                                   th:field="*{company.bankName}"
+                                                                   id="companyUserBankName"
+                                                                   class="form-control bankName"
+                                                                   type="text"
+                                                                   placeholder="Bank name"
+                                                            ></input>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-xs-12">
+                                                            <label>Bank Routing</label>
+                                                            <input th:readonly="*{company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                                                   th:field="*{company.bankRouting}"
+                                                                   id="companyUserBankRouting"
+                                                                   class="form-control bankRouting"
+                                                                   type="text"
+                                                                   placeholder="Bank Routing"
+                                                            ></input>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-xs-12">
+                                                            <label>Account</label>
+                                                            <input th:readonly="*{company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                                                   th:field="*{company.account}"
+                                                                   id="companyUserAccount"
+                                                                   class="form-control account"
+                                                                   type="text"
+                                                                   placeholder="Account"
+                                                            ></input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="custom-inline-form-group" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}">
+                                                        <div class="col-lg-3 col-md-4 col-xs-12">
+                                                            <input th:readonly="*{company.paymentOption != T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}"
+                                                                   th:field="*{company.paypalEmailAddress}"
+                                                                   id="companyUserPaypalEmailAddress"
+                                                                   class="form-control paypalEmailAddress"
+                                                                   type="text"
+                                                                   placeholder="PayPal email address"
+                                                            ></input>
+                                                        </div>
+                                                        <div class="col-lg-7 col-md-4 col-xs-12">
+                                                            <label class="label-enter-address">Enter the email address associated with your PayPal account</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="payment-check" th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).CHECK}">
+                                                        <div class="col-lg-8 col-md-4 col-xs-12">
+                                                            <label class="label-sent-address">Will be sent to above address (minimum commission/affiliate fee payment applies)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">Affiliate Program Terms and Conditions</div>
+                                <div class="panel-body">
+                                    <div class="formBlockLine clearfix">
+                                        <br/>
+                                        <div class="col-xs-12">
+                                            <div class="rearOnly">
+                                                <strong>Terms of Use for Customers</strong>
+                                                <span class="md-textarea form-control"
+                                                      th:utext="${affiliateProgramAgreement}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="formBlockLine clearfix">
+                                        <div class="col-lg-8 col-md-4 col-xs-12">
+                                            <input th:name="conditions" type="checkbox" id="companySaving" name="saving"
+                                                   class="validate" required="true"/>
+                                            <label for="companySaving">
+                                                <p>I have read, understand, and accept the terms and conditions<span class="mandatory-field"><b>*</b></span></p>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-4 col-xs-12">
+                                            <div class="g-recaptcha"
+                                                 data-sitekey="6LdI5RcUAAAAAAswURr8ZcTF0L6RgtVEZNPdOgJT">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formBlockLine clearfix formButtons">
+                            <div class="col-xs-12">
+                                <input id="affiliateSubmit" type="submit" class="save" value="Submit"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer="" type="text/javascript" src="/js/custom/affiliate.js?ver={version}(version=${appVersion.version})"></script>
+    <script defer="" th:src="@{/js/custom/admin/paymentOptions.js?ver={version}(version=${appVersion.version})}"/>
+</div>
+</body>
+</html>

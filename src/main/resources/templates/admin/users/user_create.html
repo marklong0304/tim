@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>User management</title>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container create">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/users}">Users</a></li>
+                    <li><a th:href="@{/users/create}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="adminTitle">Create new user</h1>
+
+
+                <form id="userForm" th:object="${user}" method="post" th:action="@{/users/create}" style="padding-top: 40px;">
+
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="name">First name: </label>
+                            <input id="name" type="text" name="name" placeholder="First name:"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   required="required"/>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="lastName">Last name: </label>
+                            <input id="lastName" class="form-control" type="text" name="lastName"
+                                   placeholder="Last name" th:field="*{userInfo.lastName}" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="roles">Roles:</label>
+                            <select th:field="*{roles}" id="roles" class="form-control" multiple="multiple">
+                                <option th:each="role : ${T(com.travelinsurancemaster.model.security.Role).values()}"
+                                        th:value="${role}" th:text="${role}"/>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="email">Email: </label>
+                            <input id="email" type="email" name="email" placeholder="Email Address"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6" th:classappend="${password}">
+                            <label for="pwd">Password: </label>
+                            <input id="pwd" type="password" placeholder="Password" th:field="*{password}"
+                                   class="form-control" required="required" autocomplete="off"/>
+                        </div>
+                        <div class="form-group col-sm-6" th:classappend="${password}">
+                            <label for="pwd">Confirm Password: </label>
+                            <input id="cpwd" type="password" placeholder="Confirm password" th:field="*{repeatPassword}"
+                                   class="form-control" required="required" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row" style="padding-top: 20px;">
+                        <div class="form-group col-sm-12">
+                            <a th:href="@{${backUrl}}" class="btn btn-default back-btn"
+                               style="padding: 6px 17px;">Back</a>
+                            <button type="submit" class="btn btn-success" style="margin-left: 4px; padding: 6px 17px;">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                    <input id="id" type="hidden" th:field="*{id}" class="form-control"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#roles').multiselect({
+                enableFiltering: true,
+                buttonWidth: '100%',
+                maxHeight: 400,
+                enableCaseInsensitiveFiltering: true,
+                includeSelectAllOption: true,
+                filterStyle: 'beginWith'
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

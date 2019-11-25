@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Edit Policy Meta Package</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/policies/policies.js?ver={version}(version=${appVersion.version})}"/>
+
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Edit Policy Meta Package</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="#" th:action="@{/vendors/policy/policyMetaPackage/edit/{id}(id=${policyMetaPackage.id})}" th:object="${policyMetaPackage}" method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}" th:each="e : ${#fields.detailedErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name: </label>
+                        <input id="name" type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="fixedCost">Package Fixed Cost: </label>
+                        <input id="fixedCost" type="text" th:field="*{fixedCost}" placeholder="Fixed Cost" class="form-control"/>
+                    </div>
+
+                    <div class="form-group" th:if="${!policyMetaCategories.empty}">
+                        <div class="row">
+                            <div class="col-md-8"><h3>Values</h3></div>
+                            <div class="col-md-4 text-right" th:if="${policyMetaPackage.policyMetaPackageValues.size() &lt; policyMetaCategories.size()}">
+                                <h3>
+                                    <button type="submit" class="btn btn-success xcrud-action" name="addValue" id="addValue">
+                                        <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Add
+                                    </button>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="overflowXMD">
+                            <table class="table table-hover table-bordered" id="values">
+                                <thead>
+                                <tr class="info">
+                                    <th>Category</th>
+                                    <th>Value</th>
+                                    <th width="8%">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="value, row : ${policyMetaPackage.policyMetaPackageValues}">
+                                    <td>
+                                        <select th:field="*{policyMetaPackageValues[__${row.index}__].policyMetaCategory}" id="category" class="form-control"  onchange="document.querySelector('form').submit();">
+                                            <option th:each="policyMetaCategory : ${policyMetaCategories}"
+                                                    th:value="${policyMetaCategory.id}" th:text="${policyMetaCategory.category.name}"
+                                                    th:title="${T(com.travelinsurancemaster.util.TextUtils).createTextFromRestrictions(policyMetaCategory.policyMetaCategoryRestrictions)}"/>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select th:field="*{policyMetaPackageValues[__${row.index}__].value}" id="value" class="form-control">
+                                            <option th:each="policyMetaCategoryValue : *{policyMetaPackageValues[__${row.index}__].policyMetaCategory.values}"
+                                                    th:value="${policyMetaCategoryValue.value}" th:text="${policyMetaCategoryValue.caption}"/>
+                                        </select>
+                                        <input type="hidden" th:field="*{policyMetaPackageValues[__${row.index}__].policyMetaPackage.id}"/>
+                                    </td>
+                                    <td>
+                                        <button type="submit" name="removeValue" th:value="${row.index}"
+                                                onclick="return confirm('Confirm Delete?');"
+                                                class="pull-center btn btn-danger removeBtn"
+                                                >
+                                            <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <input type="hidden" name="code" th:field="*{code}"/>
+                    <input type="hidden" name="policyMetaId" th:field="*{policyMeta.id}"/>
+
+                    <div class="form-group">
+                        <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success" name="save">Save</button>
+                    </div>
+                </form>
+
+                <!-- Policy meta package restriction modal-->
+                <div th:replace="fragments/restrictions :: restrictionsFragment"></div>
+                <div th:replace="fragments/restrictionsTable :: restrictionsTableFragment"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

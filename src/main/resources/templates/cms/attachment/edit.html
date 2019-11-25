@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Attachment page</title>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Menu</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div>
+            <h1 class="adminTitle" th:if="${attachment.id != null}">Edit attachment</h1>
+        </div>
+        <div>
+            <form action="#" th:action="@{/cms/attachment/edit}" th:object="${attachment}" method="post" enctype="multipart/form-data">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${uploadError}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${uploadError}">uploadError</span>
+                </div>
+                <div class="form-group">
+                    <label for="name">Attachment name: </label>
+                    <input id="name" type="text" th:field="*{name}" placeholder="Name" class="form-control" required="required"/>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="file">New file:</label>
+                        <input type="hidden" id="maxFileSize" th:value="${maxFileSize}"/>
+                        <input id="file" type="file" name="file" th:accept="${allowedFileTypes}"/>
+                        <span id="fileSizeError" style="display: none; color: red;">The files you are trying to upload exceed the maximum size for file uploads on this server</span>
+                    </div>
+                    <div class="form-group">
+                        <a th:href="@{/cms/attachment/{uid}(uid=${attachment.fileUid})}" target="_blank">download</a>
+                    </div>
+                    <div class="form-group">
+                        <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success btn-submit">Save</button>
+                    </div>
+                    <div th:if="${#strings.contains(attachment.mimeType,'image')}">
+                        <label>Current file:</label>
+                        <img th:src="@{/cms/attachment/{uid}(uid=${attachment.fileUid})}" class="img-responsive" alt="Current file"/>
+                    </div>
+                    <div th:if="${#strings.contains(attachment.mimeType,'pdf')}">
+                        <label>Current file:</label>
+                        <embed th:src="@{/cms/attachment/{uid}(uid=${attachment.fileUid})}" height="700" style="width: 100%" type='application/pdf'/>
+                    </div>
+                    <div th:if="${#strings.contains(attachment.mimeType,'text')}">
+                        <label>Current file:</label>
+                        <embed th:src="@{/cms/attachment/{uid}(uid=${attachment.fileUid})}" height="700" style="width: 100%" type='text/plain'/>
+                    </div>
+                    <input type="file" name="file" style="display: none;"/>
+                </div>
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" th:field="*{mimeType}"/>
+                <input type="hidden" th:field="*{fileUid}"/>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('form').submit(function (e) {
+                var isOk = true;
+                $('input[type=file]').each(function () {
+                    if (typeof this.files[0] !== 'undefined') {
+                        var maxSize = parseInt($("#maxFileSize").val(), 10),
+                                size = this.files[0].size;
+                        isOk = maxSize > size;
+                        return isOk;
+                    }
+                });
+                if (!isOk) {
+                    $("#fileSizeError").show();
+                }
+                return isOk;
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

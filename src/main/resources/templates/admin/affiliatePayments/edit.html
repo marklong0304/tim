@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Affiliate Payment</title>
+    <style>
+        .small-text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        
+        <form id="affiliatePaymentForm" action="#" th:action="@{/commissions/affiliatePayment/{id}(id=${affiliatePayment.id})}" method="post"
+              th:object="${affiliatePayment}">
+
+            <br th:if="${successMessage}"/>
+            <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <span th:text="${successMessage}">successMessageKey</span>
+            </div>
+
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <a th:href="@{${backUrl}}" class="btn btn-primary">Back</a>
+            </div>
+
+            <h3>Payment Details (<span th:text="*{statusPaid == null} ? 'In Preparation' : 'Paid'">Status</span>)</h3>
+
+            <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label for="paymentDatePicker">Payment Date</label>
+                    <input id="paymentDatePicker" th:field="*{paymentDate}"
+                           data-date-format="mm/dd/yyyy" class="form-control" type="text" autocomplete="off"
+                           th:classappend="*{statusPaid == null} ? 'datePicker' : 'disabled'"
+                    />
+                </div>
+                <br/>
+                <input type="hidden" name="statusPaid" th:value="null"
+                       th:if="${allowStatusPaidChange and affiliatePayment.statusPaid != null}"/>
+                <button class="btn btn-default" type="submit" onclick="cleanUpMoneyFields();"
+                        th:if="${allowStatusPaidChange and affiliatePayment.statusPaid != null}">
+                    Edit
+                </button>
+                <input type="hidden" name="statusPaid" th:value="${#temporals.format(#temporals.createNow(),'MM/dd/yy')}"
+                       th:unless="*{statusPaid}"/>
+                <button class="btn btn-default" type="submit" onclick="cleanUpMoneyFields();"
+                        th:unless="*{statusPaid}">
+                    Save
+                </button>
+            </div>
+
+            <h3 th:if="*{affiliateCommissions != null and affiliateCommissions.size() > 0}">Commissions</h3>
+
+            <table class="table table-payments" th:if="*{affiliateCommissions != null and affiliateCommissions.size() > 0}">
+                <thead>
+                    <tr>
+                        <th scope="col">Vendor</th>
+                        <th scope="col">Policy</th>
+                        <th scope="col">Policy#</th>
+                        <th scope="col">Payment Date</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:id="'row-' + ${row.index}" th:each="affiliateCommission, row : *{affiliateCommissions}">
+                        <td>
+                            <input type="hidden" class="form-control" th:field="*{affiliateCommissions[__${row.index}__].id}" />
+                            <span th:text="*{affiliateCommissions[__${row.index}__].purchase.policyMeta.vendor.name}">
+                                Vendor Name
+                            </span>
+                        </td>
+                        <td>
+                            <span th:text="*{affiliateCommissions[__${row.index}__].purchase.policyMeta.displayName}">
+                                Policy Name
+                            </span>
+                        </td>
+                        <td>
+                            <a th:target="_blank" th:with="baseUrl=(${report}? '/reports/purchase/MyBooking/{uuid}' : '/commissions/purchase/payments/{uuid}')"
+                               th:href="@{${baseUrl}(uuid=*{affiliateCommissions[__${row.index}__].purchase.purchaseUuid})}">
+                                <span th:text="*{affiliateCommissions[__${row.index}__].purchase.policyNumber}">
+                                    Policy#
+                                </span>
+                            </a>
+                        </td>
+                        <td>
+                            <input class="form-control"
+                                   data-date-format="mm/dd/yyyy" type="text" maxlength="10" autocomplete="off" placeholder="Payment Date"
+                                   th:classappend="*{statusPaid == null} ? 'datePicker' : 'disabled'"
+                                   th:field="*{affiliateCommissions[__${row.index}__].paid}"
+                            />
+                        </td>
+                        <td>
+                            <input type="text" maxlength="10" autocomplete="off" class="form-control" placeholder="Amount"
+                                   th:readonly="*{statusPaid}"
+                                   th:field="*{affiliateCommissions[__${row.index}__].salaryPaid}"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 th:if="*{salaryCorrections != null and salaryCorrections.size() > 0}">Salary Corrections</h3>
+
+            <table class="table" th:if="*{salaryCorrections != null and salaryCorrections.size() > 0}">
+                <thead>
+                <tr>
+                    <th scope="col">Correction Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Note</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:id="'sc-row-' + ${row.index}" th:each="salaryCorrection, row : *{salaryCorrections}">
+                    <td>
+                        <input type="hidden" class="form-control" th:field="*{salaryCorrections[__${row.index}__].id}" />
+                        <input class="form-control"
+                               data-date-format="mm/dd/yyyy" type="text" autocomplete="off" placeholder="Correction Date"
+                               th:classappend="*{statusPaid == null} ? 'datePicker' : 'disabled'"
+                               th:field="*{salaryCorrections[__${row.index}__].paid}"
+                        />
+                    </td>
+                    <td>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Amount"
+                               th:readonly="*{statusPaid}"
+                               th:field="*{salaryCorrections[__${row.index}__].salaryPaid}"
+                        />
+                    </td>
+                    <td>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Note"
+                               th:readonly="*{statusPaid}"
+                               th:field="*{salaryCorrections[__${row.index}__].note}"
+                        />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <hr/>
+
+            <h3>Affiliate Details</h3>
+
+            <div class="row" th:if="*{affiliateUser}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Name</label>
+                    <input th:field="*{affiliateUser.fullName}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Email</label>
+                    <input th:field="*{affiliateUser.email}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Phone</label>
+                    <input th:field="*{affiliateUser.userInfo.phone}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <label>Address</label>
+                    <input th:field="*{affiliateUser.userInfo.address}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <label>City</label>
+                    <input th:field="*{affiliateUser.userInfo.city}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <label>State</label>
+                    <input th:field="*{affiliateUser.userInfo.stateOrProvince}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3` col-sm-12 col-xs-12">
+                    <label>Country</label>
+                    <input th:value="${affiliatePayment.affiliateUser.userInfo.country.caption}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                    <input th:field="*{affiliateUser.userInfo.country}" class="form-control" type="hidden" autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+
+            <div class="row" th:if="*{affiliateCompany}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Company Name</label>
+                    <input th:field="*{affiliateCompany.name}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="row" th:if="*{affiliateCompany != null and affiliateCompany.companyManager != null}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Contact Name</label>
+                    <input th:field="*{affiliateCompany.companyManager.fullName}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Email</label>
+                    <input th:field="*{affiliateCompany.companyManager.email}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Phone</label>
+                    <input th:field="*{affiliateCompany.companyManager.userInfo.phone}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <label>Address</label>
+                    <input th:field="*{affiliateCompany.companyManager.userInfo.address}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <label>City</label>
+                    <input th:field="*{affiliateCompany.companyManager.userInfo.city}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <label>State</label>
+                    <input th:field="*{affiliateCompany.companyManager.userInfo.stateOrProvince}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3` col-sm-12 col-xs-12">
+                    <label>Country</label>
+                    <input th:value="${affiliatePayment.affiliateCompany.companyManager.userInfo.country.caption}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                    <input th:field="*{affiliateCompany.companyManager.userInfo.country}" class="form-control" type="hidden" autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+
+            <h3>Payment Options</h3>
+
+            <div id="paymentOption" class="row">
+                <div style="line-height: 1.6">
+                    <ul style="padding-left: 15px;">
+                        <li style="list-style-type:none" th:each="optionValue: ${T(com.travelinsurancemaster.model.PaymentOption).values()}">
+                            <div class="form-group form-row custom-form-row">
+
+                                <input name="paymentOption" type="radio" th:field="*{paymentOption}" th:value="${optionValue}" th:disabled="*{statusPaid != null}"/>
+                                <label class="payment-option-label" th:text="${optionValue.value}"></label>
+
+                                <div class="custom-inline-form-group" style="display: inline"
+                                     th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).ACH}">
+                                    <div class="row" style="padding-left: 15px;">
+                                        <label for="bankName">Bank Name</label>
+                                        <input style="margin-right: 10px" type="text"
+                                               id="bankName"
+                                               class="bankName form-control col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                                               th:readonly="*{statusPaid != null or paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="*{bankName}"
+                                               placeholder="Bank name"/>
+                                    </div>
+                                    <div class="row" style="padding-left: 15px;">
+                                        <label for="bankRouting">Bank Routing</label>
+                                        <input style="margin-right: 10px" type="text"
+                                               id="bankRouting"
+                                               class="bankRouting form-control col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                                               th:readonly="*{statusPaid != null or paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="*{bankRouting}"
+                                               placeholder="Bank Routing"/>
+                                    </div>
+                                    <div class="row" style="padding-left: 15px;">
+                                        <label for="account">Account</label>
+                                        <input style="margin-right: 10px" type="text" class="account form-control col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                                               id="account"
+                                               th:readonly="*{statusPaid != null or paymentOption != T(com.travelinsurancemaster.model.PaymentOption).ACH}"
+                                               th:field="*{account}"
+                                               placeholder="Account"/>
+                                    </div>
+                                </div>
+
+                                <div class="custom-inline-form-group" style="display: inline"
+                                     th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}">
+                                    <div class="row" style="padding-left: 15px;">
+                                        <input style="margin-right: 6px" type="text" class="paypalEmailAddress form-control col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                                               th:readonly="*{statusPaid != null or paymentOption != T(com.travelinsurancemaster.model.PaymentOption).PAYPAL}"
+                                               th:field="*{paypalEmailAddress}"
+                                               placeholder="PayPal email address"></input>
+                                        <label style="font-weight: normal;">Email address associated with the PayPal account.</label>
+                                    </div>
+                                </div>
+
+                                <div style="display: inline"
+                                     th:if="${optionValue == T(com.travelinsurancemaster.model.PaymentOption).CHECK}">
+                                    <div class="row" style="padding-left: 15px;">
+                                        <input style="margin-right: 6px" type="text" class="checkNumber form-control col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                                               th:readonly="*{statusPaid != null or paymentOption != T(com.travelinsurancemaster.model.PaymentOption).CHECK}"
+                                               th:field="*{checkNumber}"
+                                               placeholder="Check Number"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <script th:src="@{/js/custom/admin/paymentOptions.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/custom/admin/affiliatePayments/editAffiliatePayment.js?ver={version}(version=${appVersion.version})}"></script>
+</div>
+</body>
+</html>

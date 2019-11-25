@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Right Travel Insurance Providers | Travel Insurance Master</title>
+    <meta name="description" content="Travel Insurance Master offers the best travel insurance experience to its customers. The company provides great service, value, and right insurance coverage plans." />
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row stickParent">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <ul class="breadcrumb noPadding">
+                    <li>Providers</li>
+                    <div class="pull-right panel-controls" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/page/edit/{id}(id=${providersPage.id})}" data-toggle="tooltip" data-placement="top" title="Edit providers page"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <div class="table-title table">
+                    <div class="tr">
+                        <div class="td td-title">
+                            <h1 th:text="${providersPage.caption}">The Right Travel Insurance Providers</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="textBlockWrap" th:utext="${providersPage.content}">
+                        <p>
+                            We want you to be happy with your travel insurance experiency, we work with only the top travel insurance providers. We don&lsquo;t accept every
+                            provider that wants to offer plans on our site; we partner only with the ones that offer you the right coverage, great service, reliability, and value.
+                            That&lsquo;s the basis for our Best Plans Guarantee. All of the insurance companies on our site are rated highly by the Better Business Bureau, have
+                            excellent A.M. Best financial ratings, and recieve high marks from our customers.
+                        </p>
+                    </div>
+
+                    <div class="plansContainer row">
+                        <div class="col-lg-3 col-sm-4 col-xs-6" th:each="vendorPage : ${vendorPages}">
+                            <div class="shortPlanDescr">
+                                <div class="imgLogo">
+                                    <a th:href="@{/page/provider/}+${vendorPage.key.name}">
+                                        <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${vendorPage.key.vendor.code})}" alt="Provider Logo" width="" height=""/>
+                                    </a>
+                                </div>
+                                <div class="descr" th:text="${vendorPage.key.description}">
+                                </div>
+                                <div class="wrapA">
+                                    <a th:href="@{/page/provider/}+${vendorPage.key.name}">Read more</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="specWidth pull-left">
+
+                            <div class="shortPlanDescr">
+                                <div class="shortPlanDescrTable">
+                                    <div class="shortPlanDescrCell">
+                                        <h3 class="shortPlanDescrText">Interested to get listed as a <b>Travel Insurance</b> partner?</h3>
+
+                                        <div>
+                                            <button class="btn btn-success btn-lg"
+                                                    th:onClick="'window.location.href=\'mailto:' + ${@environment.getProperty('mail.apply.now')} + '\';'">Apply Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12 positStatic">
+                <div class="stickContainer">
+                    <div class="blueContainer text-center blueMessage">
+                        <span>We are open for reviews.</span>
+                        <button class="btn btn-success">Submit a Review</button>
+                    </div>
+                    <div class="blueContainer providers hidden-sm hidden-xs">
+                        <h4>Providers</h4>
+                        <ul>
+                            <li th:each="vendorPage : ${vendorPages}">
+                                <a th:text="${vendorPage.key.caption}" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${vendorPage.key.id}" class="product collapsed"/>
+
+                                <div th:id="${vendorPage.key.id}" class="inner panel-collapse collapse">
+                                    <a th:href="@{/page/provider/}+${vendorPage.key.name}+'/'+${plan.name}" th:each="plan : ${vendorPage.value}" th:text="${plan.caption}"/>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="blueContainer glossary hidden-sm hidden-xs">
+                        <h4>Insurance Terms</h4>
+                        <ul>
+                            <li th:each="categoryContent : ${categoryContentList}">
+                                <a th:href="@{/page/glossary} +'#'+${categoryContent.code}" th:text="${categoryContent.name}">
+                                    Missed Connection Coverage
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div layout:fragment="pageScript">
+    <script>
+        $(document).ready(function () {
+            $(".stickContainer").stick_in_parent({
+                parent: '.stickParent'
+            });
+
+            $(".product").on('click', function () {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open');
+                } else {
+                    $(this).addClass('open');
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

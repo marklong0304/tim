@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Purchase</title>
+    <style>
+        .small-text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="cancelModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cancel policy</h4>
+                    </div>
+                    <form th:action="@{/commissions/cancel}" th:method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="valueType">Note</label>
+                                <input type="text" name="note" id="valueType" class="form-control" required="required"/>
+                                <input type="hidden" name="purchaseUuid" th:value="${purchase.purchaseUuid}"/>
+                                <input type="hidden" name="type" th:value="${type}"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Cancel policy</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <form id="purchaseForm" action="#"
+              th:action="@{/commissions/purchase/commission/{purchaseUiud}(purchaseUiud=${purchase.purchaseUuid})}"
+              th:object="${purchase}" method="post">
+
+            <br th:if="${successMessage}"/>
+            <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <span th:text="${successMessage}">successMessageKey</span>
+            </div>
+
+            <h3>Trip Details</h3>
+
+            <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Departure Date</label>
+                    <input id="departDatePicker" th:field="*{purchaseQuoteRequest.departDate}"
+                           th:disabled="${disabledField}" data-date-format="mm/dd/yyyy" class="form-control" type="text"
+                           autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Return Date</label>
+                    <input id="returnDatePicker" th:field="*{purchaseQuoteRequest.returnDate}"
+                           data-date-format="mm/dd/yyyy" class="form-control" type="text" autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Total Trip Cost, $</label>
+                    <input type="text" th:field="*{purchaseQuoteRequest.tripCost}" class="form-control money"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Trip Depostit Date</label>
+                    <input id="depositDatePicker" th:field="*{purchaseQuoteRequest.depositDate}"
+                           data-date-format="mm/dd/yyyy" class="form-control" type="text" autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Final Payment Date</label>
+                    <input id="paymentDatePicker" th:field="*{purchaseQuoteRequest.paymentDate}"
+                           data-date-format="mm/dd/yyyy" class="form-control" type="text" autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label class="control-label" for="destination">Destination</label>
+                    <select id="destination" th:field="*{purchaseQuoteRequest.destinationCountry}"
+                            data-live-search="true" title="Select a Destination"
+                            class="custom-select selectpicker form-control ddown"
+                            th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                            th:disabled="${disabledField}">
+                        <option th:each="country : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                th:value="${country}" th:text="${country.caption}">
+                            Country
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <h3>Plan Purchase Details</h3>
+
+            <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label class="control-label" for="provider">Provider</label>
+                    <select id="provider" name="provider" data-live-search="true" title="Select provider" data-size="5"
+                            class="custom-select selectpicker form-control ddown" th:disabled="${disabledField}">
+                        <option th:each="provider : ${vendors}"
+                                th:selected="${provider.getName() == purchase.policyMeta.vendor.name}"
+                                th:value="${provider.getCode()}" th:text="${provider.getName()}">
+                            Provider
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12 policy">
+                    <label class="control-label" for="policy">Policy Name</label>
+                    <select id="policy" name="policy" data-live-search="true" title="Select policy" data-size="5"
+                            class="custom-select selectpicker form-control ddown" th:disabled="${disabledField}">
+                        <option value="Select">Select policy</option>
+                        <option th:each="policy, iStat : ${policies}"
+                                th:selected="${policy.getDisplayName() == purchase.policyMeta.displayName}"
+                                th:value="${policy.getVendor().getCode()}" th:text="${policy.getDisplayName()}"
+                                th:attr="data-index=${iStat.index}">
+                            Provider
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Policy #</label>
+                    <input type="text" th:field="*{policyNumber}" class="form-control"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Plan Cost, $</label>
+                    <input type="text" th:field="*{totalPrice}" class="form-control money"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Plan Purchase Date</label>
+                    <input id="purchaseDatePicker" th:field="*{purchaseDate}" data-date-format="mm/dd/yyyy"
+                           class="form-control" type="text" autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+            </div>
+
+            <h3>Travelers' Details</h3>
+
+            <div class="row">
+                <input type="hidden" th:field="*{purchaseQuoteRequest.citizenCountry}" th:disabled="${disabledField}"/>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Resident Country</label>
+                    <select id="countrySelect" th:field="*{purchaseQuoteRequest.residentCountry}"
+                            data-live-search="true" title="Select a Country"
+                            class="custom-select selectpicker form-control ddown"
+                            th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                            th:disabled="${disabledField}">
+                        <option th:each="country : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                th:value="${country}" th:text="${country.caption}">
+                            Country
+                        </option>
+                    </select>
+                </div>
+                <div id="stateDiv" class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <label>State</label>
+                    <select id="stateSelect" th:field="*{purchaseQuoteRequest.residentState}" data-live-search="true"
+                            title="Select a State"
+                            class="custom-select selectpicker form-control ddown"
+                            th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                            th:disabled="${disabledField}">
+                        <option value="" th:text="${''}" style="display: none"></option>
+                        <optgroup label="UNITED STATES">
+                            <option th:each="state : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                    th:value="${state}" th:text="${state.caption}">
+                                State
+                            </option>
+                        </optgroup>
+                        <optgroup label="CANADA">
+                            <option th:each="state : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                    th:value="${state}" th:text="${state.caption}">
+                                State
+                            </option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input id="city" th:field="*{purchaseRequest.city}" type="text" class="form-control"
+                               th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                               th:disabled="${disabledField}"/>
+                    </div>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="postalCode">Zip Code</label>
+                        <input id="postalCode" type="text" class="form-control" th:field="*{purchaseRequest.postalCode}"
+                               th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                               th:disabled="${disabledField}"/>
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="address">Address Line 1</label>
+                        <input id="address" th:field="*{purchaseRequest.address}" type="text" class="form-control"
+                               th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                               th:disabled="${disabledField}"/>
+                    </div>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="address2">Address Line 2</label>
+                        <input id="address2" th:field="*{purchaseRequest.addressLine2}" type="text" class="form-control"
+                               th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                               th:disabled="${disabledField}"/>
+                    </div>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label for="phone">Phone</label>
+                    <input id="phone" type="text" class="form-control phone" th:field="*{purchaseRequest.phone}"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+            </div>
+
+            <div class="row" th:id="'row-' + ${row.index}" th:each="traveler, row : *{purchaseQuoteRequest.travelers}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label th:text="'Traveler ' + ${row.index + 1} + ' First Name'">First Name</label>
+                    <input th:id="${'first-name-'+row.index}" type="text" maxlength="10" autocomplete="off"
+                           class="form-control" placeholder="First Name"
+                           th:field="*{purchaseQuoteRequest.travelers[__${row.index}__].firstName}"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Last Name</label>
+                    <input th:id="${'last-name-'+row.index}" type="text" maxlength="10" autocomplete="off"
+                           class="form-control" placeholder="Last Name"
+                           th:field="*{purchaseQuoteRequest.travelers[__${row.index}__].lastName}"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <label>DOB</label>
+                    <input th:id="${'birthday-'+row.index}" data-date-format="mm/dd/yyyy"
+                           class="form-control dobDatePicker" type="text" autocomplete="off" placeholder="Date of Birth"
+                           th:field="*{purchaseQuoteRequest.travelers[__${row.index}__].birthday}"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <br/>
+                    <input class="radio-custom" type="radio"
+                           th:value="${row.index}"
+                           name="primaryTraveler"
+                           th:checked="*{purchaseQuoteRequest.travelers[__${row.index}__].primary}"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                    <label class="radio-custom-label contract-label small-text">Primary</label>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <br/>
+                    <button type="button" title="Delete" class="pull-left btn btn-danger"
+                            th:onclick="'deleteTravelerRow(' + ${row.index} + ');'"
+                            th:unless="${purchase.isCancelled() || disabledField}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+            <div id="newTravelerRow" style="display: none;">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>First Name</label>
+                    <input id="first-name-{n}" type="text" maxlength="10" autocomplete="off" class="form-control"
+                           placeholder="First Name"
+                           template-name="purchaseQuoteRequest.travelers[{n}].firstName"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Last Name</label>
+                    <input id="last-name-{n}" type="text" maxlength="10" autocomplete="off" class="form-control"
+                           placeholder="Last Name"
+                           template-name="purchaseQuoteRequest.travelers[{n}].lastName" th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <label>DOB</label>
+                    <input id="birthday-{n}" data-date-format="mm/dd/yyyy" class="form-control dobDatePicker"
+                           type="text" autocomplete="off" placeholder="Date of Birth"
+                           template-name="purchaseQuoteRequest.travelers[{n}].birthday"/>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <br/>
+                    <input th:id="primaryTraveler" class="radio-custom" type="radio" name="primaryTraveler"
+                           template-value="{n}" th:disabled="${disabledField}"/>
+                    <label th:for="primaryTraveler" class="radio-custom-label contract-label small-text">Primary</label>
+                </div>
+                <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    <br/>
+                    <button type="button" title="Delete" class="pull-left btn btn-danger"
+                            onclick="'deleteTravelerRow({n});'" th:if="${!disabledField}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" id="travelerCount" th:value="*{purchaseQuoteRequest.travelers.size()}"/>
+            <button type="button" title="Add traveler" class="btn btn-primary" th:onclick="'addTravelerRow();'"
+                    th:unless="${purchase.isCancelled() || disabledField}">
+                Add traveler
+            </button>
+
+            <h3 th:if="*{affiliateCommission}">Affiliate</h3>
+
+            <div class="row" th:if="*{affiliateCommission}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>First Name</label>
+                    <input type="text" th:value="*{affiliateCommission?.affiliate?.name}" readonly="readonly"
+                           class="form-control" th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Last Name</label>
+                    <input type="text" th:value="*{affiliateCommission?.affiliate?.userInfo?.lastName}"
+                           readonly="readonly" class="form-control" th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Email</label>
+                    <input type="text" th:value="*{affiliateCommission?.affiliate?.email}" readonly="readonly"
+                           class="form-control" th:disabled="${disabledField}"/>
+                </div>
+            </div>
+            <div class="row" th:if="*{affiliateCommission?.affiliate?.company}">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label>Company</label>
+                    <input type="text" th:value="*{affiliateCommission?.affiliate?.company?.name}" readonly="readonly"
+                           class="form-control"/>
+                </div>
+            </div>
+
+            <h3 th:unless="*{affiliateCommission}">Commission</h3>
+
+            <div class="row">
+                <input type="hidden" th:field="*{vendorCommission.expectedCommission}"
+                       th:if="*{vendorCommission != null}"/>
+                <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6" th:if="*{vendorCommission != null} ">
+                    <label>Commission received, $</label>
+                    <input type="text" th:field="*{vendorCommission.receivedCommission}" class="form-control money"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6" th:if="*{vendorCommission != null}">
+                    <label>Receive Date</label>
+                    <input id="commissionReceiveDatePicker"
+                           th:field="*{vendorCommission.receivedDate}"
+                           data-date-format="mm/dd/yyyy" class="form-control" type="text" autocomplete="off"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6" th:if="*{affiliateCommission != null}">
+                    <label>Affiliate Pay, $</label>
+                    <input type="text" th:field="*{affiliateCommission.salaryToPay}" class="form-control money"
+                           th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                           th:disabled="${disabledField}"/>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6"
+                     th:if="*{vendorCommission != null or affiliateCommission != null}">
+                    <label>Status</label>
+                    <input type="text" th:value="*{vendorCommission.receivedDate != null} ? 'Received' : 'Not Received'"
+                           readonly="readonly" class="form-control"
+                           th:if="*{vendorCommission != null and (affiliateCommission == null or affiliateCommission.paid == null)}"
+                           th:disabled="${disabledField}"
+                    />
+                    <input type="text" th:value="Paid" readonly="readonly" class="form-control"
+                           th:if="*{affiliateCommission != null and affiliateCommission.paid != null}"
+                           th:disabled="${disabledField}"
+                    />
+                </div>
+            </div>
+
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                <button class="btn btn-default" type="submit" onclick="cleanUpMoneyFields();"
+                       th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}" th:if="${!disabledField}">
+                   Save
+             </button>
+                <a th:href="@{${backUrl}}" class="btn btn-default">Back</a>
+                <button id="createUpgradedPurchaseButton" class="btn btn-danger" type="button"
+                        onclick="cleanUpMoneyFields();"
+                        th:classappend="${purchase.isCancelled() ? 'disabled-pointer ': ''}"
+                        th:if="${purchase.vendorCommission != null and purchase.vendorCommission.receivedDate != null and !disabledField}">
+                    Create upgraded policy
+                </button>
+                <a type="button" id="cancel" class="btn btn-danger"
+                   th:unless="${purchase.isCancelled() || disabledField}">Cancel policy</a>
+                <a type="button" id="restore" class="btn btn-danger"
+                   th:if="${purchase.isCancelled() and !disabledField}">Restore policy</a>
+                <button class="btn btn-default" type="button" id="duplicate" th:if="${!disabledField}" onclick="cleanUpMoneyFields();">
+                    Duplicate
+                </button>
+               <!-- <a type="button" id="duplicate" class="btn btn-default" th:if="${!disabledField}"
+                   th:href="@{/purchase/commission/} + ${purchase.purchaseUuid}">Duplicate</a>-->
+                <button type="button" id="showPurchaseResult" class="btn btn-default" th:if="${resultPage}">See purchase result page</button>
+            </div>
+
+        </form>
+        <input type="hidden" id="resultPage" th:value="${resultPage}"/>
+    </div>
+
+    <form id="restoreForm" th:action="@{/commissions/restore}" th:method="post" style="display: none;">
+        <input type="hidden" name="purchaseUuid" th:value="${purchase.purchaseUuid}"/>
+        <input type="hidden" name="type" th:value="${type}"/>
+    </form>
+
+    <script th:src="@{/js/custom/admin/payments/editPurchase.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/purchaseView.js?ver={version}(version=${appVersion.version})}"></script>
+</div>
+</body>
+</html>

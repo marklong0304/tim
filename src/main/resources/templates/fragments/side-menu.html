@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<div class="side-menu" id="side-menu" th:fragment="side-menu">
+    <div class="login text-right">
+        <div id="loginMenu" class="btn-group logInOut" sec:authorize="isAnonymous()">
+            <a type="button" id="loginButtonSide" data-toggle="popover">Login<span class="caret"></span></a>
+            <div id="popover-content" class='hide'>
+                <ul >
+                    <form class="loginForm" th:action="@{/login}" method="post">
+                        <input type="hidden" name="remember-me" value="true"/>
+                        <li>
+                            <div class="form-group">
+                                <input type="text" id="loginEmail1" class="form-control loginEmail" placeholder="Email" name="username"/>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <input type="password" id="loginPass" class="form-control loginPass" placeholder="Password" name="password"/>
+                            </div>
+                        </li>
+                        <li><button type="submit" id="loginBtn2" class="btn btn-primary loginBtn">Login</button></li>
+                    </form>
+                    <li><a class="registration" href="#" th:href="@{/users/registration}">Register now</a></li>
+                    <li><a class="reset-pass" href="#" th:href="@{/users/requestNewPassword}">Reset account password</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="logoutMenu" class="btn-group logInOut" sec:authorize="isAuthenticated()">
+            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="username" sec:authentication="principal.user.name">User</span>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="#" th:href="@{/planQuotes}">Saved Quotes</a></li>
+                <li><a href="#" th:href="@{/purchasedPlans}">Purchase History</a></li>
+                <li><a href="#" th:href="@{/accountInfo}">My Account</a></li>
+                <li><a href="#" th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+        <a class="btn crossbtn"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/cross.svg}"
+                                     alt="Burger Open Menu"/></a>
+    </div>
+
+    <ul>
+        <li th:each="menu : ${headerMenuItems}">
+            <div class="btn-group">
+                <h3 th:text="${menu.title}"/>
+                <ul>
+                    <li th:each="submenu : ${menu.childMenuItems}"
+                        th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                        <a th:if="${#lists.size(submenu.childMenuItems) == 0}"
+                           th:case="${false}" th:text="${submenu.title}"
+                           th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                        <a th:if="${#lists.size(submenu.childMenuItems) == 0}"
+                           th:case="${true}" th:text="${submenu.title}"
+                           th:href="${(#strings.startsWith(submenu.url,'www.')?'http://':'')+submenu.url}"/>
+                        <span th:unless="${#lists.size(submenu.childMenuItems) == 0}" class="lvl-2"><span
+                                th:text="${submenu.title}"></span>
+                            <span class="caret"></span>
+                        </span>
+                        <ul th:unless="${#lists.size(submenu.childMenuItems) == 0}">
+                            <li th:each="submenu : ${submenu.childMenuItems}"
+                                th:switch="${#strings.startsWith(submenu.url,'http:/') || #strings.startsWith(submenu.url,'www.') || #strings.startsWith(submenu.url,'https:/')}">
+                                <a th:case="${false}" th:text="${submenu.title}"
+                                   th:href="@{${(#strings.startsWith(submenu.url,'/') ? '' :'/' )+submenu.url}}"/>
+                                <a th:case="${true}" th:text="${submenu.title}"
+                                   th:href="${(#strings.startsWith(submenu.url,'www.')?'http://':'')+submenu.url}"/>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="btn-group">
+                <h3>Quote</h3>
+                <ul>
+                    <li>
+                        <a id="currentQuote" href="#">See last quote</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/newQuote}">Get a new quote</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <div sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            <h3>Admin</h3>
+        </div>
+        <div th:if="${#authorization.expression('!hasRole(''ROLE_ADMIN'')') and #authorization.expression('hasRole(''ROLE_AFFILIATE'')')}">
+            <h3>Accounting</h3>
+        </div>
+        <ul>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users}">Users</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users/affiliationRequests}">Affiliattion
+                requests</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/companies}">Companies</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <h4 class="bold">API</h4>
+                <ul>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                            th:href="@{/vendors}">Vendors</a></li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                            th:href="@{/admin/categories}">Categories</a></li>
+                </ul>
+            </li>
+            <li class="hasMenu" sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <h4 class="bold">Accounting</h4>
+                </div>
+                <ul class="submenu">
+                    <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                        <a th:href="@{/commissions/payments}">Bookings</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN',)">
+                        <a th:href="@{/commissions/commission}">Commission</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                        <a th:href="@{/commissions/salary}">Salary</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ROLE_CUSTOMER_SERVICE', 'ROLE_ACCOUNTANT', 'ROLE_ADMIN')">
+                        <a th:href="@{/commissions/affiliatePayments}">Affiliate Payments</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')"><a
+                            th:href="@{/reports/sales}">Sales report</a></li>
+                </ul>
+            </li>
+            <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/payments}">My Bookings
+                report</a></li>
+            <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/salary}">My Salary
+                report</a></li>
+            <li sec:authorize="hasAnyRole('ROLE_AFFILIATE', 'ROLE_ADMIN')"><a th:href="@{/reports/affiliatePayments}">My
+                Payments report</a></li>
+            <li class="hasMenu" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                <h4 class="bold">CMS</h4>
+                <ul class="submenu">
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/page}">Page</a></li>
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/vendor_page}">Vendor</a></li>
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/category_content}">Insurance Terms</a></li>
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/menu}">Menu</a></li>
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/attachment}">File attachment</a></li>
+                    <li class="third-level" sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')"><a
+                            th:href="@{/cms/filing_claim_page}">Filing claim</a></li>
+                </ul>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/settings}">System settings</a></li>
+        </ul>
+    </div>
+    <div sec:authorize="!hasRole('ROLE_AFFILIATE')">
+        <a th:href="@{/create-affiliate-account}" class="btn btnaff">Become an Affiliate</a>
+    </div>
+
+</div>
+</body>
+</html>

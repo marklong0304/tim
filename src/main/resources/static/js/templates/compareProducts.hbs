@@ -1,0 +1,92 @@
+<table class="table table-bordered table-hover table-compare" id="my-table" style="overflow-x: scroll;">
+    <thead>
+        <tr>
+            <th></th>
+            {{#each products}}
+                <th class="tdclose col-{{@index}} {{addClass best 'recomm-column'}}">
+                    {{~#if best~}}
+                        RECOMMENDED PLAN
+                    {{~else~}}
+                        <a href="#" class="columnClose" data="col-{{@index}}">×</a>
+                    {{~/if~}}
+                </th>
+            {{/each}}
+        </tr>
+        <tr>
+            <th style="height: 136px;">
+                <p class="msg-original-plan description" style="display: none; padding: 10px; font-style: italic; color: #f05921;">
+                    Recommended plan will give you maximum coverage for your money.
+                </p>
+            </th>
+            {{#each products}}
+                <th class="col-{{@index}} {{addClass best 'recomm-column'}}">
+                    <div class="provider">
+                        <div class="img-box">
+                            <img src="https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{{vendorCode}}.png" alt="{{vendorName}}" class="img-responsive"/>
+                        </div>
+                        <p class="plan-name">{{policyMetaName}}</p>
+                    </div>
+                </th>
+            {{/each}}
+        </tr>
+        <tr>
+            <th class="pPlans" style="height: 146px; border-top-color: transparent !important;">
+                PROVIDER PLANS
+                <span class="pTotal">Total for 3 people</span>
+                <span class="pMessage">(All coverages are per person, unless otherwise noted)</span>
+            </th>
+            {{#each products}}
+                <th class="col-{{@index}} {{addClass best 'recomm-column'}}">
+                    <div class="price {{addClass best 'recom-price'}}">
+                        <span class="alt-provname">{{vendorName}}</span>
+                        <p class="alt-plan-name">{{policyMetaName}}</p>
+                        <p class="sum">${{fixed totalPrice}}</p>
+                        <p class="total">
+                            {{#if countOfTravelers}}
+                                <span class="forPeople"> total for {{countOfTravelers}} person</span>
+                            {{else}}
+                                <span class="forPeople"> total for {{countOfTravelers}} people</span>
+                            {{/if}}
+                        </p>
+                        <a href="javascript:void(0)" data={{policyMetaUniqueCode}} class="certificate details">Plan Details</a>
+                        <a onclick="getPurchase('{{policyMetaUniqueCode}}', null, null, '{{../requestId}}')" class="btn btnplan details">Buy Plan</a>
+                        {{#if certificateLink}}
+                            <a href="{{certificateLink}}" target="_blank" class="certificate">View Certificate</a>
+                        {{/if}}
+                    </div>
+                </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each jsonGroups}}
+            <tr class="tr-header expand" onclick="togg('par-{{name}}')" arrow="par-{{name}}">
+                <td  class="tr-header ">
+                    <div class="tr-header-inner">{{name}}<i class="chevron-filter"></i></div>
+                </td>
+                {{#each ../products}}
+                    <td class="col-{{@index}} "></td>
+                {{/each}}
+            </tr>
+            {{#each categories}}
+                <tr child="par-{{../name}}">
+                    <td>{{name}}</td>
+                    {{#each ../../products}}
+                        <td class="col-{{@index}} {{addClass best 'recomm-column'}}">
+                            {{#with (lookup categoryValues ../code)}}
+                                {{#if showCertificate}}
+                                    <span data-category-id="{{dataCategoryId}}" data-policy-meta-id="{{dataPolicyMetaId}}">{{value}}</span>
+                                    {{#if secondary}}<span data-toggle="modal" data-target="#secondaryModal"> (secondary)</span>{{/if}}
+                                {{else}}
+                                    <span class="simpleCell">{{value}}</span>
+                                {{/if}}
+                            {{/with}}
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+        {{/each}}
+    </tbody>
+
+</table>

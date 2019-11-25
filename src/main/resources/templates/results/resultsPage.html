@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Search Results</title>
+</head>
+<body class="blue-tooltip-right">
+
+<div layout:fragment="notification" th:remove="tag">
+    <div class="alert notf" id="notfcompare" data-spy="affix" style="display: none">
+        <div class="row">
+            <div class="col-xs-10">
+                <div class="notf-compare-inner">
+                    <button class="btn clearbtn compareButton" onclick="submitCompare();">Compare Selected Plans (<text id='notf-counter'>0</text>)</button>
+                    <button class="btn clearbtn" id='notf-clear'>Clear All</button>
+                </div>
+            </div>
+            <div class="col-xs-2"><button class="close btn" id="notf-x">&times;</button></div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="content" th:remove="tag">
+    <main>
+        <input id="quoteId" type="hidden" th:value="${quoteId}"/>
+        <input type="hidden" id="quoteRequestJson" name="quoteRequestJson" th:value="${quoteRequestJson}" />
+    <div id="errors" class="errors-div"></div>
+    <section class="summary">
+        <div class="container-fluid pattern">
+            <div class="container-fluid summary-inner">
+
+                <div class="row">
+                    <div class="col-sm-2">
+                       <!-- <a id="edit-quote" th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}"><u>Edit Quote</u></a><br/> -->
+                        <a id="editQuote" href = "javascript:void(0);" onclick="openEditQuote()"><u>Edit Quote</u></a>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li>Destination: <b th:if="${quoteRequest.destinationState != null}"
+                                                th:text="${quoteRequest.destinationState?.getCaption()+','}">Thailand</b>
+                                <b th:text="${quoteRequest.destinationCountry.getCaption()}"></b></li>
+                            <li>Departure Date: <b
+                                    th:text="${#temporals.format(quoteRequest.departDate,'MM/dd/yyyy')}">10/28/2016</b>
+                            </li>
+                            <li>Return Date: <b
+                                    th:text="${#temporals.format(quoteRequest.returnDate,'MM/dd/yyyy')}">11/11/2016</b>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li>Trip Cost: <b th:text="${'$' + quoteRequest.tripCost}">$9,000</b></li>
+                            <li>Travelers Ages: <b th:each="traveler,iterationStatus : ${quoteRequest.travelers}"
+                                                   th:text="${traveler.age} + (${iterationStatus.last==false} ? ', ' : '')">30,
+                                28, 25</b></li>
+                            <li>Resident of: <b th:if="${quoteRequest.residentState != null}"
+                                                th:text="${#strings.toUpperCase(quoteRequest.residentState?.getCaption())+','}">California</b>
+                                <b th:text="${#strings.toUpperCase(quoteRequest.residentCountry.getCaption())}"> United
+                                    States</b></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li>Citizen of: <b th:text="${quoteRequest.citizenCountry.getCaption()}">United
+                                States</b></li>
+                            <li>Deposit Date: <b
+                                    th:text="${quoteRequest.depositDate!=null and quoteRequest.tripCost != 0 ? #temporals.format(quoteRequest.depositDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                            </li>
+                            <li>Final Payment Date:
+                                <b
+                                        th:text="${quoteRequest.paymentDate!=null and quoteRequest.tripCost != 0 and quoteRequest.preExistingMedicalAndCancellation ? #temporals.format(quoteRequest.paymentDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-1">
+                        <a id="edit-quote" th:class="${#authorization.expression('isAuthenticated()')}?'':'disabled-link'"
+                           th:href="@{/results/saveQuote/{quoteId}(quoteId=${quoteId})}"><u>Save Quote</u></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="aside">
+        <div class="container-fluid">
+            <div class="row no-gutter flexbox">
+                <div class="col-sm-4 col-md-4 col-lg-3 filters">
+                    <div class="filters-inner">
+                        <form id="planTypeForm">
+                            <div class="filter-plan">
+                                <h1>Plan Type</h1>
+                                <div class="form-group">
+                                    <input id="radio-14" class="radio-custom radio-filter"
+                                           th:disabled="${quoteRequest.zeroCost}"
+                                           name="planType" value="COMPREHENSIVE" type="radio"
+                                           th:checked="${#strings.equals(quoteRequest.planType, 'COMPREHENSIVE')}"
+                                           onClick="_gaq.push(['_trackEvent', 'Filter', 'PlanType']);"/>
+                                    <label for="radio-14" class="radio-custom-label filter-label"
+                                           th:title="${quoteRequest.zeroCost} ? 'Not available when trip cost is $0. To enable click \'Edit Quote\' and enter real trip cost.':''">Trip Cancellation</label>
+                                    <input id="radio-15" class="radio-custom radio-filter"
+                                           th:checked="${#strings.equals(quoteRequest.planType, 'LIMITED')} "
+                                           name="planType" value="LIMITED" type="radio"
+                                           onClick="_gaq.push(['_trackEvent', 'Filter', 'PlanType']);"/>
+                                    <label for="radio-15" class="radio-custom-label filter-label"
+                                           title="Does not include Trip Cancellation option. It will reset Trip cost to $0.00.">No
+                                        Trip Cancellation</label>
+                                </div>
+                                <input type="hidden" name="requestId" id="requestId"/>
+                            </div>
+                        </form>
+                        <form id="updateCategoriesForm" action="#" th:action="@{/results/updateCategories}" method="post">
+                            <div class="filter-box" th:each="group,index : ${groups}"
+                                 th:if="${!#lists.isEmpty(group.categoryList)}">
+                                <h1 th:if="${index.index == 0}">Filters</h1>
+                                <div th:if="${index.index == 0}" class="actions">
+                                    <button class="btn" id="openf">Open All</button>|
+                                    <button class="btn" id="closef">Close All</button>|
+                                    <button class="btn reset" id="resetf">Reset</button>
+                                </div>
+                                <div class="filter-name" closed="false" data-th-attr="data-block=${index.index+1},data-group-name=${group.name}">
+                                    <h2 th:text="${group.name}">CANCELLATION </h2><i class="chevron-open" closed="false"
+                                                                                     data-th-attr="data-block=${index.index+1}"></i>
+                                </div>
+                                <div class="form-group filter-expand" closed="false"
+                                     data-th-attr="data-block=${index.index+1}"
+                                     th:each="category : ${group.categoryList}"
+                                     th:with="categoryVal=${quoteRequest.getCategories().containsKey(category.code)}">
+                                    <div class="inputWrap"
+                                         th:if="${category.type.name() == 'SIMPLE' || category.type.name() == 'CONDITIONAL'}">
+                                        <input th:id="${'category-' + category.id}"
+                                               class="checkbox-custom checkbox-filter simple" type="checkbox"
+                                               th:value="${category.name}"
+                                               th:name="${category.code}"
+                                               th:attr="data-text = ${category.name}, data-name = ${category.code}"
+                                               onClick="_gaq.push(['_trackEvent', 'Filter', 'Filter']);"/>
+                                        <label th:for="${'category-' + category.id}" class="checkbox-custom-label filter-label">
+                                            <span th:text="${category.name}">Cancel for any reason</span>&nbsp;<span th:id="${'category-count-' + category.id}"></span>
+                                        </label>
+                                    </div>
+                                    <div class="inputWrap catalog" th:if="${category.type.name() == 'CATALOG'}">
+                                        <input type="checkbox" th:checked="${categoryVal}"
+                                               th:id="${'category-' + category.id}"
+                                               th:attr="data-text = ${category.name}, data-name = ${category.code}"
+                                               class="checkbox-custom checkbox-filter catalog"
+                                               onClick="_gaq.push(['_trackEvent', 'Filter', 'Filter']);"
+                                        />
+                                        <label th:for="${'category-' + category.id}"
+                                               class="checkbox-custom-label filter-label">
+                                            <span th:text="${category.name}"/>&nbsp;<span
+                                                th:id="${'category-count-'+category.id}"/>&nbsp;
+                                            <span class="glyphicon glyphicon-chevron-down" style="font-size: 10px;"/>
+                                            <select class="form-control catalog-select" th:name="${category.code}" th:style="${categoryVal==false} ? 'display: none;' : ''">
+                                                <option value="-1"></option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                      </div>
+                </div>
+
+                  <div class="col-sm-8 col-md-8 col-lg-9 results results-block">
+                      <div class="selected-filters">
+                          <div id='selected-checkboxes' hidden="hidden">
+                              <h3>SELECTED FILTERS (
+                                  <text id='counter_text'>0</text>
+                                  ):
+                              </h3>
+                              <div class="counter_div"></div>
+                              <a href="#" class="clearbtn reset" id="clearbtn">Clear All</a>
+                          </div>
+
+                          <div class="row no-gutter views">
+                              <div class="col-md-6">
+                                  <h3 id="plansCount">PLANS : </h3>
+                                  <a href="#" onclick="compareAll();">
+                                      <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/comparsion.svg}" src="img/comparsion.svg"
+                                           alt="Comparsion Icon"/> <u>Compare All</u>
+                                  </a>
+                              </div>
+                              <form id="updateSortOrderForm" action="#" th:action="@{/results/updateSortOrder}" method="post">
+                                  <input id="sortOrderInput" type="hidden" name="sortOrder" th:value="${sortOrder}"/>
+                                  <div class="col-md-6">
+                                      <div class="row no-gutter sortby text-right">
+                                          <div class="col-lg-10">
+                                              <label class="control-label">SORT BY:</label>
+                                              <select id="sortOrderSelect" class="selectpicker form-control" th:selected="${sortOrder}">
+                                                  <option value="LTH">Price - Low to High</option>
+                                                  <option value="HTL">Price - High to Low</option>
+                                                  <option value="PROVIDER">Provider</option>
+                                                <!--  <option value="pt">Plan Type</option> -->
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+
+                      <!-- Notification -->
+
+                    <div id="loading" class="container-fluid notf">
+
+                        <div class="notf-loading text-center">
+                            <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" src="img/logo-gray.svg"
+                                 alt="Logo Notification"/>
+                            <h4>LOADING</h4>
+                            <hr/>
+                            <p>We are loading your insurance quotes.<br/>
+                                We will also recommend the best plan for you!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="load" class="recommended-plan" style="display: none">
+                        <p class="heading">YOUR RECOMMENDED PLAN</p>
+                        <p id="msg-original-plan" class="description" style="display: none">
+                            This plan will give you maximum coverage for your money.<span class="original"></span><br/>
+                            <span>* All coverages are per person, unless otherwise noted.</span>
+                        </p>
+                        <p id="msg-filtered-plan" class="description" style="display: none">
+                            This plan is recommended based on your new selection.<br/>
+                            <span>* All coverages are per person, unless otherwise noted.</span>
+                        </p>
+                        <p id="msg-empty-filtered-plan" class="description" style="display: none">
+                            Sorry, your quote has changed or expired. Please start over or edit quote.<br/>
+                            <span>* All coverages are per person, unless otherwise noted.</span>
+                        </p>
+                        <p id="msg-empty-original-plan" class="description" style="display: none">
+                            There are no plans available for requested parameters.<br/>
+                            <span>* All coverages are per person, unless otherwise noted.</span>
+                        </p>
+                    </div>
+                    <!-- INCLUDED PRODUCTS -->
+                    <div id="products-content" class="products-content">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <form id="compareForm" th:action="@{/comparePlans/}" method="get">
+        <input name="quoteId" th:value="${quoteId}" type="hidden"/>
+        <input id="plans" name="plans" th:value="${''}" type="hidden"/>
+        <input id="bestPlanCode" name="bestPlanCode" th:value="${''}" type="hidden"/>
+    </form>
+    <form id="purchaseForm" th:action="@{/results/purchasePage/{quoteId}(quoteId=${quoteId})}" method="get">
+        <input id="purchaseUniqueCode" type="hidden" name="uniqueCode" />
+        <input id="purchaseQuoteId" name="purchaseQuoteId" type="hidden"/>
+        <input id="purchaseRequestId" name="purchaseRequestId" type="hidden"/>
+    </form>
+    </main>
+</div>
+
+<!-- modal area -->
+<th:block layout:fragment="pageModal">
+    <div class="modal fade" id="linkModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info"><span id="zeroCostMessage">For Trip Cancellation benefit the Trip Cost must be more than zero. Enter Trip Cost?</span></p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btnmodal" th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="depositAndPaymentModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">Trip Cost, Initial Deposit Date and Final Payment Date must be filled. Enter the missing values?</p>
+                </div>
+                <div class="modal-footer">
+                    <a th:if="${quoteRequest.tripCost > 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuoteStep3/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a th:if="${quoteRequest.tripCost == 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="plandetailsModal" class="modal"></div>
+    <div id="editQuoteModal" class="modal"></div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+<!--
+    <script type="text/javascript" th:src="@{/js/lib/jquery-ui.min.js}"></script>
+-->
+    <script type="text/javascript" th:src="@{/js/lib/handlebars.min-latest.js}"></script>
+    <script type="text/javascript" th:src="@{/js/templates/templates.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/results/resultsCommons.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/results/results.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/results/filters.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/results/resultsCompare.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/details.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="text/javascript" th:src="@{/js/custom/results/editQuote.js?ver={version}(version=${appVersion.version})}"></script>
+    <script>
+        $('#notfcompare').affix({
+            offset: {
+                top: $('#notfcompare').offset().top + 84
+            }
+        });
+    </script>
+
+</th:block>
+
+</body>
+</html>

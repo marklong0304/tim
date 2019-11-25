@@ -1,0 +1,1 @@
+ALTER TABLE affiliate_payment ADD COLUMN total NUMERIC(19,2) NULL DEFAULT NULL;

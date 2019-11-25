@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title th:text="|${vendor.name} - Compensation matrix|"></title>
+    <style>
+        .borderTop {
+            border-top: 1px solid lightgray;
+            padding-bottom: 15px;
+        }
+        .paddingTop {
+            padding-top: 15px;
+        }
+        .noRightMargin {
+            margin-right: 0px;
+        }
+
+        .noLeftMargin {
+            padding-left: 0px;
+        }
+        label {
+            font-weight: normal !important;
+        }
+        .redBorder {
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div id="searchResultContent">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ol class="breadcrumb">
+                        <li th:each="b : ${breadcrumb}">
+                            <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="adminTitle" th:text="|Compensations - ${vendor.name}|"/>
+                </div>
+                <div class="col-md-2 text-right">
+                    <a th:href="@{${backUrl}}" href="/vendors" class="btn btn-default">
+                        Back
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <div class="row">
+                <div id="policies" class="col-md-4 noRightMargin borderTop paddingTop">
+                    <h3 class="adminTitle">Vendor Compensation</h3>
+                    <div class="row paddingTop vendorRow">
+                        <div class="col-md-12">
+                            <a style="cursor: pointer;" th:onclick="'getCompensationValuesForVendor(\''+ ${vendor.id} +'\');'" th:text="${vendor.name}"></a>
+                        </div>
+                    </div>
+                    <br />
+                    <h3 class="adminTitle">Vendor Policies</h3>
+                    <div class="row paddingTop policyRow" th:each="policyMeta : ${vendor.getPolicyMetaList()}">
+                        <div class="col-md-12">
+                            <a style="cursor: pointer;" th:onclick="'getCompensationValuesForPolicy(\''+ ${policyMeta.id} +'\');'" th:text="${policyMeta.displayName}"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 noLeftMargin borderTop paddingTop" style="overflow: auto; padding-left: 10px;">
+                    <div class="alert alert-success" role="alert" hidden="hidden">
+                        <button type="button" onclick="hideAlert()" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <span id="successMessage"/>
+                    </div>
+                    <div id="percentInfoForm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript" type="application/javascript">
+        var percentInfo;
+        $(document).ready(function () {
+            var vendorId = [[${vendor.id}]];
+            getCompensationValuesForVendor(vendorId);
+        });
+
+        function hideAlert() {
+            $('.alert-success').hide();
+        }
+        function addListener() {
+            var percentType = $("#percentType");
+            if (percentType.val() == 'PERCENT' || percentType.val() == 'RANGE_PERCENT') {
+                $(".numericValue").mask('000', {negative: false});
+            } else {
+                $('.numericValue').mask('0000000', {negative: false});
+            }
+            $('.numericValueFrom, .numericValueTo').mask('0000000', {negative: false});
+
+            percentType.bind("change", function () {
+                percentInfo.percentType = percentType.val();
+                if (percentType.val().indexOf('FIX') != -1){
+                    percentInfo.commissionValueType = 'FIX';
+                } else if (percentType.val().indexOf('PERCENT') != -1){
+                    percentInfo.commissionValueType = 'PERCENT';
+                } else {
+                    percentInfo.commissionValueType = 'CALCULATED';
+                }
+                percentInfo.percentInfo = [];
+                if (percentInfo.percentType != 'NONE') {
+                    percentInfo.percentInfo.push({
+                        value: '',
+                        valueFrom: '',
+                        valueTo: '',
+                        textValue: ''
+                    });
+                }
+                updatePercentInfoForm();
+            })
+        }
+
+        function addRange(){
+            fromFormToVariable();
+            percentInfo.percentInfo.push({
+                value: '',
+                valueFrom: '',
+                valueTo: '',
+                textValue: ''
+            });
+            updatePercentInfoForm();
+        }
+
+        function removeRange(id) {
+            percentInfo.percentInfo.splice(id, 1);
+            updatePercentInfoForm();
+        }
+
+        function updatePercentInfoForm() {
+            var content = getHeaderForm();
+            content += getBodyForm();
+            content += getFooterForm();
+            $('#percentInfoForm').html(content);
+            addListener();
+        }
+
+        function getHeaderForm () {
+            return'<div class="panel panel-info"> \
+                <div class="panel-heading clearfix"> \
+                    <div class="panel-title"> \
+                    <span>Compensation for '+ percentInfo.name +'</span> \
+                </div></div>';
+        }
+
+        function stringToHumanView(string) {
+            return string.charAt(0).toUpperCase() + string.substr(1).toLowerCase().replace('_', ' ');
+        }
+
+        function getBodyForm () {
+            var body = '<div class="panel-body">\
+                <div class="form-group">';
+            if (percentInfo.allCompensationsEqual || percentInfo.object == 'policy') {
+                body += '<label for="percentType">Compensation type:</label>';
+            } else {
+                body += '<div style="padding: 10px 0; color: blue;">Compensation type varies by policy</div>\
+                        <label for="percentType">Set compensation type for all vendor\'s policies:</label>';
+            }
+            body += '<select id="percentType" class="form-control">';
+            var percentTypeList = [[${T(com.travelinsurancemaster.model.PercentType).values()}]];
+            $.each(percentTypeList, function(i, type) {
+                if (type.$name == percentInfo.percentType) {
+                    body += '<option value="' + type.$name + '" selected="selected">' + stringToHumanView(type.$name) + '</option>';
+                } else {
+                    body += '<option value="' + type.$name + '">' + stringToHumanView(type.$name) + '</option>';
+                }
+            });
+
+            body += '</select></div>';
+
+            $.each(percentInfo.percentInfo, function (i, info){
+                body += '<div class="panel panel-default">\
+                <div class="panel-heading clearfix">\
+                    <div class="panel-title"><span>';
+
+                switch (percentInfo.commissionValueType) {
+                    case 'FIX' :
+                        body += 'Fixed value ($)';
+                        break;
+                    case 'PERCENT' :
+                        body += 'Percent value (%)';
+                        break;
+                    case 'CALCULATED' :
+                        body += 'Calculated value';
+                }
+
+                body += '</span>';
+                if (i != 0) {
+                    body += '<button type="submit" name="removeRange" class="btn btn-primary pull-right" onclick="javascript:removeRange('+ i +')"><i class="glyphicon glyphicon-remove"></i></button>';
+                }
+                body += '</div></div><div class="panel-body">';
+
+                if (percentInfo.percentType != 'CALCULATED') {
+                    body += '<div class="form-group"> \
+                        <label for="value">Value: </label> \
+                        <input value="' + info.value + '" id="value-'+ i +'" type="text" name="value" placeholder="' + (percentInfo.commissionValueType == 'FIX' ? 'Fixed value ($)' : 'Percent value (%)') + '" class="form-control numericValue"/> \
+                      <span id="value-'+ i +'-err" style="color: red"/>\
+                    </div>';
+                }
+
+                if (percentInfo.percentType == 'RANGE_PERCENT' || percentInfo.percentType == 'RANGE_FIXED') {
+                    body += '<div class="form-group"> \
+                        <label for="valueFrom">Value From ($): </label> <i class="glyphicon glyphicon-info-sign pull-right" style="color: #31708f; cursor: pointer;" title="Checking total price between from and to values">  </i>\
+                        <input value="'+ info.valueFrom +'" id="valueFrom-'+ i +'" type="text" name="valueFrom" placeholder="Value from" class="form-control numericValueFrom"/> \
+                        <span id="valueFrom-'+ i +'-err" style="color: red"/> \
+                    </div>\
+                    <div class="form-group"> \
+                        <label for="valueTo">Value To ($): </label> \
+                        <input value="'+ info.valueTo +'" id="valueTo-'+ i +'" type="text" name="valueTo" placeholder="Value to" class="form-control numericValueTo"/> \
+                        <span id="valueTo-'+ i +'-err" style="color: red"/> \
+                    </div>';
+                }
+
+                if (percentInfo.percentType == 'CALCULATED') {
+                    body += '<div class="form-group"> \
+                            <label for="textValue">Text Value: </label> \
+                            <textarea id="textValue" type="text" name="textValue" placeholder="Script text" class="form-control">'+ info.textValue +'</textarea> \
+                    <h6><i> Use JavaScript syntax. Result variable is used to return value. <br/>Such constants can be used: <b>price, destinationCountry,\
+                        tripCost,\
+                        departDate, returnDate, residenceState, residenceCountry, citizenShip, ages.</b></i></h6> \
+                        <h6><i> Example expression: <b>var result = price * 0.1 + 20;</b></i></h6> \
+                        <span id="textValue-err" style="color: red"/> \
+                        </div>';
+                }
+
+                body += '</div></div>';
+            });
+
+            if (percentInfo.percentType == 'RANGE_PERCENT' || percentInfo.percentType == 'RANGE_FIXED') {
+                body += '<div class="form-group"> \
+                    <button onclick="javascript:addRange()" id="addRange" name="addRange" class="btn btn-info">Add range</button> \
+                </div>';
+            }
+
+            body += '</div>';
+            return body;
+        }
+
+        function getFooterForm() {
+            return '</div> \
+                    <div class="col-md-12 text-right"> \
+                        <a onclick="javascript:save()" id="save" class="btn btn-success">Save</a> \
+                    </div>';
+        }
+
+        function getCompensationValuesForVendor(id) {
+            getCompensationValues('vendors/compensation/vendor/', id);
+        }
+
+        function getCompensationValuesForPolicy(id) {
+            getCompensationValues('vendors/compensation/policy/', id);
+        }
+
+        function gotoTop() {
+            $('body,html, .plansCompareHeight').animate({
+                scrollTop: 0
+            }, 400);
+        }
+        function fromFormToVariable() {
+            if (percentInfo.percentType == 'RANGE_PERCENT' || percentInfo.percentType == 'RANGE_FIXED') {
+                $.each(percentInfo.percentInfo, function(i, info){
+                    info.value = $('#value-' + i).val();
+                    info.valueFrom = $('#valueFrom-' + i).val();
+                    info.valueTo = $('#valueTo-' + i).val();
+                });
+            } else if(percentInfo.percentType == 'CALCULATED') {
+                percentInfo.percentInfo[0].textValue = $('#textValue').val();
+            } else if (percentInfo.percentType == 'NONE') {
+                percentInfo.percentInfo = [];
+            } else {
+                percentInfo.percentInfo[0].value = $('#value-0').val();
+            }
+        }
+        function save() {
+            if(percentInfo.object == 'vendor') {
+                if(confirm('All vendor\'s policies will be affected. Proceed?')) {
+                    saveCommission();
+                    location.reload();
+                }
+            } else {
+                saveCommission();
+            }
+        }
+
+        function saveCommission() {
+            fromFormToVariable();
+            saveCompensationValues('vendors/compensation/' + percentInfo.object);
+        }
+
+        function getCompensationValues(url, id) {
+            $.ajax({
+                url: context + url + id,
+                type: "GET",
+                success: function (response) {
+                    if (response) {
+                        percentInfo = response;
+                        updatePercentInfoForm();
+                        hideAlert();
+                        gotoTop();
+                    }
+                }
+            }).fail(function () {
+                alert("Error");
+            });
+        }
+
+        function saveCompensationValues(url) {
+            $.ajax({
+                url: context + url,
+                type: "PUT",
+                data: JSON.stringify(percentInfo),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data, textStatus, xhr) {
+                    gotoTop();
+                    $('#successMessage').text("Saved successfully");
+                    $('.alert-success').show();
+                },
+                error: function (data, textStatus, xhr) {
+                    $.each(JSON.parse(data.responseText), function(fieldName, textError){
+                        var field = $('#' + fieldName);
+                        field.addClass('redBorder');
+                        var errorSpan = $('#' + fieldName + '-err');
+                        errorSpan.text(textError);
+
+                        field.bind("keyup", function () {
+                            field.removeClass('redBorder');
+                            errorSpan.text('');
+                        })
+                    })
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

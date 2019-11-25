@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Vendor page edit</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+
+    <script th:src="@{/js/custom/cms/policyPage.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/custom/cms/policyMetaCategoryContentPage.js?ver={version}(version=${appVersion.version})}"/>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <style>
+        .link:hover {
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Page</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <h1 class="adminTitle" th:if="${policyMetaPage.id != null}">Edit policy page</h1>
+
+        <h1 class="adminTitle" th:if="${policyMetaPage.id == null}">Create policy page</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form id="editForm" action="#"
+                  th:action="@{/cms/vendor_page/policy_page/edit/{policyPageId}(policyPageId=${policyMetaPage.id})}"
+                  th:object="${policyMetaPage}"
+                  method="post">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">Policy page name: </label>
+                    <input id="name" type="text" th:field="*{caption}" placeholder="Name" class="form-control"/>
+                    <span th:errors="*{caption}" style="color: red"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="policyPlan">Policy Meta: </label>
+                    <p id="policyPlan"
+                       th:text="*{policyMeta.displayName + ' (' + policyMeta.uniqueCode + ')' + (policyMeta.active ? '' : ' - NOT ACTIVE')}"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Policy page description: </label>
+                    <span th:errors="*{description}" style="color: red"/>
+                    <input id="description" type="hidden" th:field="*{description}" class="form-control"/>
+
+                    <div id="summernote1"/>
+                    <iframe id="descriptionIFrame" th:src="@{/cms/page/wysiwyg}"
+                            style="border: none; width:100%; height: 560px"
+                            onload="initDescriptionIframe()"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Policy page content: </label>
+                    <span th:errors="*{content}" style="color: red"/>
+                    <input id="content" type="hidden" th:field="*{content}" class="form-control"/>
+
+                    <div id="summernote2"/>
+                    <iframe id="contentIFrame" th:src="@{/cms/page/wysiwyg}"
+                            style="border: none; width:100%; height: 560px"
+                            onload="initContentIframe()"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Policy page status:</label>
+                    <select th:field="*{status}" id="status" class="form-control">
+                        <option th:each="status : ${T(com.travelinsurancemaster.model.dto.cms.page.PageStatus).values()}"
+                                th:value="${status}" th:text="${status}"/>
+                    </select>
+                    <span th:errors="*{status}" style="color: red"/>
+                </div>
+
+                <input type="hidden" name="vendorPage" th:value="${policyMetaPage.vendorPage.id}"/>
+
+                <input type="hidden" name="version" th:field="*{version}"/>
+
+                <input type="hidden" name="id" th:field="*{id}"/>
+
+                <input type="hidden" name="policyMeta" th:value="${policyMetaPage.policyMeta.id}"/>
+
+
+                <div class="form-group" th:if="${policyMetaPage.id != null}">
+                    <a th:href="@{${'/page/provider/'+policyMetaPage.vendorPage.name+'/'+policyMetaPage.name}}"
+                       target="_blank">view page</a>
+                </div>
+
+                <div class="form-group">
+                    <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                    <button type="submit" class="btn btn-success btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal fade" id="chooseCategoryDialog" tabindex="-1" role="dialog" style="color: black;"
+             aria-labelledby="chooseCategoryDialogLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="chooseCategoryDialogLabel">Choose category content.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <select id="categoryCode" class="form-control">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.code}" th:text="${category.name}"/>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="" class="btn btn-primary" onclick="createPolicyMetaCategory(); return false;">Create
+                            policy meta category content</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${policyMetaPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Policy meta categories content</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1><a onclick="openChooseCategoryDialog(); return false;" class="btn btn-success xcrud-action "><i
+                            class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="policyMetaCategoryContentList">
+                    <thead>
+                    <tr class="info">
+                        <th width="23%">Category</th>
+                        <th width="23%">Group</th>
+                        <th width="15%">Create date</th>
+                        <th width="15%">Modified date</th>
+                        <th width="15%">Author</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="policyMetaCategory : ${policyMetaPage.policyMetaCategoryList}"
+                        th:id="'policyMetaCategory-' + ${policyMetaCategory.id}">
+                        <td th:text="${policyMetaCategory.name}"/>
+                        <td th:text="${policyMetaCategory.category.group.name}"/>
+                        <td th:text="${#dates.format(policyMetaCategory.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(policyMetaCategory.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${policyMetaCategory.author.name}"/>
+                        <td>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/vendor_page/policy_page/policy_meta_category/edit/{id}(id=${policyMetaCategory.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    th:classappend="${!policyMetaCategory.canDeleted}?'disabled':''"
+                                    th:onclick="'javascript:deleteCategoryContent(\'' + ${policyMetaCategory.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:if="${policyMetaPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Policy meta custom categories content</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1>
+                        <a th:href="@{/cms/vendor_page/policy_page/policy_meta_category/createCategory/customCategory/{id}/(id=${policyMetaPage.id})}"
+                           class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="policyMetaCustomCategoryContentList">
+                    <thead>
+                    <tr class="info">
+                        <th width="23%">Name</th>
+                        <th width="23%">Group</th>
+                        <th width="15%">Create date</th>
+                        <th width="15%">Modified date</th>
+                        <th width="15%">Author</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customCategory : ${policyMetaPage.policyMetaCustomCategoryList}"
+                        th:id="'policyMetaCustomCategory-' + ${customCategory.id}">
+                        <td th:text="${customCategory.name}"/>
+                        <td th:text="${customCategory.group}"/>
+                        <td th:text="${#dates.format(customCategory.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(customCategory.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${customCategory.author.name}"/>
+                        <td>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/vendor_page/policy_page/policy_meta_category/edit/{id}(id=${customCategory.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    th:onclick="'javascript:deleteCategoryContent(\'' + ${customCategory.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:if="${policyMetaPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Policy meta plan info content</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1>
+                        <a th:href="@{/cms/vendor_page/policy_page/policy_meta_category/createCategory/planInfo/{id}/(id=${policyMetaPage.id})}"
+                           class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="policyMetaPlanInfoContentList">
+                    <thead>
+                    <tr class="info">
+                        <th width="23%">Name</th>
+                        <th width="25%">Create date</th>
+                        <th width="25%">Modified date</th>
+                        <th width="18%">Author</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="planInfo : ${policyMetaPage.policyMetaPlanInfoList}"
+                        th:id="'policyMetaPlanInfo-' + ${planInfo.id}">
+                        <td th:text="${planInfo.name}"/>
+                        <td th:text="${#dates.format(planInfo.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(planInfo.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${planInfo.author.name}"/>
+                        <td>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/vendor_page/policy_page/policy_meta_category/edit/{id}(id=${planInfo.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    th:onclick="'javascript:deleteCategoryContent(\'' + ${planInfo.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:if="${policyMetaPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Policy meta policy restriction content</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1>
+                        <a th:href="@{/cms/vendor_page/policy_page/policy_meta_category/createCategory/policyRestrictions/{id}/(id=${policyMetaPage.id})}"
+                           class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="policyMetaPolicyRestrictionsContentList">
+                    <thead>
+                    <tr class="info">
+                        <th width="23%">Name</th>
+                        <th width="25%">Create date</th>
+                        <th width="25%">Modified date</th>
+                        <th width="18%">Author</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="restriction : ${policyMetaPage.policyMetaRestrictionsList}"
+                        th:id="'policyMetaRestriction-' + ${restriction.id}">
+                        <td th:text="${restriction.name}"/>
+                        <td th:text="${#dates.format(restriction.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(restriction.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${restriction.author.name}"/>
+                        <td>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/vendor_page/policy_page/policy_meta_category/edit/{id}(id=${restriction.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    th:onclick="'javascript:deleteCategoryContent(\'' + ${restriction.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div th:if="${policyMetaPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Policy meta policy package content</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1>
+                        <a th:href="@{/cms/vendor_page/policy_page/policy_meta_category/createCategory/Package/{id}/(id=${policyMetaPage.id})}"
+                           class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="policyMetaPackage">
+                    <thead>
+                    <tr class="info">
+                        <th width="23%">Name</th>
+                        <th width="25%">Create date</th>
+                        <th width="25%">Modified date</th>
+                        <th width="18%">Author</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="package : ${policyMetaPage.policyMetaPackageList}"
+                        th:id="'policyMetaPackage-' + ${package.id}">
+                        <td th:text="${package.name}"/>
+                        <td th:text="${#dates.format(package.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(package.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${package.author.name}"/>
+                        <td>
+                            <a class="btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/vendor_page/policy_page/policy_meta_category/edit/{id}(id=${package.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    th:classappend="${!package.canDeleted}?'disabled':''"
+                                    th:onclick="'javascript:deleteCategoryContent(\'' + ${package.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var policyMetaPageId = [[${policyMetaPage.id}]];
+        /*]]>*/
+        // @formatter:on
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".btn-submit").on('click', function (e) {
+                e.preventDefault();
+                if ($('#contentIFrame').contents().find("#summernote").code().length > 100000) {
+                    $('label[for="content"]').text("Policy page content: ");
+                    $('label[for="content"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Content Length is 100000 symbols </span>');
+                } else if ($('#descriptionIFrame').contents().find("#summernote").code().length > 100000) {
+                    $('label[for="content"]').text("Policy page description: ");
+                    $('label[for="content"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Description Length is 100000 symbols </span>');
+                } else {
+                    $("#content").val($('#contentIFrame').contents().find("#summernote").code());
+                    $("#description").val($('#descriptionIFrame').contents().find("#summernote").code());
+                    this.form.submit();
+                }
+            });
+        });
+
+        function initContentIframe() {
+            $('#contentIFrame').contents().find("#summernote").code($("#content").val());
+        }
+
+        function initDescriptionIframe() {
+            $('#descriptionIFrame').contents().find("#summernote").code($("#description").val());
+        }
+
+    </script>
+</div>
+</body>
+</html>

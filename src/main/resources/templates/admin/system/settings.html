@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>System settings</title>
+    <script th:src="@{/js/custom/admin/percentInfo.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent" style="min-height: 600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/admin/settings}">System settings</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">System settings</h1>
+
+        <hr/>
+        <h3>Cache control</h3>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-info clearCache" type="button" title="Clear product cache"
+                   th:href="@{/admin/settings/clearProductCache}">
+                    <span style="font-size: 18px; margin-right:20px;">Clear product cache</span>
+                    <span class="glyphicon glyphicon-erase"></span>
+                </a>
+                <a class="btn btn-info clearCache" type="button" title="Clear policy meta cache"
+                   th:href="@{/admin/settings/clearPolicyMetaCache}">
+                    <span style="font-size: 18px; margin-right:20px;">Clear policy meta cache</span>
+                    <span class="glyphicon glyphicon-erase"></span>
+                </a>
+            </div>
+        </div>
+        <hr/>
+        <!-- Default Link commission -->
+        <form id="editUserForm" action="#" th:action="@{/admin/settings/}" th:object="${systemSettings}" method="post">
+            <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <div th:each="e : ${#fields.detailedErrors()}">
+                    <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                    <span th:text="${e.message}">The error message</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="defaultLinkPercentType">Default affiliate link compensation type:</label>
+                <select th:field="*{defaultLinkPercentType}" id="defaultLinkPercentType"
+                        class="form-control percentType">
+                    <option th:each="percentType : ${T(com.travelinsurancemaster.model.PercentType).values()}"
+                            th:value="${percentType}" th:text="${percentType.type}"/>
+                </select>
+            </div>
+            <div th:each="percentInfo, row : ${systemSettings.defaultLinkPercentInfo}" id="defaultLinkPercentInfo">
+                <div th:id="${'defaultLinkPercentPanel' + __${row.index}__}" class="panel panel-info">
+                    <div class="panel-heading clearfix">
+                        <div class="panel-title">
+                            <span th:if="${systemSettings.defaultLinkPercentType.commissionValueType.name() == 'PERCENT'}"> Percent value (%)</span>
+                            <span th:if="${systemSettings.defaultLinkPercentType.commissionValueType.name() == 'FIX'}"> Fixed value ($)</span>
+                            <span th:if="${systemSettings.defaultLinkPercentType.commissionValueType.name() == 'CALCULATED'}"> Calculated value</span>
+                            <button type="submit" th:value="${row.index}" name="removeDefaultLinkRange"
+                                    th:unless="${row.index} == 0"
+                                    onclick="return confirmRemove();" class="btn btn-primary pull-right"><i
+                                    class="glyphicon glyphicon-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="defaultLinkPercentValue"
+                                   th:for="${'defaultLinkPercentValue' + __${row.index}__}">Value: </label>
+                            <input type="text" id="defaultLinkPercentValue"
+                                   th:id="${'defaultLinkPercentValue' + __${row.index}__}" name="percentValue"
+                                   th:placeholder="${systemSettings.defaultLinkPercentType.commissionValueType.name() == 'FIX'?'Fixed value ($)':'Percent value (%)'}"
+                                   th:field="*{defaultLinkPercentInfo[__${row.index}__].value}"
+                                   class="form-control numericValue"/>
+                            <span th:errors="*{defaultLinkPercentInfo[__${row.index}__].value}" style="color: red"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultLinkValueFrom" th:for="${'defaultLinkValueFrom' + __${row.index}__}">Value From ($): </label>
+                            <span class="pull-right"><i class="glyphicon glyphicon-info-sign" style="color: #31708f; cursor: pointer;" title="Checking total price between from and to values">  </i></span>
+                            <input id="defaultLinkValueFrom" th:id="${'defaultLinkValueFrom' + __${row.index}__}"
+                                   type="text" name="valueFrom" placeholder="Value from"
+                                   th:field="*{defaultLinkPercentInfo[__${row.index}__].valueFrom}"
+                                   class="form-control numericValue"/>
+                            <span th:errors="*{defaultLinkPercentInfo[__${row.index}__].valueFrom}" style="color: red"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultLinkValueTo" th:for="${'defaultLinkValueTo' + __${row.index}__}">Value
+                                To ($): </label>
+                            <input id="defaultLinkValueTo" th:id="${'defaultLinkValueTo' + __${row.index}__}"
+                                   type="text" name="valueTo" placeholder="Value to"
+                                   th:field="*{defaultLinkPercentInfo[__${row.index}__].valueTo}"
+                                   class="form-control numericValue"/>
+                            <span th:errors="*{defaultLinkPercentInfo[__${row.index}__].valueTo}" style="color: red"/>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <label for="defaultLinkTextValue" th:for="${'defaultLinkTextValue' + __${row.index}__}">Text
+                                Value: </label>
+                                    <textarea id="defaultLinkTextValue"
+                                              th:id="${'defaultLinkTextValue' + __${row.index}__}" type="text"
+                                              name="textValue" placeholder="Script text"
+                                              disabled="disabled"
+                                              th:field="*{defaultLinkPercentInfo[__${row.index}__].textValue}"
+                                              class="form-control"/>
+                            <h6><i> Use JavaScript syntax. Result variable is used to return value. <br/>Such constants
+                                can be used: <b>price, destinationCountry, tripCost,
+                                    departDate, returnDate, residenceState, residenceCountry, citizenShip, ages.</b></i>
+                            </h6>
+                            <h6><i> Example expression: <b>var result = price * 0.1 + 20;</b></i></h6>
+                            <span th:errors="*{defaultLinkPercentInfo[__${row.index}__].textValue}" style="color: red"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add range" id="addDefaultLinkRange" name="addDefaultLinkRange"
+                       class="btn btn-info"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Values" id="updateDefaultLinkValues" name="updateDefaultLinkValues"
+                       class="btn btn-info" style="display: none"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+        <!-- end default link commission -->
+        <hr/>
+        <label for="defaultLinkPercentType">System phone:</label>
+
+        <form id="updatePhoneForm" action="#" th:action="@{/admin/settings}" th:object="${systemSettings}"
+              method="post">
+            <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <div th:each="e : ${#fields.detailedErrors()}">
+                    <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                    <span th:text="${e.message}">The error message</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" id="phone" th:field="*{phone}" class="form-control"/>
+                <span th:errors="*{phone}" style="color: red"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" name="updatePhone">Save</button>
+            </div>
+        </form>
+        <!--<div>-->
+            <!--<hr/>-->
+            <!--<h3>Cms control</h3>-->
+
+            <!--<div class="row" th:remove="all">-->
+                <!--<div class="col-md-12">-->
+                    <!--<a class="btn btn-info fillCms" type="button" title="Generate glossary"-->
+                       <!--th:href="@{/admin/settings/fillGlossary}">-->
+                        <!--<span style="font-size: 18px; margin-right:20px;">Generate glossary</span>-->
+                        <!--<span class="glyphicon glyphicon-upload"></span>-->
+                    <!--</a>-->
+                    <!--<a class="btn btn-info fillCms" type="button" title="Generate vendor pages"-->
+                       <!--th:href="@{/admin/settings/fillVendorPages}">-->
+                        <!--<span style="font-size: 18px; margin-right:20px;">Generate vendor pages</span>-->
+                        <!--<span class="glyphicon glyphicon-upload"></span>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-4">-->
+                    <!--<select id="vendor" class="form-control" style="margin-right:20px;">-->
+                        <!--<option value="">Not Selected</option>-->
+                        <!--<option th:each="vendor : ${vendors}" th:value="${vendor.id}" th:text="${vendor.name}"/>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                    <!--<a id="generateVendorPage" class="btn btn-info" type="button" title="Generate vendor page"-->
+                       <!--th:href="@{/admin/settings/fillVendorPageById}">-->
+                        <!--<span style="font-size: 18px;">Generate vendor page</span>-->
+                        <!--<span class="glyphicon glyphicon-upload"></span>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div id="generateVendorPageLoading" class="col-md-4">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <hr/>
+        <h3>Certificates control</h3>
+
+        <div class="row">
+            <div class="col-md-4">
+                <a class="btn btn-info importCertificates" type="button" title="Import certificates from cms"
+                   th:href="@{/admin/settings/importCertificates}" style="display: none;">
+                    <span style="font-size: 18px; margin-right:20px;">Import certificates from cms</span>
+                    <span class="glyphicon glyphicon-import"></span>
+                </a>
+                <a id="importGrabberCertificates" class="btn btn-info" type="button"
+                   title="Import certificates from grabber" th:href="@{/admin/settings/importGrabberCertificates}">
+                    <span style="font-size: 18px; margin-right:20px;">Import certificates from grabber</span>
+                    <span class="glyphicon glyphicon-import"></span>
+                </a>
+            </div>
+            <div id="importGrabberCertificatesLoading" class="col-md-4">
+            </div>
+        </div>
+    </div>
+    <script>
+        var lastValue;
+        $(function () {
+            var defaultLinkPercentType = $("#defaultLinkPercentType");
+            defaultLinkPercentType.bind("focus", function (e) {
+                lastValue = $(this).val();
+            }).bind("change", function () {
+                var changeConfirmation = confirm("Settings will be permanently deleted. Confirm?");
+                if (!changeConfirmation) {
+                    $(this).val(lastValue);
+                } else {
+                    $("#defaultLinkPercentInfo").html("");
+                    $("#updateDefaultLinkValues").click();
+                }
+            });
+
+            if (defaultLinkPercentType.val() == 'PERCENT' || defaultLinkPercentType.val() == 'FIXED') {
+                $('#defaultLinkValueFrom0').parent().hide();
+                $('#defaultLinkValueTo0').parent().hide();
+                $('#addDefaultLinkRange').parent().hide();
+                $('#defaultLinkValueFrom0').prop("disabled", true);
+                $('#defaultLinkValueTo0').prop("disabled", true);
+            } else if (defaultLinkPercentType.val() == 'NONE') {
+                $('#defaultLinkPercentPanel0').hide();
+                $('#addDefaultLinkRange').parent().hide();
+                $('#defaultLinkPercentValue0').prop("disabled", true);
+                $('#defaultLinkValueFrom0').prop("disabled", true);
+                $('#defaultLinkValueTo0').prop("disabled", true);
+            } else if (defaultLinkPercentType.val() == 'CALCULATED') {
+                $('#addDefaultLinkRange').parent().hide();
+                $('#defaultLinkPercentValue0').parent().hide();
+                $('#defaultLinkValueFrom0').parent().hide();
+                $('#defaultLinkValueTo0').parent().hide();
+                $('#defaultLinkPercentValue0').prop("disabled", true);
+                $('#defaultLinkValueFrom0').prop("disabled", true);
+                $('#defaultLinkValueTo0').prop("disabled", true);
+                $('#defaultLinkTextValue0').parent().show();
+                $('#defaultLinkTextValue0').prop("disabled", false);
+            }
+
+            $(".numericValue").mask('00000000');
+
+            $('.clearCache').click(function (e) {
+                e.preventDefault();
+                $.post($(this).attr('href'), function () {
+                    alert("success");
+                }).fail(function () {
+                    alert("error cleaning cache");
+                });
+            });
+
+            $('.fillCms').click(function (e) {
+                e.preventDefault();
+                $.post($(this).attr('href'), function () {
+                    alert("success");
+                }).fail(function () {
+                    alert("error");
+                });
+            });
+
+            $('.importCertificates').click(function (e) {
+                e.preventDefault();
+                if (!confirm('Are you sure you want to delete old certificates and generate new from CMS?')) {
+                    return;
+                }
+                $.post($(this).attr('href'), function (data) {
+                    alert(data);
+                }).fail(function () {
+                    alert("error");
+                });
+            });
+
+            var spinner2 = new Spinner();
+            $('#importGrabberCertificates').click(function (e) {
+                e.preventDefault();
+                if (!confirm('Are you sure you want to update all certificates with new certificates from grabber?')) {
+                    return;
+                }
+                $(this).attr('disabled', 'disabled');
+                spinner2.spin($('#importGrabberCertificatesLoading')[0]);
+                $.post($(this).attr('href'), function (data) {
+                    alert("success");
+                    $('#importGrabberCertificates').removeAttr('disabled');
+                    spinner2.stop();
+                }).fail(function () {
+                    alert("error");
+                    $('#importGrabberCertificates').removeAttr('disabled');
+                    spinner2.stop();
+                });
+            })
+
+            var spinner = new Spinner();
+            $('#generateVendorPage').click(function (e) {
+                e.preventDefault();
+                var vendorDiv = $('#vendor');
+                var vendorId = vendorDiv.val();
+                if (!vendorId) {
+                    alert('Please select vendor');
+                    return;
+                }
+                if (!confirm('All existing cms pages would be deleted! Are you sure?')) {
+                    return;
+                }
+                $(this).attr('disabled', 'disabled');
+                vendorDiv.attr('disabled', 'disabled');
+                spinner.spin($('#generateVendorPageLoading')[0]);
+                $.post($(this).attr('href'), {vendorId: vendorId}, function (data) {
+                    alert("success");
+                    $('#generateVendorPage').removeAttr('disabled');
+                    vendorDiv.removeAttr('disabled');
+                    spinner.stop();
+                }).fail(function () {
+                    alert("error");
+                    $('#generateVendorPage').removeAttr('disabled');
+                    vendorDiv.removeAttr('disabled');
+                    spinner.stop();
+                });
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

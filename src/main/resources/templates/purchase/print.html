@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_print" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Print Purchase</title>
+</head>
+<body>
+<style type="text/css">
+    html {
+        -webkit-text-size-adjust: none;
+    }
+
+    body:first-of-type .lineHeight0 {
+        line-height: 0;
+    }
+
+    .linkWhite a:link, .linkWhite a:visited {
+        color: #FFFFFF;
+    }
+
+    a[href^=tel], a[href^=mailto], a, .ii a[href], a span {
+        color: #fff !important;
+        text-decoration: none;
+    }
+
+    .appleLinksWhite a {
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+    .appleLinks a {
+        color: #012236 !important;
+        text-decoration: none !important;
+    }
+</style>
+<th:block layout:fragment="content">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%"
+           style="min-width:560px;background:#ffffff; max-width: 100%">
+        <tbody>
+        <tr>
+            <td style="text-align:center;background:#002d48">
+                <center style="display:inline-block;vertical-align:top">
+                    <table cellpadding="0" cellspacing="0" border="0" width="600" style="width:560px">
+                        <tbody>
+                        <tr>
+                            <td style="width:560px;text-align:left;overflow:hidden">
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td style="width:170px;white-space:nowrap; vertical-align: middle;height: 43px; min-height: 43px;"
+                                            height="43">
+                                            <img th:src="${logo}" border="0"
+                                                 style="border:0;vertical-align: top;display:block;" width="170"
+                                                 height="29" alt="Logo" class="CToWUd"/>
+                                        </td>
+                                        <td style="width:560px;padding-top:0;vertical-align: top" align="right">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%"
+                                                   style="width:100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="text-align:right;vertical-align:middle;white-space:nowrap;padding-left:27px;height: 43px; min-height: 43px;"
+                                                        height="43"><font
+                                                            style="color: #ffffff;">800<span>-</span>614<span>-</span>8505</font>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;vertical-align:top;height:357px">
+                <center style="display:inline-block;vertical-align:top">
+                    <table cellpadding="0" cellspacing="0" border="0" width="544" style="width:547px">
+                        <tbody>
+                        <tr>
+                            <td style="width:547px;text-align:left;overflow:hidden;padding-bottom:33px">
+                                <table cellpadding="0" cellspacing="0" border="0" width="560"
+                                       style="background:#ffffff;width:544px">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="width:100%;background:#fff;height:22px">
+                                                        <div style="min-height:22px">
+                                                            &nbsp;
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-top:0;font-size:23px;mso-line-height-rule: exactly;line-height:19px;padding-bottom:7px;">
+                                                        <div style="font-family:Tahoma,Helvetica,sans-serif;font-size:18px;mso-line-height-rule: exactly;line-height:19px;color:#010101!important;letter-spacing: 0.4px;">
+                                                            <span th:text="'Dear '+${userName}+','">Dear Yelena Levitina,</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:14px;font-size:14px;padding-top:7px;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Thank you for your purchase from Travel Insurance Master.  Your credit card has been charged $34 for the <span
+                                                                            th:text="${purchase.purchaseRequest.product.policyMetaCode.name}"></span> plan directly by <span
+                                                                            th:text="${purchase.policyMeta.vendor.name}"></span>. You will also receive a purchase confirmation with the certificate of insurance from <span
+                                                                            th:text="${purchase.policyMeta.vendor.name}"></span>.  Please review all plan information and contact us if you have any questions about your purchase or your coverage.  Below is the summary of your purchase and important contact information.  We recommend you print your policy certificate to have important contact and coverage information with you during your trip.</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:17px;font-size:14px;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">We take great pride in our work and love being able to help you.  We wish you a wonderful, safe and stress-free trip. </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:24px;font-size:14px;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Thank you for choosing Travel Insurance Master.</span>
+                                                                </td>
+                                                            </tr>
+                                                            <!--first row-->
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-top:1px;padding-bottom:2px;font-size:14px; padding-left: 6px;border-left-width:4px;border-left-style:solid;border-left-color:#009900;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#002d48!important;text-decoration:none;letter-spacing: 0.4px;font-weight: bold;">Order Information</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding-top: 10px;padding-bottom: 31px;">
+                                                                    <table cellpadding="0" cellspacing="0" border="0"
+                                                                           width="100%"
+                                                                           style="border-left-width:1px;border-left-style:solid;border-left-color:#012236;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Purchase Date</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/calendar.png}"
+                                                                                     alt="Calendar"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${#temporals.format(purchase.purchaseDate,'MM/dd/yyyy')}">12/02/2015</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:if="${purchase.orderRequestId!=null}">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Order Number</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/basket.png}"
+                                                                                     alt="basket"
+                                                                                     width="21"
+                                                                                     height="20"
+                                                                                     style="width: 21px; display:block; height: 20px;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${purchase.orderRequestId}">AALE1121307C</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Plan Name</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/planName.png}"
+                                                                                     alt="Plan Name"
+                                                                                     width="20"
+                                                                                     height="12"
+                                                                                     style="width: 20px; display:block; height: 12px;vertical-align: top;padding-top: 3px;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${purchase.purchaseRequest.product.policyMetaCode.name}">Allianz Global Assistance Basic</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Policy Number</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/planName.png}"
+                                                                                     alt="Plan Name"
+                                                                                     width="20"
+                                                                                     height="12"
+                                                                                     style="width: 20px; display:block; height: 12px;vertical-align: top;padding-top: 3px"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${purchase.policyNumber}">I10084359-001</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:if="${certificateLink!=null}">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Plan Details</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <a th:href="${certificateLink}" target="_blank"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/pdf.png}"
+                                                                                     alt="Certificate"
+                                                                                     width="20"
+                                                                                     height="19"
+                                                                                     style="width: 20px; height: 19px;display:block;vertical-align: top;"
+                                                                                     border="0"/></a>
+                                                                            </td>
+                                                                            <!--<td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">-->
+                                                                                  <!--<a style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;letter-spacing: 0.4px;color:#0099cc!important;text-decoration:underline"-->
+                                                                                     <!--th:href="${certificateLink}" href="#"-->
+                                                                                     <!--target="_blank"><font-->
+                                                                                          <!--color="#0099cc"-->
+                                                                                          <!--face="Tahoma,Helvetica,sans-serif">Download Plan Details</font></a>-->
+                                                                              <!--</td>-->
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Total Cost</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/cost.png}"
+                                                                                     alt="Cost"
+                                                                                     width="21"
+                                                                                     height="20"
+                                                                                     style="width: 21px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${'$' + #numbers.formatDecimal(purchase.totalPrice, 1, 2)}">$34.00</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <!--second row-->
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-top:1px;padding-bottom:2px;font-size:14px; padding-left: 6px;border-left-width:4px;border-left-style:solid;border-left-color:#009900;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#002d48!important;text-decoration:none;letter-spacing: 0.4px;font-weight: bold;">Customer Information</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding-top: 10px;padding-bottom: 31px;">
+                                                                    <table cellpadding="0" cellspacing="0" border="0"
+                                                                           width="100%"
+                                                                           style="border-left-width:1px;border-left-style:solid;border-left-color:#012236;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Insured(s)</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/user.png}"
+                                                                                     alt="User"
+                                                                                     width="21"
+                                                                                     height="20"
+                                                                                     style="width: 21px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:each="traveler,iterationStatus : ${purchaseRequest.travelers}"
+                                                                                  th:text="${traveler.firstName + ' ' + traveler.lastName} + (${iterationStatus.last==false}?', ':'')">Yelena Levitina</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Address</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/map.png}"
+                                                                                     alt="Map"
+                                                                                     width="15"
+                                                                                     height="20"
+                                                                                     style="width: 15px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${address}">805 Huntington Ave Boston,<br/> Massachusetts 02115</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Daytime Phone</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/phone.png}"
+                                                                                     alt="Phone"
+                                                                                     width="23"
+                                                                                     height="21"
+                                                                                     style="width: 23px; height: 21px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <font face="Tahoma,Helvetica,sans-serif"
+                                                                                      th:text="${purchaseRequest.getPhone()}">617-407-4433</font>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Evening Phone</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/phone.png}"
+                                                                                     alt="Phone"
+                                                                                     width="23"
+                                                                                     height="21"
+                                                                                     style="width: 23px; height: 21px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <font face="Tahoma,Helvetica,sans-serif"
+                                                                                      th:text="${purchaseRequest.getPhone()}">617-407-4433</font>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Email Address</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/mail.png}"
+                                                                                     alt="Mail"
+                                                                                     width="21"
+                                                                                     height="13"
+                                                                                     style="width: 21px; height: 13px;display:block;vertical-align: top;padding-top: 3px;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;vertical-align: top;">
+                                                                                <font face="Tahoma,Helvetica,sans-serif">
+                                                                                    <th:block
+                                                                                            th:text="${purchaseRequest.getEmail()}">
+                                                                                        yelevitina@gmail.com
+                                                                                    </th:block>
+                                                                                </font>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <!--third row-->
+                                                            <tr>
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-top:1px;padding-bottom:2px;font-size:14px; padding-left: 6px;border-left-width:4px;border-left-style:solid;border-left-color:#009900;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#002d48!important;text-decoration:none;letter-spacing: 0.4px;font-weight: bold;">Trip Details</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding-top: 10px;padding-bottom: 31px;">
+                                                                    <table cellpadding="0" cellspacing="0" border="0"
+                                                                           width="100%"
+                                                                           style="border-left-width:1px;border-left-style:solid;border-left-color:#012236;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Primary Destination</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/destination.png}"
+                                                                                     alt="Destination"
+                                                                                     width="14"
+                                                                                     height="16"
+                                                                                     style="width:14px; height: 16px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                      th:text="${(quoteRequest.destinationState!=null)?quoteRequest.destinationState?.getCaption():quoteRequest.destinationCountry}">Aruba</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Departure Date</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/calendar.png}"
+                                                                                     alt="Calendar"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${#temporals.format(quoteRequest.departDate,'MM/dd/yyyy')}">01/01/2016</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Return Date</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/calendar.png}"
+                                                                                     alt="Calendar"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${#temporals.format(quoteRequest.returnDate,'MM/dd/yyyy')}">01/08/2015</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:if="${quoteRequest.depositDate!=null}">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Initial Trip Payment Date</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/calendar.png}"
+                                                                                     alt="Calendar"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${#temporals.format(quoteRequest.depositDate,'MM/dd/yyyy')}">12/01/2016</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:if="${quoteRequest.tripCostPerTraveler!=null}">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Trip Cost Per Traveler</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/calendar.png}"
+                                                                                     alt="Calendar"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"
+                                                                                  th:text="${quoteRequest.tripCostPerTravelerText}">NaN</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:remove="all">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Tour Operator</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/operator.png}"
+                                                                                     alt="Operator"
+                                                                                     width="12"
+                                                                                     height="20"
+                                                                                     style="width: 12px; padding-left: 3px; display:block;height: 20px;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">None</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:remove="all">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Airline</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/airline.png}"
+                                                                                     alt="Airline"
+                                                                                     width="20"
+                                                                                     height="20"
+                                                                                     style="width: 20px; height: 20px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Antinea Airlines</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr th:remove="all">
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Cruise Line</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/ship.png}"
+                                                                                     alt="Ship"
+                                                                                     width="16"
+                                                                                     height="16"
+                                                                                     style="width: 16px; height: 16px;display:block;vertical-align: top;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Nonem</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <!--fourth row-->
+                                                            <tr th:remove="all">
+                                                                <td style="font-family:Tahoma,Helvetica,sans-serif;padding-top:1px;padding-bottom:2px;font-size:14px; padding-left: 6px;border-left-width:4px;border-left-style:solid;border-left-color:#009900;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#002d48!important;text-decoration:none;letter-spacing: 0.4px;font-weight: bold;">Provider Information</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr th:remove="all">
+                                                                <td style="padding-top: 10px;padding-bottom: 31px;">
+                                                                    <table cellpadding="0" cellspacing="0" border="0"
+                                                                           width="100%"
+                                                                           style="border-left-width:1px;border-left-style:solid;border-left-color:#012236;">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Address</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/map.png}"
+                                                                                     alt="Map"
+                                                                                     width="15"
+                                                                                     height="20"
+                                                                                     style="width: 15px; height: 20px;vertical-align: top;display:block;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">AGA Service Company <br/>9950 Mayland Drive <br/> Richmond, VA 23233</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">&nbsp;</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/map.png}"
+                                                                                     alt="Map"
+                                                                                     width="15"
+                                                                                     height="20"
+                                                                                     style="width: 15px; height: 20px;vertical-align: top;display:block;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Jefferson Insurance Company<br/> 9950 Mayland Drive<br/> Richmond, VA 23233<br/> For CT, IN, NH, &amp; NY:</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">&nbsp;</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/map.png}"
+                                                                                     alt="Map"
+                                                                                     width="15"
+                                                                                     height="20"
+                                                                                     style="width: 15px; height: 20px;vertical-align: top;display:block;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">BCS Insurance Company<br/> Suite 200<br/> 2 Mid America Plaza<br/> Oakbrook Terrace, IL 60181</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Claim</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/phone.png}"
+                                                                                     alt="Phone"
+                                                                                     width="23"
+                                                                                     height="21"
+                                                                                     style="width: 23px; height: 21px;vertical-align: top;display:block;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;vertical-align: top;">
+                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;"><a
+                                                                                    style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;letter-spacing: 0.4px;color:#0099cc!important;text-decoration:underline"
+                                                                                    href="tel:8006148505"
+                                                                                    target="_blank"><font
+                                                                                    color="#0099cc"
+                                                                                    face="Tahoma,Helvetica,sans-serif">800<span>-</span>614<span>-</span>8505</font></a><br/> Monday <span>-</span> Friday: 7am <span>-</span> midnight
+                                                                                <br/> Saturday - Sunday: 9am - 9pm</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Mailing Address</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;padding-bottom:21px;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/map.png}"
+                                                                                     alt="Map"
+                                                                                     width="21"
+                                                                                     height="13"
+                                                                                     style="width: 21px; height: 13px;vertical-align: top;display:block;padding-top: 3px;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;vertical-align: top;padding-bottom:21px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Allianz Global Assistance<br/> 9950 Mayland Drive<br/> Richmond, VA 23233</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px; width: 200px;vertical-align: top;padding-left: 10px;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Underwriter</span>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;width: 30px; vertical-align: top;">
+                                                                                <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/mails/mail.png}"
+                                                                                     alt="Mail"
+                                                                                     width="21"
+                                                                                     height="13"
+                                                                                     style="width: 21px; height: 13px;display:block;vertical-align: top;padding-top: 3px;"
+                                                                                     border="0"/>
+                                                                            </td>
+                                                                            <td style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;vertical-align: top;">
+                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;color:#012236!important;text-decoration:none;letter-spacing: 0.4px;">Coverage is underwritten by Jefferson<br/> Insurance Company and BCS Insurance<br/> Company</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding-bottom: 13px;">
+                                                                    <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;letter-spacing: 0.4px;color:#012236!important;text-decoration:none">If this email was sent in error, or if you did not submit this request, please contact us at your earliest convenience.</span>
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="" align="right">
+                                                                    <table cellpadding="0" cellspacing="0" border="0"
+                                                                           width="100%" style="width:100%">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td style="width:4000px">&nbsp;</td>
+                                                                            <td style="text-align:right;vertical-align:top;white-space:nowrap;"
+                                                                                align="right">
+                                                                                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:14px;letter-spacing: 0.2px;color:#012236!important;text-decoration:none;text-align: right;font-style: italic;">Thank you,<br/>
+                                                                                                                <span style="font-family:Tahoma,Helvetica,sans-serif;letter-spacing: 0.2px;color:#012236;text-decoration:none"
+                                                                                                                      class="appleLinks"><font
+                                                                                                                        color="#012236">TravelInsuranceMaster.com</font></span></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;background:#012236;padding-top:2px">
+                <center style="display:inline-block;vertical-align:top">
+                    <table cellpadding="0" cellspacing="0" border="0"
+                           style="width:620px;text-align:left;overflow:hidden">
+                        <tbody>
+                        <tr>
+                            <td style="padding-top:11px;min-height:49px;text-align: left;vertical-align: top;padding-right: 7px; padding-bottom: 7px; padding-left: 10px;">
+                                <table cellpadding="0" cellspacing="0" border="0"
+                                       style="text-align:left;overflow:hidden">
+                                    <tr>
+                                        <td style="padding-bottom:2px;">
+                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-weight: bold;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none">Address</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:2px;">
+                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none">Travel Insurance Master</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:2px;">
+                                        <span style="font-family:Tahoma,Helvetica,sans-serif;font-weight: bold;font-size:12px;letter-spacing: 0.2px; color:#fff;text-decoration:none"
+                                              class="appleLinksWhite"><font color="#ffffff">16 Webster St</font></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <span style="font-family:Tahoma,Helvetica,sans-serif;font-weight: bold;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none"
+                                              class="appleLinksWhite"><font
+                                                color="#ffffff">Brookline MA 02446</font></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding-top:11px;min-height:49px;text-align: left;vertical-align: top;padding-right: 6px; padding-bottom: 7px;">
+                                <table cellpadding="0" cellspacing="0" border="0"
+                                       style="text-align:left;overflow:hidden">
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-weight: bold;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none">Customer Care</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:1px;">
+                                            <a href="tel:8006148505"
+                                               style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none"
+                                               class="appleLinksWhite"><font
+                                                    color="#ffffff">800<span>-</span>614<span>-</span>8505</font></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <a style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:underline;"
+                                               href="mailto:support@TravelInsuranceMaster.com"
+                                               target="_blank"><font
+                                                    color="#ffffff">support@TravelInsuranceMaster.com</font></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="padding-top:11px;min-height:49px;text-align: left;vertical-align: top; padding-bottom: 7px;padding-right: 10px;">
+                                <table cellpadding="0" cellspacing="0" border="0"
+                                       style="text-align:left;overflow:hidden">
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <span style="font-family:Tahoma,Helvetica,sans-serif;font-weight: bold;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none">Hours (Eastern Time)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <a href="#"
+                                               style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff!important;text-decoration:none; cursor: default"
+                                               class="appleLinksWhite"><font color="#ffffff">Monday <span>&#8211;</span>
+                                                Friday: 9am <span>&#8211;</span> 6pm</font></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <a href="#"
+                                               style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff!important;text-decoration:none;cursor: default"
+                                               class="appleLinksWhite"><font color="#ffffff">Saturday: 10am <span>&#8211;</span> 3pm</font></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:3px;">
+                                            <a style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:underline;"
+                                               href="https://travelinsurancemaster.com/page/providers/${purchase.policyMeta.vendor.name}" target="_blank"><font
+                                                    color="#ffffff">You can also contact <span th:text="${purchase.policyMeta.vendor.name}"></span></font></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;background:#012236;padding-top:2px;padding-bottom: 15px;">
+                <center style="display:inline-block;vertical-align:top">
+                    <table cellpadding="0" cellspacing="0" border="0"
+                           style="width:620px;text-align:left;overflow:hidden">
+                        <tbody>
+                        <tr>
+                            <td style="text-align: left;padding-left: 10px;padding-right: 10px;">
+                                <span style="font-family:Tahoma,Helvetica,sans-serif;font-size:12px;letter-spacing: 0.2px;color:#fff;text-decoration:none">© <span th:text="${#dates.year(#dates.createNow())}">2018</span> Travel Insurance Master</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+</body>
+</html>

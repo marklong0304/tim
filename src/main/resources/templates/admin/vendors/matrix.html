@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Vendor Matrix</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script src="/js/lib/dataTables.fixedColumns.min.js"
+            th:src="@{/js/lib/dataTables.fixedColumns.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/fixedColumns.bootstrap.min.css"
+          th:href="@{/css/lib/fixedColumns.bootstrap.min.css}"/>
+    <script th:inline="javascript">
+        var table;
+        function initT() {
+            var h = $(window).height() - /*$('#footer').height()*/ 20 - 80 - $('#header').height() - 160;
+            table = $('#matrix').DataTable({
+                stateSave: true,
+                "info": false,
+                "ordering": false,
+                "paging": false,
+                "scrollY": Math.max(h, 300),
+                "scrollX": true,
+                /*<![CDATA[*/
+                "dom": '<"toolbar">frtip',
+                /*]]>*/
+                 fixedColumns: {
+                    leftColumns: 2
+                 }
+            });
+        }
+
+        $(function () {
+            initT();
+            $("div.toolbar").html('<label for="vendorSearch">Search vendor: </label> \
+                <input id="vendorSearch" class="form-control input-sm" type="text" placeholder="Vendor name"/> \
+                <label for="planSearch">Search plan: </label> \
+                <input id="planSearch" class="form-control input-sm" type="text" placeholder="Plan name"/>');
+
+            $('.vendor').click(function () {
+                window.open(context + 'vendors/edit/' + $(this).data("el_id"));
+            });
+            $('.policyMeta').click(function () {
+                window.open(context + 'vendors/policy/edit/' + $(this).data("el_id"));
+            });
+            $('.metaCategory').click(function () {
+                window.open(context + 'vendors/policy/metaCategory/edit/' + $(this).data("el_id"));
+            });
+            $('.metaCategoryCreate').click(function () {
+                window.open(context + 'vendors/policy/metaCategory/create/' + $(this).data("el_id")+ '/' + $(this).data("cat_code"));
+                return false;
+            });
+
+            $('#vendorSearch').on('keyup change', function () {
+                table.column(0).search(this.value).draw();
+            });
+            $('#planSearch').on('keyup change', function () {
+                table.column(1).search(this.value).draw();
+            });
+        });
+    </script>
+    <style>
+        .vendor, .policyMeta, .metaCategory, .metaCategoryCreate {
+            cursor: pointer;
+        }
+        .metaCategory:hover {
+            text-decoration: underline;
+        }
+        thead input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+        .table-div {
+            font-size: 14px;
+        }
+        #searchResultContent {
+            padding-bottom: 0;
+        }
+        table.DTFC_Cloned tbody {
+            background-color: #fff;
+        }
+        .DTFC_RightBodyLiner {
+            overflow-y: hidden !important;
+        }
+        .toolbar {
+            float: left;
+        }
+        .DTFC_LeftBodyWrapper .dataTables_empty {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a th:href="@{/vendors}">Vendors</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/vendors/matrix}">Matrix</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="coll-md-12 table-div">
+                <table class="table table-hover table-bordered" id="matrix">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th th:each="groupCategory : ${groupCategories}" th:colspan="${groupCategory.value.size()}">
+                            <span th:text="${groupCategory.key}"></span>
+                        </th>
+                        <th rowspan="2">
+                            Supports Zero Cancellation
+                        </th>
+                        <th rowspan="2">
+                            Minimal trip cost
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Vendor name</th>
+                        <th>Plan name</th>
+                        <th th:each="category : ${categories}">
+                            <span th:text="${category.name}"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="policyMeta : ${policyMetas}">
+                        <th class="vendor" th:attr="data-el_id=${policyMeta.vendor.id}">
+                            <span th:text="${policyMeta.vendor.name}"/>
+                        </th>
+                        <th class="policyMeta" th:attr="data-el_id=${policyMeta.id}">
+                            <span th:text="${policyMeta.displayName}"/>
+                        </th>
+                        <td th:each="category : ${categories}">
+                            <div th:with="categoryValue=${policyMeta.getCategoryValue(category.code)}">
+                                <a href="#" th:if="${categoryValue == null}"
+                                     th:attr="data-el_id=${policyMeta.id},data-cat_code=${category.code}"
+                                     class="metaCategoryCreate">Add
+                                </a>
+
+                                <div th:if="${categoryValue!=null}" th:title="${categoryValue.description}"
+                                     th:attr="data-el_id=${categoryValue.id}"
+                                     class="metaCategory">
+                                    <div th:text="${categoryValue.type.name()}"></div>
+
+                                    <div th:each="categoryVal : ${categoryValue.values}" style="white-space: nowrap">
+                                        <span th:text="${categoryVal.caption}"></span>
+                                        (<span
+                                            th:text="${categoryVal.value} + ' ' + ${categoryVal.valueType.shortCaption}"></span>)
+                                        <span th:if="${category.code == 'pre-ex-waiver'
+                                                        or category.code=='cancel-for-any-reason'
+                                                        or category.code=='cancel-for-work-reasons'
+                                                        or category.code=='pre-ex-waiver-on-trip'}">
+                                            <br/>
+                                            <span th:if="${categoryVal.daysAfterInitialDeposit != null}"
+                                                  th:text="'d after dep:' + ${categoryVal.daysAfterInitialDeposit} + ', '"></span>
+                                            <span th:if="${categoryVal.daysAfterFinalPayment != null}"
+                                                  th:text="'final pay:' + ${categoryVal.daysAfterFinalPayment}+ ', '"></span>
+                                            <span th:if="${categoryVal.minAge != null or categoryVal.maxAge != null}"
+                                                  th:text="'min-max age:' + ${categoryVal.minAge != null ? categoryVal.minAge : '-1'} + '-' + ${categoryVal.maxAge != null ? categoryVal.maxAge : '999'}"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="policyMeta" th:attr="data-el_id=${policyMeta.id}">
+                            <span th:text="${policyMeta.supportsZeroCancellation}"/>
+                        </td>
+                        <td class="policyMeta" th:attr="data-el_id=${policyMeta.id}">
+                            <span th:text="${policyMeta.minimalTripCost}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

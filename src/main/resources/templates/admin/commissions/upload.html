@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Commissions</title>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js" th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script src="/js/custom/admin/commissions/commissions.js" th:src="@{/js/custom/admin/commissions/payments.js?ver={version}(version=${appVersion.version})}"></script>
+    <script src="/js/custom/admin/customDataTable.js" th:src="@{/js/custom/admin/customDataTable.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid planDetails b2b quotes" id="searchResultContent">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h3>Upload commision from vendors</h3>
+
+                        <form th:action="@{/commissions/commission/upload}" th:object="${form}" method="post">
+                            <div class="form-group">
+                                <label for="data">Insert commission from vendor:</label>
+                                <textarea placeholder="Vendor  Policy number  Received commission" class="form-control" rows="10" id="data" th:field="*{data}"/>
+                            </div>
+                            <a th:href="@{/commissions/commission}" class="btn btn-default">Back</a>
+                            <button id="upload" type="submit" class="btn btn-success">Upload</button>
+                            <div th:if="${form.uploadList.size()>0}">
+                                <hr/>
+                                <div class="overflowX">
+                                    <table class="table table-bordered display nowrap compact" cellspacing="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th width="5%">Vendor</th>
+                                        <th width="5%">Policy number</th>
+                                        <th>Received commission</th>
+                                        <th>Check number</th>
+                                        <th>Confirm</th>
+                                        <th>Status</th>
+                                        <th>Errors</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="row, id : ${form.uploadList}" th:styleappend="${row.errors.size()>0?'color: red;':'color: green;'}">
+                                        <td width="5%"><input readonly="readonly"
+                                                              style="border: none;  outline: none;  background-color: transparent;  font-family: inherit;  font-size: inherit; "
+                                                              th:field="*{uploadList[__${id.index}__].vendor}"/></td>
+                                        <td width="5%"><input readonly="readonly"
+                                                              style="border: none;  outline: none;  background-color: transparent;  font-family: inherit;  font-size: inherit; "
+                                                              th:field="*{uploadList[__${id.index}__].policyNumber}"/></td>
+                                        <td><input readonly="readonly"
+                                                   style="border: none;  outline: none;  background-color: transparent;  font-family: inherit;  font-size: inherit; "
+                                                   th:field="*{uploadList[__${id.index}__].receivedCommission}"/></td>
+                                        <td><input readonly="readonly"
+                                                   style="border: none;  outline: none;  background-color: transparent;  font-family: inherit;  font-size: inherit; "
+                                                   th:field="*{uploadList[__${id.index}__].checkNumber}"/></td>
+                                        <td>
+                                            <input type="hidden" class="confirmInput" th:field="*{uploadList[__${id.index}__].confirm}"/>
+                                            <input class="confirmCheckbox" type="checkbox" th:checked="${row.confirm}" th:classappend="${row.disabled?'disabled-pointer':''}"/>
+                                        </td>
+                                        <td><input readonly="readonly"
+                                                   style="border: none;  outline: none;  background-color: transparent;  font-family: inherit;  font-size: inherit;"
+                                                   th:field="*{uploadList[__${id.index}__].status}"/>
+                                        </td>
+                                        <td>
+                                            <div th:each="error : ${row.errors}" th:text="${'* '+error}"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                 </div>
+                                <button style="margin-top: 20px;" id="save" name="save" type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                $(".confirmCheckbox").on("click", function () {
+                    $(this).prev('input').val(this.checked);
+                });
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="TravelInsured SOAP" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ServiceSoap" type="wsdl" bindingName="{https://www.travelinsured.com/TIWebService/}ServiceSoap" soapVersion="1_1" anonymous="optional" definition="https://test.travelinsured.com/TIWebService/Service.asmx?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Book" name="Book" bindingOperationName="Book" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:Book>
+         <!--Optional:-->
+         <tiw:OTA_InsuranceBookRQ>?</tiw:OTA_InsuranceBookRQ>
+      </tiw:Book>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/Book"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/BookingFile" name="BookingFile" bindingOperationName="BookingFile" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:BookingFile>
+         <!--Optional:-->
+         <tiw:BookingFileBatch>?</tiw:BookingFileBatch>
+      </tiw:BookingFile>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/BookingFile"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Ping" name="Ping" bindingOperationName="Ping" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:Ping>
+         <!--Optional:-->
+         <tiw:OTA_PingRQ>?</tiw:OTA_PingRQ>
+      </tiw:Ping>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/Ping"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Process" name="Process" bindingOperationName="Process" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:Process>
+         <!--Optional:-->
+         <tiw:Request>?</tiw:Request>
+      </tiw:Process>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/Process"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/ProcessMessageText" name="ProcessMessageText" bindingOperationName="ProcessMessageText" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:ProcessMessageText>
+         <!--Optional:-->
+         <tiw:MessageText>?</tiw:MessageText>
+      </tiw:ProcessMessageText>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ProcessMessageText"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlDocument" name="PurchaseInsurancePolicyXmlDocument" bindingOperationName="PurchaseInsurancePolicyXmlDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:PurchaseInsurancePolicyXmlDocument>
+         <!--Optional:-->
+         <tiw:PurchaseInfoXMLDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tiw:PurchaseInfoXMLDoc>
+      </tiw:PurchaseInsurancePolicyXmlDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlDocument"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlString" name="PurchaseInsurancePolicyXmlString" bindingOperationName="PurchaseInsurancePolicyXmlString" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:PurchaseInsurancePolicyXmlString>
+         <!--Optional:-->
+         <tiw:strPurchaseInfo>?</tiw:strPurchaseInfo>
+      </tiw:PurchaseInsurancePolicyXmlString>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlString"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Quote" name="Quote" bindingOperationName="Quote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:Quote>
+         <!--Optional:-->
+         <tiw:OTA_InsuranceQuoteRQ>?</tiw:OTA_InsuranceQuoteRQ>
+      </tiw:Quote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/Quote"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Search" name="Search" bindingOperationName="Search" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tiw:Search>
+         <!--Optional:-->
+         <tiw:OTA_InsurancePlanSearchRQ>?</tiw:OTA_InsurancePlanSearchRQ>
+      </tiw:Search>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/Search"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ServiceSoap12" type="wsdl" bindingName="{https://www.travelinsured.com/TIWebService/}ServiceSoap12" soapVersion="1_2" anonymous="optional" definition="https://test.travelinsured.com/TIWebService/Service.asmx?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://test.travelinsured.com/TIWebService/Service.asmx?wsdl"><con:part><con:url>https://test.travelinsured.com/TIWebService/Service.asmx?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="https://www.travelinsured.com/TIWebService/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://www.travelinsured.com/TIWebService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://www.travelinsured.com/TIWebService/">
+      <s:import/>
+      <s:element name="Book">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OTA_InsuranceBookRQ" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OTA_InsuranceBookRS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BookResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BookingFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BookingFileBatch" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BookingFile_RS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BookingFileResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Ping">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OTA_PingRQ" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OTA_PingRS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PingResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Process">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Request" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProcessResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProcessMessageText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MessageText" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TINS_XML_MESSAGE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="ProcessMessageTextResult"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseInsurancePolicyXmlDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseInfoXMLDoc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseInsurancePolicyXmlDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseInsurancePolicyXmlDocumentResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseInsurancePolicyXmlString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strPurchaseInfo" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PurchaseInsurancePolicyXmlStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PurchaseInsurancePolicyXmlStringResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Quote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OTA_InsuranceQuoteRQ" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OTA_InsuranceQuoteRS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuoteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Search">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OTA_InsurancePlanSearchRQ" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OTA_InsurancePlanSearchRS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+    <s:schema elementFormDefault="qualified">
+      <s:element name="ProcessMessageTextResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="CompletionCode" type="CompletionCodeType"/>
+            <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CompletionMessage" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TINS_XML_DATA">
+              <s:complexType>
+                <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Header" type="HeaderType"/>
+                  <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Segment">
+                    <s:complexType>
+                      <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorCode" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorMessage" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TransactionType" type="TransactionTypeType"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TransactionId" type="s:string"/>
+                        <s:choice minOccurs="0" maxOccurs="unbounded">
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BenefitOut" type="BenefitType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CustomerSupportedLanguage" type="CustomerSupportedLanguageType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyOut" type="PolicyOutType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Residence" type="ResidenceType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Product" type="ProductType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Callback">
+                            <s:complexType>
+                              <s:sequence>
+                                <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ActionCode" type="s:int"/>
+                                <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyNumber" type="s:string"/>
+                                <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="GDSRecordLocator" type="s:string"/>
+                              </s:sequence>
+                            </s:complexType>
+                          </s:element>
+                        </s:choice>
+                      </s:sequence>
+                    </s:complexType>
+                  </s:element>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="CompletionCodeType">
+        <s:restriction base="s:string">
+          <s:enumeration value="0"/>
+          <s:enumeration value="1"/>
+          <s:enumeration value="2"/>
+          <s:enumeration value="3"/>
+          <s:enumeration value="4"/>
+          <s:enumeration value="5"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="HeaderType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorCode" type="HeaderErrorCodeType"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorMessage" type="s:string"/>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="MessageType" type="MessageTypeType"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Version" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SourceId" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="MessageId" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="HeaderErrorCodeType">
+        <s:restriction base="s:string">
+          <s:enumeration value="0"/>
+          <s:enumeration value="-1"/>
+          <s:enumeration value="99"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="MessageTypeType">
+        <s:restriction base="s:string">
+          <s:enumeration value="INP1"/>
+          <s:enumeration value="INP2"/>
+          <s:enumeration value="OUT1"/>
+          <s:enumeration value="OUT2"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="TransactionTypeType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Reference"/>
+          <s:enumeration value="Callback"/>
+          <s:enumeration value="Quote"/>
+          <s:enumeration value="Sell"/>
+          <s:enumeration value="TCancel"/>
+          <s:enumeration value="Void"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="BenefitType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BenefitCd" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BenefitDesc" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Amount" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerSupportedLanguageType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="LanguageName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="LanguageCode" type="s:string"/>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="DefaultLanguage">
+            <s:simpleType>
+              <s:restriction base="s:string">
+                <s:enumeration value="Y"/>
+                <s:enumeration value="N"/>
+              </s:restriction>
+            </s:simpleType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PolicyOutType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="TotalPremium" type="s:decimal"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CommissionAmt" type="s:decimal"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CurrencyCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyInfo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="OtherInfo" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="VendorNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="VendorPrintURL" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ResidenceType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ResidenceCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ResidenceName" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ProductType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CurrencyCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="GDSProductCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ProductDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Plan" type="ArrayOfProductTypeBenefitGroup"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductTypeBenefitGroup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="BenefitGroup">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GroupType" type="GroupTypeType"/>
+                <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Benefit" type="BenefitType"/>
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="GroupTypeType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default"/>
+          <s:enumeration value="Optional"/>
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="TINS_XML_MESSAGE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="CompletionCode" type="CompletionCodeType"/>
+            <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CompletionMessage" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TINS_XML_DATA">
+              <s:complexType>
+                <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Header" type="HeaderType"/>
+                  <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Segment">
+                    <s:complexType>
+                      <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorCode" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ErrorMessage" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TransactionType" type="TransactionTypeType"/>
+                        <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="TransactionId" type="s:string"/>
+                        <s:choice minOccurs="0" maxOccurs="unbounded">
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BenefitOut" type="BenefitType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CustomerSupportedLanguage" type="CustomerSupportedLanguageType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyOut" type="PolicyOutType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Residence" type="ResidenceType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Product" type="ProductType"/>
+                          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Callback">
+                            <s:complexType>
+                              <s:sequence>
+                                <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ActionCode" type="s:int"/>
+                                <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PolicyNumber" type="s:string"/>
+                                <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="GDSRecordLocator" type="s:string"/>
+                              </s:sequence>
+                            </s:complexType>
+                          </s:element>
+                        </s:choice>
+                      </s:sequence>
+                    </s:complexType>
+                  </s:element>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BookSoapIn">
+    <wsdl:part name="parameters" element="tns:Book"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapOut">
+    <wsdl:part name="parameters" element="tns:OTA_InsuranceBookRS"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileSoapIn">
+    <wsdl:part name="parameters" element="tns:BookingFile"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileSoapOut">
+    <wsdl:part name="parameters" element="tns:BookingFile_RS"/>
+  </wsdl:message>
+  <wsdl:message name="PingSoapIn">
+    <wsdl:part name="parameters" element="tns:Ping"/>
+  </wsdl:message>
+  <wsdl:message name="PingSoapOut">
+    <wsdl:part name="parameters" element="tns:OTA_PingRS"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessSoapIn">
+    <wsdl:part name="parameters" element="tns:Process"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessSoapOut">
+    <wsdl:part name="parameters" element="tns:Response"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextSoapIn">
+    <wsdl:part name="parameters" element="tns:ProcessMessageText"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextSoapOut">
+    <wsdl:part name="parameters" element="tns:TINS_XML_MESSAGE"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseInsurancePolicyXmlDocument"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseInsurancePolicyXmlDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringSoapIn">
+    <wsdl:part name="parameters" element="tns:PurchaseInsurancePolicyXmlString"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringSoapOut">
+    <wsdl:part name="parameters" element="tns:PurchaseInsurancePolicyXmlStringResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:Quote"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:OTA_InsuranceQuoteRS"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapIn">
+    <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+    <wsdl:part name="parameters" element="tns:OTA_InsurancePlanSearchRS"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpGetIn">
+    <wsdl:part name="OTA_InsuranceBookRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileHttpGetIn">
+    <wsdl:part name="BookingFileBatch" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpGetIn">
+    <wsdl:part name="OTA_PingRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessHttpGetIn">
+    <wsdl:part name="Request" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextHttpGetIn">
+    <wsdl:part name="MessageText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextHttpGetOut">
+    <wsdl:part name="Body" element="TINS_XML_MESSAGE"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringHttpGetIn">
+    <wsdl:part name="strPurchaseInfo" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteHttpGetIn">
+    <wsdl:part name="OTA_InsuranceQuoteRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetIn">
+    <wsdl:part name="OTA_InsurancePlanSearchRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpPostIn">
+    <wsdl:part name="OTA_InsuranceBookRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileHttpPostIn">
+    <wsdl:part name="BookingFileBatch" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookingFileHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpPostIn">
+    <wsdl:part name="OTA_PingRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessHttpPostIn">
+    <wsdl:part name="Request" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextHttpPostIn">
+    <wsdl:part name="MessageText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageTextHttpPostOut">
+    <wsdl:part name="Body" element="TINS_XML_MESSAGE"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringHttpPostIn">
+    <wsdl:part name="strPurchaseInfo" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseInsurancePolicyXmlStringHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteHttpPostIn">
+    <wsdl:part name="OTA_InsuranceQuoteRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuoteHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostIn">
+    <wsdl:part name="OTA_InsurancePlanSearchRQ" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="Book">
+      <wsdl:documentation>Book an insurance policy using the OTA API. Both the request and response will be OTA schema compliant.</wsdl:documentation>
+      <wsdl:input message="tns:BookSoapIn"/>
+      <wsdl:output message="tns:BookSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:BookingFileSoapIn"/>
+      <wsdl:output message="tns:BookingFileSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:documentation>This can be used to test connectivity. It returns the request string.</wsdl:documentation>
+      <wsdl:input message="tns:PingSoapIn"/>
+      <wsdl:output message="tns:PingSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessSoapIn"/>
+      <wsdl:output message="tns:ProcessSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessMessageTextSoapIn"/>
+      <wsdl:output message="tns:ProcessMessageTextSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlDocument">
+      <wsdl:documentation>Purchase Insurance Using an XML Document. Returns XML Document.</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseInsurancePolicyXmlDocumentSoapIn"/>
+      <wsdl:output message="tns:PurchaseInsurancePolicyXmlDocumentSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <wsdl:documentation>Purchase Insurance Using an XML String. Returns XML String.</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseInsurancePolicyXmlStringSoapIn"/>
+      <wsdl:output message="tns:PurchaseInsurancePolicyXmlStringSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <wsdl:documentation>Quote insurance policies using the OTA API.</wsdl:documentation>
+      <wsdl:input message="tns:QuoteSoapIn"/>
+      <wsdl:output message="tns:QuoteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:documentation>Search for insurance products.</wsdl:documentation>
+      <wsdl:input message="tns:SearchSoapIn"/>
+      <wsdl:output message="tns:SearchSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpGet">
+    <wsdl:operation name="Book">
+      <wsdl:documentation>Book an insurance policy using the OTA API. Both the request and response will be OTA schema compliant.</wsdl:documentation>
+      <wsdl:input message="tns:BookHttpGetIn"/>
+      <wsdl:output message="tns:BookHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:BookingFileHttpGetIn"/>
+      <wsdl:output message="tns:BookingFileHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:documentation>This can be used to test connectivity. It returns the request string.</wsdl:documentation>
+      <wsdl:input message="tns:PingHttpGetIn"/>
+      <wsdl:output message="tns:PingHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessHttpGetIn"/>
+      <wsdl:output message="tns:ProcessHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessMessageTextHttpGetIn"/>
+      <wsdl:output message="tns:ProcessMessageTextHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <wsdl:documentation>Purchase Insurance Using an XML String. Returns XML String.</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseInsurancePolicyXmlStringHttpGetIn"/>
+      <wsdl:output message="tns:PurchaseInsurancePolicyXmlStringHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <wsdl:documentation>Quote insurance policies using the OTA API.</wsdl:documentation>
+      <wsdl:input message="tns:QuoteHttpGetIn"/>
+      <wsdl:output message="tns:QuoteHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:documentation>Search for insurance products.</wsdl:documentation>
+      <wsdl:input message="tns:SearchHttpGetIn"/>
+      <wsdl:output message="tns:SearchHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpPost">
+    <wsdl:operation name="Book">
+      <wsdl:documentation>Book an insurance policy using the OTA API. Both the request and response will be OTA schema compliant.</wsdl:documentation>
+      <wsdl:input message="tns:BookHttpPostIn"/>
+      <wsdl:output message="tns:BookHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:BookingFileHttpPostIn"/>
+      <wsdl:output message="tns:BookingFileHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:documentation>This can be used to test connectivity. It returns the request string.</wsdl:documentation>
+      <wsdl:input message="tns:PingHttpPostIn"/>
+      <wsdl:output message="tns:PingHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessHttpPostIn"/>
+      <wsdl:output message="tns:ProcessHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <wsdl:documentation>Process a custom request. Calling this method requires a special agreement between the client and TII.</wsdl:documentation>
+      <wsdl:input message="tns:ProcessMessageTextHttpPostIn"/>
+      <wsdl:output message="tns:ProcessMessageTextHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <wsdl:documentation>Purchase Insurance Using an XML String. Returns XML String.</wsdl:documentation>
+      <wsdl:input message="tns:PurchaseInsurancePolicyXmlStringHttpPostIn"/>
+      <wsdl:output message="tns:PurchaseInsurancePolicyXmlStringHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <wsdl:documentation>Quote insurance policies using the OTA API.</wsdl:documentation>
+      <wsdl:input message="tns:QuoteHttpPostIn"/>
+      <wsdl:output message="tns:QuoteHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:documentation>Search for insurance products.</wsdl:documentation>
+      <wsdl:input message="tns:SearchHttpPostIn"/>
+      <wsdl:output message="tns:SearchHttpPostOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Book">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/Book" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/BookingFile" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/Ping" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/Process" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/ProcessMessageText" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlDocument">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlDocument" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlString" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/Quote" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="https://www.travelinsured.com/TIWebService/Search" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Book">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/Book" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/BookingFile" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/Ping" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/Process" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/ProcessMessageText" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlDocument">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlDocument" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlString" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/Quote" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap12:operation soapAction="https://www.travelinsured.com/TIWebService/Search" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpGet" type="tns:ServiceHttpGet">
+    <http:binding verb="GET"/>
+    <wsdl:operation name="Book">
+      <http:operation location="/Book"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <http:operation location="/BookingFile"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <http:operation location="/Ping"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <http:operation location="/Process"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <http:operation location="/ProcessMessageText"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <http:operation location="/PurchaseInsurancePolicyXmlString"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <http:operation location="/Quote"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <http:operation location="/Search"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="Book">
+      <http:operation location="/Book"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookingFile">
+      <http:operation location="/BookingFile"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <http:operation location="/Ping"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Process">
+      <http:operation location="/Process"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMessageText">
+      <http:operation location="/ProcessMessageText"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PurchaseInsurancePolicyXmlString">
+      <http:operation location="/PurchaseInsurancePolicyXmlString"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Quote">
+      <http:operation location="/Quote"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <http:operation location="/Search"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="https://test.travelinsured.com/TIWebService/Service.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="https://test.travelinsured.com/TIWebService/Service.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpGet" binding="tns:ServiceHttpGet">
+      <http:address location="https://test.travelinsured.com/TIWebService/Service.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+      <http:address location="https://test.travelinsured.com/TIWebService/Service.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Book" name="Book" bindingOperationName="Book" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:Book>
+         <!--Optional:-->
+         <tiw:OTA_InsuranceBookRQ>
+		<![CDATA[
+		<OTA_InsuranceBookRQ Version="1" xmlns="http://www.opentravel.org/OTA/2003/05">
+			<POS>
+				<Source AgentSine="novikov">
+					<RequestorID MessagePassword="novikov" Type="1" ID="novikov">
+						<CompanyName Code="52784" CodeContext="TII"/>
+					</RequestorID>
+				</Source>
+			</POS>
+			<PlanForBookRQ PlanID="0" TypeID="WTP14">
+				<CoveredTravelers>
+					<CoveredTraveler>
+						<CoveredPerson Relation="PrimaryTraveler" BirthDate="1988-05-14">
+							<GivenName>FirstName</GivenName>
+							<Surname>LastName</Surname>
+						</CoveredPerson>
+						<Email EmailType="1">test@gmail.com</Email>
+						<Address Type="1">
+							<AddressLine>45 Some st.</AddressLine>
+							<CityName>New York</CityName>
+							<PostalCode>90001</PostalCode>
+							<StateProv StateCode="CA"/>
+							<CountryName Code="US"/>
+						</Address>
+						<Telephone PhoneUseType="4" PhoneNumber="123456789"/>
+						<CitizenCountryName Code="US"/>
+						<IndCoverageReqs>
+							<IndTripCost Amount="1200.0"/>
+						</IndCoverageReqs>
+					</CoveredTraveler>
+				</CoveredTravelers>
+				<InsCoverageDetail Type="SingleTrip" EffectiveDate="2015-05-15+03:00">
+					<CoverageRequirements>
+						<CoverageRequirement CoverageLevel="Primary" CoverageType="1"/>
+					</CoverageRequirements>
+					<CoveredTrips>
+						<CoveredTrip DepositDate="2015-02-02T00:00:00.000+03:00" 
+						Start="2015-10-20" End="2015-10-23">
+						<Destinations><Destination><CityName>Las Vegas</CityName></Destination></Destinations></CoveredTrip></CoveredTrips><DeliveryPref DistribType="3"/></InsCoverageDetail><InsuranceCustomer><PaymentForm><PaymentCard CardCode="VI" CardNumber="4007000000027" SeriesCode="123" ExpireDate="0918"><CardHolderName>John P.Doe</CardHolderName></PaymentCard></PaymentForm></InsuranceCustomer><PlanCost Amount="59.0"><BasePremium Amount="59.0"/></PlanCost></PlanForBookRQ></OTA_InsuranceBookRQ>
+		]]]]>><![CDATA[
+		</tiw:OTA_InsuranceBookRQ>
+      </tiw:Book>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/BookRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/BookingFile" name="BookingFile" bindingOperationName="BookingFile" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:BookingFile>
+         <!--Optional:-->
+         <tiw:BookingFileBatch>?</tiw:BookingFileBatch>
+      </tiw:BookingFile>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/BookingFileRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Ping" name="Ping" bindingOperationName="Ping" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:Ping>
+         <!--Optional:-->
+         <tiw:OTA_PingRQ>123</tiw:OTA_PingRQ>
+      </tiw:Ping>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/PingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Process" name="Process" bindingOperationName="Process" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:Process>
+         <!--Optional:-->
+         <tiw:Request>?</tiw:Request>
+      </tiw:Process>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/ProcessRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/ProcessMessageText" name="ProcessMessageText" bindingOperationName="ProcessMessageText" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:ProcessMessageText>
+         <!--Optional:-->
+         <tiw:MessageText>?</tiw:MessageText>
+      </tiw:ProcessMessageText>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/ProcessMessageTextRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlDocument" name="PurchaseInsurancePolicyXmlDocument" bindingOperationName="PurchaseInsurancePolicyXmlDocument" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:PurchaseInsurancePolicyXmlDocument>
+         <!--Optional:-->
+         <tiw:PurchaseInfoXMLDoc>
+            e
+            <!--You may enter ANY elements at this point-->
+            gero
+         </tiw:PurchaseInfoXMLDoc>
+      </tiw:PurchaseInsurancePolicyXmlDocument>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/PurchaseInsurancePolicyXmlDocumentRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/PurchaseInsurancePolicyXmlString" name="PurchaseInsurancePolicyXmlString" bindingOperationName="PurchaseInsurancePolicyXmlString" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:PurchaseInsurancePolicyXmlString>
+         <!--Optional:-->
+         <tiw:strPurchaseInfo>?</tiw:strPurchaseInfo>
+      </tiw:PurchaseInsurancePolicyXmlString>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/PurchaseInsurancePolicyXmlStringRequest"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Quote" name="Quote" bindingOperationName="Quote" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:Quote>
+         <!--Optional:-->
+         <tiw:OTA_InsuranceQuoteRQ>
+			<![CDATA[
+				<OTA_InsuranceQuoteRQ Version="1" xmlns="http://www.opentravel.org/OTA/2003/05">
+				<POS>
+					<Source AgentSine="novikov">
+						<RequestorID MessagePassword="novikov" Type="1" ID="novikov">
+				 			<CompanyName Code="52784" CodeContext="TII"/>
+						</RequestorID>
+					</Source>
+				</POS>
+				<PlanForQuoteRQ PlanID="0" TypeID="WTP14"><CoveredTravelers><CoveredTraveler>
+				<CoveredPerson Relation="PrimaryTraveler" BirthDate="1988-05-14"><GivenName>John</GivenName>
+				<Surname>Black</Surname></CoveredPerson><CitizenCountryName Code="US"/><IndCoverageReqs>
+				<IndTripCost Amount="1200.0"/></IndCoverageReqs></CoveredTraveler></CoveredTravelers>
+				<InsCoverageDetail Type="SingleTrip"><CoveredTrips><CoveredTrip Start="2015-10-20" End="2015-10-23"/>
+				</CoveredTrips></InsCoverageDetail></PlanForQuoteRQ></OTA_InsuranceQuoteRQ>
+			]]]]>><![CDATA[
+	    </tiw:OTA_InsuranceQuoteRQ>
+      </tiw:Quote>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/QuoteRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="https://www.travelinsured.com/TIWebService/Search" name="Search" bindingOperationName="Search" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://test.travelinsured.com/TIWebService/Service.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tiw="https://www.travelinsured.com/TIWebService/">
+   <soap:Header/>
+   <soap:Body>
+      <tiw:Search>
+         <!--Optional:-->
+         <tiw:OTA_InsurancePlanSearchRQ>
+         </tiw:OTA_InsurancePlanSearchRQ>
+      </tiw:Search>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="https://www.travelinsured.com/TIWebService/ServiceSoap/SearchRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Company management</title>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js" th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/admin/companies/companies.js?ver={version}(version=${appVersion.version})}"/>
+
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/companies}">Companies</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Company management</h1></div>
+            <div class="col-md-4 text-right">
+                <h1 class="adminTitle"><a th:href="@{/companies/create}" class="btn btn-success xcrud-action "><i
+                        class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="companies">
+            <thead>
+            <tr class="info">
+                <th width="22%">Name</th>
+                <th width="22%">Address</th>
+                <th width="16%">City</th>
+                <th width="10%">Zip</th>
+                <th width="10%">Phone</th>
+                <th width="8%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="company : ${companies}" th:id="'company-' + ${company.id}">
+                <td th:text="${company.name}"/>
+                <td th:text="${company.companyManager?.userInfo?.address}"/>
+                <td th:text="${company.companyManager?.userInfo?.city}"/>
+                <td th:text="${company.companyManager?.userInfo?.zipCode}"/>
+                <td th:text="${company.companyManager?.userInfo?.phone}"/>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Edit"
+                       th:href="@{/companies/edit/{id}(id=${company.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <span class="d-inline-block" style="padding-left: 10px;" tabindex="0" data-toggle="tooltip" title="Delete"
+                          data-th-title="${company.canDelete ? 'Delete' : 'Can''t delete company with users: ' + company.getUserNameList()}">
+                        <button class="btn btn-danger" type="button" title="Delete"
+                                th:classappend="${!company.canDelete} ? 'disabled' : ''"
+                                th:onclick="${company.canDelete} ? 'javascript:deleteCompany(\'' + ${company.id} + '\');' : ''">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en" >
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
+    <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="shortcut icon" th:href="@{https://d3u70gwj4bg98w.cloudfront.net/images/favicon.ico}" type="image/x-icon"/>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">TIM</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/lib/bootstrap-datepicker3.min.css}" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;subset=latin,cyrillic-ext,cyrillic'
+          rel='stylesheet' type='text/css'/>
+    <link th:href="@{/css/lib/jquery.bxslider.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/lib/bootstrap-select.min.css}" rel="stylesheet"
+          type="text/css"/>
+    <link th:href="@{/css/lib/bootstrap-slider.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/style.css?ver={version}(version=${appVersion.version})}" rel="stylesheet"/>
+    <link th:href="@{/css/custom.css?ver={version}(version=${appVersion.version})}" rel="stylesheet"/>
+
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var context = [[@{/}]];
+        var STATUS_CHECK_INTERVAL = [[${statusCheckInterval}]];
+        var defErrMsg = "Temporary server Error. Please try again later.";
+        /*]]>*/
+        // @formatter:on
+    </script>
+
+    <script type="text/javascript" src="/js/lib/jquery-1.11.2.min.js" th:src="@{/js/lib/jquery-1.11.2.min.js}"/>
+    <script type="text/javascript" src="/js/lib/jquery.easing.1.3.js" th:src="@{/js/lib/jquery.easing.1.3.js}"/>
+    <script type="text/javascript" th:src="@{/js/lib/pointer_events_polyfill.js}"></script>
+    <script type="text/javascript" src="/js/lib/click-carousel.js" th:src="@{/js/lib/click-carousel.js}"/>
+    <script type="text/javascript" src="/js/lib/bootstrap.min.js" th:src="@{/js/lib/bootstrap.min.js}"/>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.min.js" th:src="@{/js/lib/bootstrap-datepicker.min.js}"/>
+    <script type="text/javascript" src="/js/lib/jquery.bxslider.min.js" th:src="@{/js/lib/jquery.bxslider.min.js}"/>
+    <script type="text/javascript" src="/js/bootstrap-select.min.js" th:src="@{/js/lib/bootstrap-select.min.js}"/>
+    <script type="text/javascript" src="/js/lib/jquery.mask.min.js" th:src="@{/js/lib/jquery.mask.min.js}"/>
+    <script type="text/javascript" src="/js/lib/autoNumeric-min.js" th:src="@{/js/lib/autoNumeric-min.js}"/>
+    <script type="text/javascript" src="/js/lib/bootstrap-slider.min.js" th:src="@{/js/lib/bootstrap-slider.min.js}"/>
+    <script type="text/javascript" src="/js/lib/jquery.sticky-kit.min.js" th:src="@{/js/lib/jquery.sticky-kit.min.js}" />
+    <script type="text/javascript" src="/js/lib/spin.min.js" th:src="@{/js/lib/spin.min.js}"/>
+    <script type="text/javascript" th:src="@{/js/lib/lodash.js}"></script>
+    <script type="text/javascript" src="/js/lib/moment.min.js" th:src="@{/js/lib/moment.min.js}"/>
+    <script type="text/javascript" src="/js/lib/moment-range.min.js" th:src="@{/js/lib/moment-range.min.js}"/>
+    <script type="text/javascript" src="/js/custom/main.js" th:src="@{/js/custom/main.js?ver={version}(version=${appVersion.version})}"/>
+    <script type="text/javascript" src="/js/custom/login.js" th:src="@{/js/custom/login.js?ver={version}(version=${appVersion.version})}"/>
+    <script type="text/javascript" src="/js/lib/ace/ace.js" th:src="@{/js/lib/ace/ace.js}"/>
+    <script type="text/javascript" src="/js/lib/ace/theme-chrome.js" th:src="@{/js/lib/ace/theme-chrome.js}"/>
+    <script type="text/javascript" src="/js/lib/ace/mode-groovy.js" th:src="@{/js/lib/ace/mode-groovy.js}"/>
+    <script type="text/javascript" src="/js/lib/bootstrap-formhelpers.min.js" th:src="@{/js/lib/bootstrap-formhelpers.min.js}"></script>
+
+    <script th:remove="all" type="text/javascript" src="/js/lib/confirm-bootstrap.js" th:src="@{/js/lib/confirm-bootstrap.js}"/>
+
+</head>
+<body id="body">
+    <div class="mainWrapper">
+        <div th:replace="fragments/navbar :: navbar" />
+        <div class="emptyHeader"></div>
+        <div layout:fragment="content" />
+        <div class="hFooter"></div>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+    <span class="goTopLink" style="display: inline;"><i>Top</i></span>
+
+    <div class="modal fade" id="serverErrorModal" tabindex="-1" role="dialog" style="color: black;" aria-labelledby="serverErrorModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="serverErrorModalLabel">Session notification.</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You session has expired! Please, reload page to continue!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="expiredSessionReloadBtn" onclick="location.reload();">Reload page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:if="${gaEnable}">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-68831860-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

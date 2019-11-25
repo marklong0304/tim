@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${vendorPage.caption + ' ' + policyMetaPage.caption}"></title>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="modal fade noPadding" id="sertificateDialog" tabindex="-1" role="dialog"
+             aria-labelledby="chooseCategoryDialogLabel">
+            <div class="modal-dialog custom-dialog-category">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master" width="240"/>travel
+                            insurance master</a>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+
+                <div class="container-fluid popup-inner">
+                    <div class="img-box"><img id="modalVendorCode" alt="Provider" width="110px" height=""/></div>
+                    <p class="plan-name" id="modalPolicyMetaName">Safe Travels International Trip Protection</p>
+                </div>
+                <div class="container-fluid popup-text">
+                    <h1 id="modalCategory" class="popup-head">Financial Default</h1>
+                    <p id="modalContent" class="popup-info">
+                        Bankruptcy or Default.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row stickParent">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <ul class="breadcrumb noPadding">
+                    <li><a th:href="@{/page/providers}">Providers</a></li>
+                    <li><a th:href="@{/page/provider/}+${vendorPage.name}" th:text="${vendorPage.caption}">AIG Travel
+                        Guard</a></li>
+                    <li th:text="${policyMetaPage.caption}">Platinum</li>
+                    <div class="pull-right panel-controls"
+                         sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/vendor_page/policy_page/edit/{id}(id=${policyMetaPage.id})}"
+                           data-toggle="tooltip" data-placement="top" title="Edit plan"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <div class="table-title table">
+                    <div class="tr">
+                        <div class="td td-title">
+                            <h1 th:text="${policyMetaPage.caption}">AIG Travel Guard Platinum</h1>
+                        </div>
+                        <div class="td td-logo">
+                            <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${vendorPage.vendor.code})}" alt="Logo Travel Guard"
+                                 width="240"
+                                 height=""/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+
+                    <div class="panel-group-descr-plan" id="accordion">
+
+                        <div id="collapseOne" class="panel-collapse collapse" th:utext="${policyMetaPage.content}"/>
+                        <div>
+                            <a class="moreLess" id="moreLess" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            </a> &nbsp;
+                        </div>
+                    </div>
+
+
+                    <div class="tab-group">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#general-plan-info" data-toggle="tab">General Plan info</a></li>
+                            <li><a href="#trip-cancellation" data-toggle="tab">Trip Cancellation</a></li>
+                            <li><a href="#travel-medical" data-toggle="tab">Travel Medical</a></li>
+                            <li><a href="#loss-or-delay" data-toggle="tab">Loss or Delay</a></li>
+                            <li><a href="#more-benefits" data-toggle="tab">More benefits</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <th:block th:each="group : ${groups}">
+                                <div class="tab-pane fade in"
+                                     th:classappend="${group.key == T(com.travelinsurancemaster.model.GroupNamesProvidersPlanPage).GENERAL_PLAN_INFO.code ? 'active' : ''}"
+                                     th:id="${group.key}">
+                                    <div class="inner-descr-table">
+                                        <th:block th:each="policyMetaCategoryContent : ${group.value}">
+                                            <div class="row" th:if="${policyMetaCategoryContent.key == 'Certificate'}">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 labelFieldDefault">
+                                                    Certificate
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data">
+                                                    <a th:classappend="${certificate==null ? 'disabled-link':''}"
+                                                       th:href="@{/cms/certificate/show/{id}(id=${certificate!=null?certificate.uuid:''})}"
+                                                       th:attrappend="disabled = ${certificate == null} ? true : false"
+                                                       target="_blank">View Certificate</a>
+                                                </div>
+                                            </div>
+                                            <div class="row"
+                                                 th:unless="${policyMetaCategoryContent.key == 'Certificate' or policyMetaCategoryContent.key == 'Restrictions' or policyMetaCategoryContent.key == 'Package'}">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5"
+                                                     th:classappend="${policyMetaCategoryContent.value != null ? 'labelField':'labelFieldDefault'}">
+                                                    <a href="#" onclick="openChooseCategoryDialog(this); return false;"
+                                                       th:id="${policyMetaCategoryContent.value.id}"
+                                                       th:if="${policyMetaCategoryContent.value != null and policyMetaCategoryContent.value.certificateText != null and #strings.length(policyMetaCategoryContent.value.certificateText)!=0}"
+                                                       th:text="${policyMetaCategoryContent.key}"/>
+
+                                                    <span th:unless="${policyMetaCategoryContent.value != null and policyMetaCategoryContent.value.certificateText != null and #strings.length(policyMetaCategoryContent.value.certificateText)!=0}"
+                                                      th:text=" ${policyMetaCategoryContent.key}"></span>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${policyMetaCategoryContent.value != null and policyMetaCategoryContent.key != 'Package'}">
+                                                    <div th:each="categoryVal, status  : ${policyMetaCategoryContent.value.valuesFromPolicyMetaApi}" class="data-provider-plan">
+                                                        <span ></span>
+                                                        <input type="radio" th:text="${categoryVal.caption}" th:if="${policyMetaCategoryContent.value.isUpsaleCategory()}" th:disabled="true" th:checked="${status.index == 0}"/>
+                                                        <span th:text="${categoryVal.caption}" th:if="${!policyMetaCategoryContent.value.isUpsaleCategory()}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${policyMetaCategoryContent.value == null}">
+                                                    <span>&mdash;</span>
+                                                </div>
+                                            </div>
+                                            <div class="row" th:if="${policyMetaCategoryContent.key == 'Restrictions' and restrictionText!=null and #strings.length(restrictionText)!=0}">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 labelField" th:if="${restrictionCMS!=null}">
+                                                    <a href="#" onclick="openChooseCategoryDialog(this); return false;"
+                                                       th:id="${restrictionCMS.id}"
+                                                       th:if="${restrictionCMS != null and restrictionCMS.certificateText != null and #strings.length(restrictionCMS.certificateText)!=0}">Restriction</a>
+
+                                                    <span th:unless="${restrictionCMS != null and restrictionCMS.certificateText != null and #strings.length(restrictionCMS.certificateText)!=0}"
+                                                      th:text=" ${restrictionCMS.name}"></span>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 labelField" th:if="${restrictionCMS==null}">
+                                                    Restriction
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${restrictionText != null}" th:utext="${restrictionText}">
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${restrictionText == null}">
+                                                    <span>&mdash;</span>
+                                                </div>
+                                            </div>
+                                            <div class="row" th:if="${policyMetaCategoryContent.key == 'Package'}"
+                                                 th:each="package : ${policyMetaPage.policyMetaPackageList}">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 labelField">
+                                                    <a href="#" onclick="openChooseCategoryDialog(this); return false;"
+                                                       th:id="${package.id}"
+                                                       th:if="${package != null and package.certificateText != null and #strings.length(package.certificateText)!=0}"
+                                                       th:text="${package.name}"></a>
+
+                                                    <span th:unless="${package != null and package.certificateText != null and #strings.length(package.certificateText)!=0}"
+                                                          th:text=" ${package.name}"></span>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${package != null}" th:utext="${package.content}">
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 data"
+                                                     th:if="${package == null}">
+                                                    <span>&mdash;</span>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <div class="otherPlansBg">
+                        <h2>Other plans by
+                            <th:block th:text="${vendorPage.vendor.name}"></th:block>
+                        </h2>
+                        <th:block th:each="plan : ${policyMetaPages}"
+                                  th:if="${plan.id != policyMetaPage.id}">
+                            <div class="singlePlan">
+                                <h2><a th:href="@{/page/provider/}+${vendorPage.name}+'/'+${plan.name}"
+                                       th:text="${plan.caption}"/></h2>
+
+                                <div th:utext="${plan.description}"/>
+                                <div class="wrapA">
+                                    <a th:href="@{/page/provider/}+${vendorPage.name}+'/'+${plan.name}">More details</a>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12 positStatic">
+                <div class="stickContainer">
+                    <div class="blueContainer text-center blueMessage newblueMessage">
+                        <h2>Your Quote</h2>
+                        <span>To see the most accurate plan information and pricing</span>
+                        <button id="getQuote" class="btn btn-success">Get a Quote</button>
+                    </div>
+                    <div class="blueContainer providers hidden-sm hidden-xs">
+                        <h4>Providers</h4>
+                        <ul>
+                            <li th:each="page : ${vendorPages}">
+                                <a th:text="${page.key.caption}" data-toggle="collapse" data-parent="#accordion"
+                                   th:href="'#'+${page.key.id}" class="product"
+                                   th:classappend="${vendorPage.id == page.key.id ? 'open' : ''}"/>
+
+                                <div th:id="${page.key.id}" class="inner panel-collapse collapse"
+                                     th:classappend="${vendorPage.id == page.key.id ? 'in' : ''}">
+                                    <a th:href="@{/page/provider/}+${page.key.name}+'/'+${plan.name}"
+                                       th:each="plan : ${page.value}"
+                                       th:classappend="${plan.name == policyMetaPage.name ? 'activeInner': ''}"
+                                       th:utext="${plan.caption}">
+                                    </a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="blueContainer glossary hidden-sm hidden-xs">
+                        <h4>Insurance Terms</h4>
+                        <ul>
+                            <li th:each="categoryContent : ${categoryContentList}">
+                                <a th:href="@{/page/glossary} +'#'+${categoryContent.code}"
+                                   th:text="${categoryContent.name}">
+                                    Missed Connection Coverage
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="pageScript">
+    <script type="text/javascript" th:src="@{/js/lib/jquery.sticky-kit.js}"></script>
+    <script type="application/javascript">
+        function openChooseCategoryDialog(e) {
+            $.post(window.location + '/' + $(e).attr('id'), null, function (data) {
+                $("#modalCategory").text('').append(data.category);
+                $("#modalContent").text('').append(data.content);
+                $("#modalVendorCode").attr("src", 'https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/' + data.vendorCode + '.png');
+                $("#modalPolicyMetaName").text('').append(data.policyMetaName);
+                $('#sertificateDialog').modal('show');
+            });
+        }
+        $(document).ready(function () {
+            $(".stickContainer").stick_in_parent({
+                parent: '.stickParent'
+            });
+
+            var t = $(".activeInner").text();
+            $(".activeInner").text('');
+            $(".activeInner").append('<span>&bull;</span>' + t);
+            $(".product").on('click', function () {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open');
+                } else {
+                    $(this).addClass('open');
+                }
+            });
+            $("#getQuote").on("click", function () {
+                document.location.href=context;
+            });
+        });
+        $(window).on('load', function(){
+            /*<![CDATA[*/
+            var offsetHeight = $('#collapseOne').prop('offsetHeight');
+            var scrollHeight = $('#collapseOne').prop('scrollHeight') - 7;
+            if (scrollHeight <= offsetHeight) {
+                $('#moreLess').hide();
+            }
+            /*]]>*/
+        });
+    </script>
+</th:block>
+</body>
+</html>

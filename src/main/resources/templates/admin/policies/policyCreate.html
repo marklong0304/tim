@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Create policy</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/percentInfo.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/custom/admin/policies/policies.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                    <li><a th:href="@{/vendors/policy/create/{vendorId}(vendorId=${policyMeta.vendor.id})}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Create Policy</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form action="#" th:action="@{/vendors/policy/create/{vendorId}(vendorId=${policyMeta.vendor.id})}" th:object="${policyMeta}" method="post" style="padding-top: 40px;">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}">
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="name">Policy Name: </label>
+                            <input id="name" type="text" th:field="*{policyMetaCodes[0].name}"
+                                   placeholder="Name" class="form-control"/>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label for="code">Policy Code: </label>
+                            <input id="code" type="text" th:field="*{policyMetaCodes[0].code}"
+                                   placeholder="Code" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="displayName">Policy Display Name: </label>
+                            <input id="displayName" type="text" th:field="*{displayName}"
+                                   placeholder="Display Name" class="form-control"/>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label for="policyUniqueCode">Policy Unique Code: </label>
+                            <input id="policyUniqueCode" type="text" th:field="*{uniqueCode}"
+                                   placeholder="Unique Code" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="active">Policy Active: </label>
+                            <select th:field="*{active}" id="active" class="form-control">
+                                <option th:value="${'true'}" th:text="${'True'}"/>
+                                <option th:value="${'false'}" th:text="${'False'}"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label for="purchasable">Policy Purchasable: </label>
+                            <select th:field="*{purchasable}" id="purchasable" class="form-control">
+                                <option th:value="${'true'}" th:text="${'True'}"/>
+                                <option th:value="${'false'}" th:text="${'False'}"/>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="supportsZeroCancellation">Policy Supports Zero Cancellation: </label>
+                            <select th:field="*{supportsZeroCancellation}" id="supportsZeroCancellation" class="form-control">
+                                <option th:value="${'true'}" th:text="${'True'}"/>
+                                <option th:value="${'false'}" th:text="${'False'}"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label for="minTripCost">Minimal trip cost: </label>
+                            <input id="minTripCost" type="text" th:field="*{minimalTripCost}"
+                                   placeholder="Minimal trip cost" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-6">
+                            <label for="vendor.name">Policy Vendor: </label>
+                            <input type="hidden" th:field="*{vendor.id}"/>
+                            <input type="text" id="vendor.name" th:field="*{vendor.name}"
+                                   readonly="readonly" class="form-control "/>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <input type="hidden" name="policyMetaId" th:field="*{policyMetaCodes[0].policyMeta.id}"/>
+
+                    <div class="form-row row" style="padding-top: 20px;">
+                        <div class="form-group col-sm-12">
+                            <a th:href="@{${backUrl}}" class="btn btn-default back-btn" style="padding: 6px 17px;">Back</a>
+                            <button type="submit" class="btn btn-success" style="margin-left: 4px; padding: 6px 17px;">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <!--  DETAILS MODALS -->
+    <div class="modal noPadding" id="certificateDialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog custom-dialog-category">
+            <div class="container-fluid popup-nav">
+                <div class="logo">
+                    <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                    <button id="closeCertificateDialog" type="button" class="close" aria-label="Close"><span>&times;</span></button>
+                </div>
+            </div>
+
+            <div class="container-fluid popup-inner">
+                <div class="img-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${product.policyMeta.vendor.code})}"
+                                          alt="Save Travels International Trip" width="110px" height=""/></div>
+                <p class="plan-name" th:text="${product.policyMetaCode.name}">Safe Travels International Trip
+                    Protection</p>
+            </div>
+            <div class="container-fluid popup-text">
+                <h1 id="modalCategory" class="popup-head">Financial Default</h1>
+                <p id="modalContent" class="popup-info">
+                    Bankruptcy or Default causing a complete cessation of travel services provided the Bankruptcy or Default occurs more than 14 days following Your Effective Date. Benefits will be paid due to Bankruptcy or Default of an airline only if no alternate transportation is available. If alternate transportation is available, benefits will be limited to the change fee charged to allow you to transfer to another airline in order to get to Your intended destination. Coverage for this Other Covered Event only applies if Your payment for this policy is received within the Time Sensitive Period.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="linkModalDetails" tabindex="1060" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button id="closeLinkModalDetails" type="button" class="close" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info"><span id="zeroCostMessage">For Trip Cancellation benefit the Trip Cost must be more than zero. Enter Trip Cost?</span></p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btnmodal" th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="depositAndPaymentDetailsModal" tabindex="1060" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button id="closeDepositAndPaymentDetailsModal" type="button" class="close" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">Trip Cost, Initial Deposit Date and Final Payment Date must be filled. Enter the missing values?</p>
+                </div>
+                <div class="modal-footer">
+                    <a th:if="${quoteRequest.tripCost > 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuoteStep3/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a th:if="${quoteRequest.tripCost == 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Secondary modal-->
+    <div class="modal fade" id="secondaryModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close closeSecondaryModal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">Secondary Coverage will pay the balance after your Primary collectible insurance has paid
+                        the claim and its limits have been exhausted. Secondary coverage may include your primary
+                        insurance deductible if any.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">PLAN DETAILS</h4>
+
+            </div>
+            <div class="modal-body">
+                <div id="errors" class="errors-div"/>
+                <div class="row-outer">
+                    <div class="row plans-row no-gutter">
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-push-9 col-md-push-9 col-sm-push-9 price" >
+                            <div class="price" >
+                                <p id = "totalPriceTxt" class="sum cost" th:text="'$' + ${#numbers.formatDecimal(product.totalPrice, 1, 2, 'POINT')}">$298</p>
+                                <p class="total">
+                                    <span class="forPeople" th:if="${quoteRequest.travelers.size() == 1}"
+                                                       th:text="${'total for ' + quoteRequest.travelers.size() + ' person'}">total for 1 person</span>
+                                    <span class="forPeople" th:if="${quoteRequest.travelers.size() > 1}"
+                                          th:text="${'total for ' + quoteRequest.travelers.size() + ' people'}">total for 2 people</span>
+                                </p>
+                                <form id="purchaseFormDetails" action="#" th:action="@{/results/purchasePage/{quoteId}(quoteId=${quoteId})}" method="get">
+                                    <input id="purchaseUniqueCode" type="hidden" name="uniqueCode" th:value="${product.policyMeta.uniqueCode}"/>
+                                    <input id="purchaseQuoteId" name="purchaseQuoteId" type="hidden"/>
+                                    <input id="purchaseRequestId" name="purchaseRequestId" type="hidden" th:value="${requestId}" />
+                                    <a th:if="${#bools.isTrue(product.policyMeta.purchasable)}" class="btn btnplan purchaseDetail" href="#" onclick="submitPurchase(this)">Buy Plan</a>
+                                    <a th:if="${#bools.isFalse(product.policyMeta.purchasable)}" class="btn btnplan purchaseDetail disabled" href="#">Buy Plan</a>
+                                </form>
+                                <a th:onclick="'parseLink(\'' + ${product.certificate}+ '\');'" th:if="${product.certificate != null}"
+                                   target="_blank" class="certificate">View Certificate</a>
+                                <div class="loader"></div>
+                                <a th:href="@{/cms/certificate/show/{uuid}(uuid=${certificate.uuid})}"
+                                   th:if="${product.certificate == null and certificate!=null}" target="_blank"
+                                   class="certificate">View Certificate</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-3 col-md-pull-3 col-sm-pull-3">
+                            <div class="provider">
+                                <div class="img-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${product.policyMeta.vendor.code})}" alt="Safe Travels International
+                                    Trip Protection" class="img-responsive"/></div>
+                                <p class="plan-name" th:text="${product.policyMetaCode.name}">Safe Travels International
+                                    Trip Protection</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-3 col-md-pull-3 col-sm-pull-3">
+                            <ul class="plan-features">
+                                <li th:each="category, i : ${productCardLeft}">
+                                    <h6 th:text="${category.categoryName}">TRIP CANCELLATION</h6>
+                                    <p th:text="${category.categoryCaption}" th:id="${'ex'+(i.index+1)}">100%</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-lg-pull-3 col-md-pull-3 col-sm-pull-3">
+                            <ul class="plan-features">
+                                <li th:each="category, i : ${productCardRight}">
+                                    <h6 th:text="${category.categoryName}">TRIP CANCELLATION</h6>
+                                    <p th:text="${category.categoryCaption}" th:id="${'ex'+(i.index+4)}">100%</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div id = "openCardDetails"></div>
+                <form id="upsaleForm" action="#" th:action="@{/details/detailsUpsale}" method="post" class="newTableStyle">
+                    <input type="hidden" name="policyUniqueCode" th:value="${product.policyMeta.uniqueCode}"/>
+                    <input type="hidden" name="quoteId" th:value="${quoteId}"/>
+                    <input type="hidden" class="quoteRequestJson"
+                           name="quoteRequestJson" th:value="${quoteRequestJson}" />
+                    <table class="table table-bordered" id="modaltable">
+                        <tbody>
+                            <th:block th:each="group : ${groups[quoteRequest.planType]}">
+                                <th:block th:unless="${#strings.equals(group.name, 'Cancellation') and #strings.equals(quoteRequest.planType, 'LIMITED') }">
+                                    <tr class="table-subhead">
+                                        <td colspan="6">
+                                            <span class="group-title" th:text="${group.name}">CANCELLATION</span> <i
+                                                class="chevron-filter"></i></td>
+                                    </tr>
+                                    <tr th:each="category : ${group.categories}" th:if="${category.type.name() != 'CONDITIONAL'}">
+                                        <td th:inline="text">
+                                            [[${category.name}]]
+                                        </td>
+                                        <td th:if="${(group.name.equals('Cancellation') and !category.code.equals('trip-interruption')) and (zeroToApi or minTripCost)}">
+                                            <th:block th:if="${zeroToApi}">
+                                                <div th:unless="${#maps.containsKey(contentCategoriesWithCertificateText, category.code)}">-</div>
+                                                <div th:if="${#maps.containsKey(contentCategoriesWithCertificateText, category.code)}">n/a</div>
+                                            </th:block>
+                                            <th:block th:if="${minTripCost}">
+                                                <th:block th:with="policyMetaCategory=${contentCategoriesWithCertificateText.get(category.code)}">
+                                                    <span th:if="${policyMetaCategory == null}">-</span>
+                                                    <th:block th:if="${policyMetaCategory != null}">
+                                                        <th:block th:if="${policyMetaCategory.type.name() == 'SIMPLE'}">
+                                                            <span class="positionName">
+                                                                <span th:text="${policyMetaCategory.getMinCostValue(minCost)}+' '"></span>
+                                                                <span th:if="${policyMetaCategory.values[0].valueType.caption!='Other'}">
+                                                                    <i></i><b>
+                                                                    <span>Due to policy restriction, trip cost must be at least $<span th:text="${minCost}"/></span>
+                                                                </b>
+                                                                </span>
+                                                            </span>
+                                                            <th:block
+                                                                    th:if="${policyMetaCategory.values[0].secondary and #lists.size(policyMetaCategory.valuesAfterConditions) == 1}">
+                                                                <a href="#" data-toggle="modal"
+                                                                   data-target="#secondaryModal">(secondary)</a>
+                                                            </th:block>
+                                                            <br/>
+                                                            <a href="#" onclick="openChooseCategoryDialog(this); return false;" th:id="${category.code}"
+                                                                th:if="${#maps.containsKey(contentCategoriesWithCertificateText, category.code)}">Details</a>
+                                                        </th:block>
+
+                                                        <th:block th:if="${policyMetaCategory.type.name() == 'UP_SALE'}">
+                                                            <select class="selectpicker form-control upsale details" th:name="${category.code}"
+                                                                    th:if="${#lists.size(policyMetaCategory.valuesAfterConditions)>0}">
+                                                                <option th:each="categoryVal : ${policyMetaCategory.valuesAfterConditions}"
+                                                                        th:value="${#strings.toUpperCase(categoryVal.value)}"
+                                                                        th:attr="data-secondary=${categoryVal.secondary}"
+                                                                        th:text="${categoryVal.caption + (categoryVal.secondary?'(Secondary)':'')}"
+                                                                        th:selected="${(upsaleValues.get(category.code) != null and #strings.toUpperCase(upsaleValues.get(category.code).value) == #strings.toUpperCase(categoryVal.value))}"
+                                                                        th:class="uspTooltip ${category.id+'-'+#strings.toUpperCase(categoryVal.value)}"></option>
+                                                            </select>
+                                                            <a class="secondaryModalUpsale" href="#" data-toggle="modal" data-target="#secondaryModal">(secondary)</a>
+                                                            <span th:unless="${#lists.size(policyMetaCategory.valuesAfterConditions)>0}">-</span>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </td>
+
+                                        <td th:with="policyMetaCategory=${contentCategoriesWithCertificateText.get(category.code)}"
+                                            th:unless="${(group.name.equals('Cancellation')and !category.code.equals('trip-interruption')) and (zeroToApi or minTripCost)}">
+                                            <span th:if="${policyMetaCategory == null}">-</span>
+
+                                            <th:block th:if="${policyMetaCategory != null}">
+                                                <span th:if="${policyMetaCategory.type.name() == 'SIMPLE'}"
+                                                      th:text="${policyMetaCategory.values[0].caption + ' '}"></span>
+                                                <th:block th:if="${policyMetaCategory.type.name() == 'UP_SALE'}">
+                                                    <select class="selectpicker form-control upsale details" th:name="${category.code}"
+                                                            th:if="${#lists.size(policyMetaCategory.valuesAfterConditions)>0}">
+                                                        <option th:each="categoryVal : ${policyMetaCategory.valuesAfterConditions}"
+                                                                th:value="${#strings.toUpperCase(categoryVal.value)}"
+                                                                th:attr="data-secondary=${categoryVal.secondary}"
+                                                                th:text="${categoryVal.caption + (categoryVal.secondary?' (secondary)':'')}"
+                                                                th:selected="${(upsaleValues.get(category.code) != null and #strings.toUpperCase(upsaleValues.get(category.code).value) == #strings.toUpperCase(categoryVal.value))}"
+                                                                th:classappend="${'uspTooltip '+ category.id+'-'+#strings.toUpperCase(categoryVal.value)}"></option>
+                                                    </select>
+                                                    <a class="secondaryModalUpsale" href="#" data-toggle="modal" data-target="#secondaryModal">(secondary)</a>
+                                                    <span th:unless="${#lists.size(policyMetaCategory.valuesAfterConditions)>0}">-</span>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${policyMetaCategory.values[0].secondary and #lists.size(policyMetaCategory.valuesAfterConditions) == 1}">
+                                                    <a href="#" data-toggle="modal" data-target="#secondaryModal">(secondary)</a>
+                                                </th:block>
+                                                <br/>
+                                                <a href="#" onclick="openChooseCategoryDialog(this); return false;"
+                                                   th:id="${category.code}" th:if="${#maps.containsKey(contentCategoriesWithCertificateText, category.code)}">Details</a>
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </th:block>
+                            <tr class="table-subhead" th:if="${not #lists.isEmpty(packages)}">
+                                <td colspan="6"><span class="group-title">PACKAGES</span> <i class="chevron-filter"></i></td>
+                            </tr>
+                            <tr id="package" th:each="package : ${packages}">
+                                <td class="backLinks">
+                                    <a href="#" onclick="openCmsPackageDialog(this); return false;"
+                                       th:id="${package.id}"
+                                       th:utext="${package.name}"></a>
+                                </td>
+
+                                <td>
+                                    <input th:id="${package.code}" class="checkbox-custom" th:name="${package.code}" type="checkbox"
+                                           th:checked="${#lists.contains(quoteRequest.enabledPackages, package.code)}" onclick="sendUpdatePackagesRequest(this);"/>
+                                    <label th:for="${package.code}" th:text="${package.name}" class="checkbox-custom-label">label</label>
+                                </td>
+                            </tr>
+                            <tr class="table-subhead">
+                                <td colspan="6"><span class="group-title">RESTRICTIONS</span> <i class="chevron-filter"></i></td>
+                            </tr>
+                            <!-- show restrictions added in cms if they exist -->
+                            <tr th:if="${manualRestrictionsExist}">
+                                <td colspan="2" th:each="restriction : ${product.policyMeta.policyMetaPage.policyMetaRestrictionsList}">
+                                    <a href="#" onclick="openCmsRestrictionDialog(this); return false;"
+                                       th:id="${restriction.id}"
+                                       th:utext="${restriction.certificateText}"
+                                       th:if="${restriction != null and restriction.certificateText != null and #strings.length(restriction.certificateText)!=0}"></a>
+                                </td>
+                            </tr>
+                            <!-- otherwise, use the autogenerated text from policy meta restrictions -->
+                            <tr th:unless="${manualRestrictionsExist}">
+                                <td colspan="2">
+                                    <th:block class="backLinks" th:if="${certificate!=null}">
+                                        <a th:href="@{/cms/certificate/show/{uuid}(uuid=${certificate.uuid})}" th:title="'View the Certificate'"
+                                           th:text="${#strings.equals(restriction, 'No restrictions')?'View the Certificate':restriction}"
+                                           target="_blank">view certificate</a>
+                                    </th:block>
+                                    <th:block th:unless="${certificate!=null}" th:text="${restriction}">
+                                        No restrictions hardcoded
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <input type="hidden" id="zeroCost" th:value="${zeroCost}"/>
+                <input type="hidden" id="depositAndPayment" th:value="${depositAndPayment}"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnmodalClose" data-dismiss="modal">Close</button>
+                <script th:inline="javascript">
+                    // @formatter:off
+                    /*<![CDATA[*/
+                    var policyMetaId = [[${product.policyMeta.id}]];
+                    var vendorPageName = [[${product.policyMeta.vendor.vendorPage.name}]];
+                    var policyMetaPageName = [[${product.policyMeta.policyMetaPage.name}]]
+                    /*]]>*/
+                    // @formatter:on
+                </script>
+            </div>
+
+        </div>
+    </div>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Certificate api</title>
+    <style>
+        h2 {
+            margin-top: 45px;
+        }
+        h3 {
+            display: block;
+            font-size: 24px;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            font-weight: 300;
+        }
+
+        .req {
+            color: #8899a6;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .flabel {
+            color: #8899a6;
+            display: inline-block;
+            padding: 15px 0;
+            font-size: 1rem;
+        }
+
+        .row.border {
+            border-bottom: solid 1px #e1e8ed;
+        }
+
+        .param {
+            box-sizing: border-box;
+            color: #000;
+            display: block;
+            float: left;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 0;
+            word-wrap: break-word;
+            line-height: 1.65;
+        }
+        .r-param {
+            box-sizing: border-box;
+            color: #000;
+            display: block;
+            float: left;
+            font-size: 16px;
+            font-weight: 300;
+            padding: 10px 0;
+            word-wrap: break-word;
+            line-height: 1.65;
+        }
+        .url{
+            font-family: monospace,monospace;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <h1> Developers Documentation REST APIs</h1>
+        <h2>GET all certificates</h2>
+        Return a collection of certificates
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'list'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+
+        <h2>POST certificate</h2>
+        Upload certificate (pdf) to TIM for use in country-states mapping
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'create'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+        <h3>Parameters</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">file<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">The raw binary file certificate being uploaded (application/pdf)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">fileName<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Name of certificate file</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">vendorCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Vendor code string</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">policyMetaCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Policy meta code string</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">countries<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Comma separated country codes (empty for default policy)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">states<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Comma separated state codes (empty for default policy)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">defaultPolicy<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Default policy flag (Must be one of: true, false)</span>
+            </div>
+        </div>
+
+
+
+
+        <h2>POST update certificate</h2>
+        Update certificate (pdf) to TIM for use in country-states mapping
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'update'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+        <h3>Parameters</h3>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">uuid<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Valid certificate uuid</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">file<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">The raw binary file certificate being uploaded (application/pdf)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">fileName<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Name of certificate file</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">vendorCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Vendor code string</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">policyMetaCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Policy meta code string</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">countries<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Comma separated country codes (empty for default policy)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">states<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Comma separated state codes (empty for default policy)</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">defaultPolicy<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Default policy flag (Must be one of: true, false)</span>
+            </div>
+        </div>
+
+
+        <h2>Remove certificate by uuid</h2>
+        Remove existing certificate by file uuid
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'remove'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+        <h3>Parameters</h3>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">uuid<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Valid certificate uuid</span>
+            </div>
+        </div>
+
+
+        <h2>Remove all certificates by vendor</h2>
+
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'remove'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+        <h3>Parameters</h3>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">vendorCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Vendor code string</span>
+            </div>
+        </div>
+
+
+        <h2>Remove all certificates by vendor and policy meta</h2>
+
+        <h3>Resource URL</h3>
+        <span class="url" th:text="${#strings.endsWith(#httpServletRequest.requestURL,'/')?#httpServletRequest.requestURL:(#httpServletRequest.requestURL+'/')}+'remove'"></span>
+
+        <h3>Resource Information</h3>
+
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Response formats</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">JSON</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="flabel">Requires authentication?</span>
+            </div>
+            <div class="col-md-9">
+                <span class="flabel" style="color: black">yes</span>
+            </div>
+        </div>
+
+        <h3>Parameters</h3>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">vendorCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Vendor code string</span>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-3">
+                <span class="param">policyMetaCode<span class="req">required</span></span>
+            </div>
+            <div class="col-md-9">
+                <span class="r-param">Policy meta code string</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

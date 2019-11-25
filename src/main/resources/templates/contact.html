@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Contact Us</title>
+</head>
+<body>
+    <div layout:fragment="content" class="bgF6F6F6">
+        <div class="con container">
+                <h3 class="contact"></h3>
+                <div class="contactUs col-sm-4">
+                    <div class="contact">
+                        <h3>Message Us</h3>
+                        <form th:action="@{/contact/sendEmail}" action="#" method="post">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="fname" name="firstname" placeholder="Your name"
+                                       class="form-control" th:field="*{contactForm.name}"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input type="text" id="mail" name="email" placeholder="E-mail address"
+                                       class="form-control" th:field="*{contactForm.emailFrom}"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                <input type="text" id="phone" name="telephone" placeholder="Phone"
+                                       class="form-control" th:field="*{contactForm.phoneNumber}"/>
+                            </div>
+                            <textarea id="subject" name="subject" placeholder="Your Message"
+                                      th:field="*{contactForm.messageBody}"></textarea>
+                            <div class="formBlockLine clearfix">
+                                <div class="col-lg-2 col-md-4 col-xs-12 captcha" >
+                                    <div class="g-recaptcha"
+                                         data-sitekey="6LdI5RcUAAAAAAswURr8ZcTF0L6RgtVEZNPdOgJT">
+                                    </div>
+                                    <div class="col-lg-8 col-md-4 col-xs-12">
+                                        <input type="submit" value="Send" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="contact">
+                        <div class="form-group">
+                            <h3>Filing Claims</h3>
+                            <select id="provider" name="provider" data-live-search="true" title="Select provider" data-size="5"
+                                    class="custom-select-con selectpicker form-control ddown">
+                                <option value="Select" selected="selected">Select provider</option>
+                                <option th:each="provider : ${vendors}"
+                                        th:value="${provider.getCode()}" th:text="${provider.getName()}">
+                                    Provider
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group policy">
+                            <label class="control-label" for="policy">Policy Name</label>
+                            <select id="policy" name="policy" data-live-search="true" title="Select policy" data-size="5"
+                                    class="custom-select-con selectpicker form-control ddown">
+                                <option value="Select" selected="selected">Select policy</option>
+                                <option th:each="policy, iStat : ${policies}"
+                                        th:value="${policy.getVendor().getCode()}" th:text="${policy.getDisplayName()}"
+                                        th:attr="data-index=${iStat.index}">
+                                    Provider
+                                </option>
+                            </select>
+                        </div>
+                        <div class="contactInfo" th:each="contact : ${contacts}" >
+                            <div class="contactL" th:value="${contact.vendorNameFilClaims}">
+                                <div class="us phoneNumber">
+                                    <img src="/images/phone.svg" class="img-phone"/>
+                                    Phone
+                                </div>
+                                <span class="footerPhone" th:text="${contact.phoneNumber}">phone</span><br/>
+                                <span class="footerPhone" th:text="${contact.schedulePerDay}">schedulePerDay</span>
+                                <br/>
+                                <span class="footerPhone" th:text="${contact.schedulePerWeek}">schedulePerWeek</span>
+                                <div class="moreDetails">
+                                    <a th:href="@{/page/filingClaim/}+${contact.name}">More details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contactUs col-sm-4">
+                    <div class="messageUs">
+                        <h3>Contact Us</h3>
+                        <div class="us phoneNumber">
+                            <img src="/images/phone.svg" class="img-phone"/>
+                            Phone
+                            <p class="footerPhone telephone">800-614-8505</p>
+                            <p class="footerPhone telephone">617-879-2644</p>
+                            <p class="footerPhone phoneHours">Phone hours:</p>
+                            <p class="footerPhone">Mon – Fri 9:00am to 6:00pm</p>
+                        </div>
+                       <!-- <div class="us">
+                            <img src="/images/newdesign/mail.png" class="img-mail"/>
+                            Email
+                            <p class="footerPhone">support@travelinsurancemaster.com</p>
+                        </div>-->
+                        <div class="us us-mail">
+                            <img src="/images/mail.svg" class="img-mail"/>
+                            Mail
+                            <p class="footerPhone mail">16 Webster St</p>
+                            <p class="footerPhone mail">Brookline, MA 02446</p>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <h3>Our Location</h3>
+                        <div class="map">
+                            <img src="/images/map.svg"/>
+                            <!--                        <script type="text/javascript">
+                                                      var map;
+                                                      var uluru = {lat: 42.340928, lng: -71.121743};
+                                                      function initMap() {
+                                                        map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: uluru});
+                                                        var marker = new google.maps.Marker({position: uluru, map: map});
+                                                        infowindow = new google.maps.InfoWindow({content:"<b>Travel Insurance Master</b><br/>16 Webster St<br/>Brookline, MA 02446" });
+                                                        google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
+                                                      }
+                                                    </script>-->
+                        </div>
+                    </div>
+
+                </div>
+            <div class="contactUs col-sm-4">
+                <div class="contact">
+                    <ul>
+                        <li>
+                            <div class="btn-group">
+                                <h3>Help</h3>
+                                <ul>
+                                    <li class="help">
+                                        <a href="/page/Insurance-Basics">Insurance Basics</a>
+                                    </li>
+                                    <li class="help">
+                                        <a href="/page/glossary">Insurance Terms</a>
+                                    </li>
+                                    <li class="help">
+                                        <a href="/page/Primary-vs-Secondary-Medical-Travel-Insurance">Primary vs. Secondary</a>
+                                    </li>
+                                    <li class="help">
+                                        <a href="/page/Schengen-Visa">Schengen Visa</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script defer="" type="text/javascript" th:src="@{/js/custom/contact.js?ver={version}(version=${appVersion.version})}"></script>
+        </div>
+    </div>
+</body>
+</html>

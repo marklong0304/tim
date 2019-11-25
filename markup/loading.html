@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TIM</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link href="css/jquery.bxslider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid" id="header">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 hidden-sm hidden-xs">
+                    <div class="logo">
+                        <a href="#"><img src="img/logo.png" alt="Logo"/></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 hidden-sm hidden-xs">
+                    <div class="phone">800-222-3456</div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                    <div class="mainMenu">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <div class="logo visible-xs visible-sm">
+                                        <a href="#"><img src="img/logo.png" alt="Logo"/></a>
+                                    </div>
+                                    <div class="phone visible-sm">800-222-3456</div>
+                                    <div class="phone visible-xs">800-222-3456</div>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Learn <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Learn1</a></li>
+                                                    <li><a href="#">Learn2</a></li>
+                                                    <li><a href="#">Learn3</a></li>
+                                                </ul>
+                                            </div></li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Quote <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Quote1</a></li>
+                                                    <li><a href="#">Quote2</a></li>
+                                                    <li><a href="#">Quote3</a></li>
+                                                </ul>
+                                            </div>  
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="login">
+                                            <div class="dropdown visible-xs visible-sm">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    Login
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="login hidden-xs hidden-sm">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    <span class="hidden-md">Welcome, <span class="username">Adminnnnnnnn</span>!</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="searchResultContent">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                    <div class="row">
+                        <div class="orderInfo clearfix">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 backLinks">
+                                <a href="#" class="back">Edit Quote</a>
+                                <a href="#">Save Quote</a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Departure Date: <b>03/29/2015</b></p>
+                                <p>Return Date: <b>03/31/2015</b></p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Resident of: <b>Texas, United States</b></p>
+                                <p>Destination: <b>Mexico</b></p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p>Trip Cost: <b>$5,000</b></p>
+                                <p>Travelers Ages: <b>30, 27</b></p>
+                            </div>
+                        </div>    
+                        <div class="carouselPartners clearfix">
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 clearfix">
+                                <div class="ajaxLoader">Processing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
+                                <div id="carousel"> 
+                                    <div id="container">   	
+                                                <a><img src="img/partner1.png" alt="Partner 1" /></a>
+                                                <a><img src="img/partner2.png" alt="Partner 2" /></a>
+                                                <a><img src="img/partner3.png" alt="Partner 3" /></a>
+                                                <a><img src="img/partner4.png" alt="Partner 4" /></a>
+                                                <a><img src="img/partner5.png" alt="Partner 5" /></a>
+                                                <a><img src="img/partner6.png" alt="Partner 6" /></a>
+                                                <a><img src="img/partner7.png" alt="Partner 7" /></a>
+                                                <a><img src="img/partner1.png" alt="Partner 1" /></a>
+                                                <a><img src="img/partner2.png" alt="Partner 2" /></a>
+                                                <a><img src="img/partner3.png" alt="Partner 3" /></a>
+                                                <a><img src="img/partner4.png" alt="Partner 4" /></a>
+                                                <a><img src="img/partner5.png" alt="Partner 5" /></a>
+                                                <a><img src="img/partner6.png" alt="Partner 6" /></a>
+                                                <a><img src="img/partner7.png" alt="Partner 7" /></a>
+                                    </div><!-- container -->
+                                        <img id="carouselLeft" src="img/leftArr.jpg" alt="Left Arrow" />
+                                        <img id="carouselRight" src="img/rightArr.jpg" alt="Right Arrow" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>About Us</h4>
+                        <a href="#">Why Choose Us Customer Testimonials Our Guarantees</a>
+                        <a href="#">Customer Testimonials</a>
+                        <a href="#">Our Guarantees</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Connect With Us</h4>
+                        <a href="#">Affiliate Program</a>
+                        <a href="#">Insurance Providers</a>
+                        <a href="#">Business Partners</a>
+                        <a href="#">Privacy/ Security/ Legal</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Support</h4>
+                        <a href="#">Travel Insurance Basics</a>
+                        <a href="#">Group Insurance</a>
+                        <a href="#">Filing a Claim</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerPhone">+1-800-123-4567</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial facebook"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial twitter"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial google"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial inst"><a href="#"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 copyright">Travel Insurance Master © 2015</div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="js/jquery.bxslider.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="js/click-carousel.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function imgTopMargin(img) {
+                    var imgHeight = img.height();
+                    img.css('margin-top', -imgHeight / 2);
+                }
+                imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                $(window).resize(function () {
+                    imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                    imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                });
+                $(".numeric input[type=checkbox]").change(function () {
+                    var chb = $(this).is(':checked');
+                    var titleBlock = $(this).parent('.numeric').find('label').html();
+                    var dataId = $(this).parent('.numeric').data('id');
+                    var dataSliderId = $(this).parent('.numeric').data('sliderId');
+                    if (chb) {
+                        var contentSplitter = '<div class="col-lg-4 col-md-4 col-sm-6 newSplitterBlock">' +
+                                '<span class="positionName">' + titleBlock + '</span>' +
+                                '<input id="' + dataId + '" class="ex" data-slider-id="' + dataSliderId + '" type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="0"/>' +
+                                '</div>';
+                        $('.horizontalSplitterBlock').append(contentSplitter);
+                        $('.ex').slider({
+                            formatter: function (value) {
+                                var newValue = (value / 1000).toFixed(3);
+                                var newValue2 = newValue.replace('.', ',');
+                                return newValue2;
+                            }
+                        });
+                        $('.newSplitterBlock').animate({opacity: 1}, 1000);
+                    }
+                    else {
+                        $('input[type=text][data-slider-id=' + dataSliderId + ']').parent('.newSplitterBlock').animate({
+                            opacity: 0
+                        }, 500, function () {
+                            $(this).remove();
+                        });
+                    }
+                });
+                $('.ex').slider({
+                    formatter: function (value) {
+                        var newValue = (value / 1000).toFixed(3);
+                        var newValue2 = newValue.replace('.', ',');
+                        return newValue2;
+                    }
+                });
+                $(".ex").on("slide", function (slideEvt) {
+                    var dataParam = $(this).attr('data-slider-id');
+                    var newVal = (slideEvt.value / 1000).toFixed(3);
+                    var newVal2 = newVal.replace('.', ',');
+                    $('.positionCost[data-slider-id=' + dataParam + '] span').text(newVal2);
+                });
+                $('#collapse').on('show.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').addClass('openCollapse');
+                });
+                $('#collapse').on('hide.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').removeClass('openCollapse');
+                });
+                $('#container').clickCarousel({ direction: "right", margin: 0, shiftSpeed: 700, hideSpeed: 5000 }); 
+            });
+        </script>
+        <span class="goTopLink" style="display: inline;"><i>Top</i></span>
+    </body>
+</html>

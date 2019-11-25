@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Sales report</title>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/lib/moment-range.min.js}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container planDetails b2b quotes pb90" id="searchResultContent">
+        <h2>Sales report</h2>
+        <hr/>
+        <div>
+            <h3>Report parameters</h3>
+        </div>
+        <div class="row">
+            <form th:object="${salesRequest}" th:method="post" th:action="@{/reports/sales}" target="_blank">
+                <div class="row">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}" style="border: none; margin-left: 40px">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}">
+                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+                    <div id="errors"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 purchaseFormBlock" style="border: none; margin: 0; padding-right: 10px;  padding-left: 10px">
+                        <div class="row vertical-align" style="border: none; margin: 0; padding-right: 10px; padding-left: 15px">
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">
+                                <div style="margin-right: 10px;">
+                                    <label>Select dates from</label>
+                                    <input id="departDateFrom" type="text" class="dateInput" th:field="*{from}" data-date-format="mm/dd/yyyy" required="required"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-10 col-xs-10 ">
+                                <div style="margin-left: 10px;">
+                                    <label>to</label>
+                                    <input id="departDateTo" type="text" class="dateInput" th:field="*{to}" data-date-format="mm/dd/yyyy" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 purchaseFormBlock" style="border: none; margin: 0; padding-right: 10px;  padding-left: 10px">
+                        <div class="row vertical-align" style="border: none; margin: 0; padding-right: 10px; padding-left: 15px">
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 ">
+                                <div style="margin-bottom: 10px;">
+                                    <label>Report interval</label>
+                                    <select th:field="*{interval}" id="interval" class="form-control" required="required">
+                                        <option th:each="interval : ${T(com.travelinsurancemaster.model.dto.report.sales.ReportInterval).values()}"
+                                                th:value="${interval}" th:text="${interval.caption}"/>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row vertical-align" style="border: none; margin: 0; padding: 5px 5px 15px 10px;">
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 selectFixedSize selectWidth100">
+                                <label>Affiliates</label><br />
+                                <select class="form-control" id="affiliates" multiple="multiple" th:field="*{affiliates}">
+                                    <option th:each="user : ${users}" th:text="${user.name}" th:value="${user.id}" />
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row vertical-align" style="border: none; margin: 0; padding: 5px 5px 15px 10px;">
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 selectFixedSize selectWidth100">
+                                <label>Plans</label><br/>
+                                <select class="form-control" id="policyMetas" multiple="multiple" th:field="*{policyMetas}">
+                                    <option th:each="policyMeta : ${policyMetas}" th:text="|${policyMeta.vendor.name} - ${policyMeta.displayName}|" th:value="${policyMeta.id}"/>
+                                </select></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border: none; margin: 0; padding-top: 10px; padding-right: 10px; padding-left: 25px">
+                    <button id="reportBtn" class="btn btn-success" type="submit">Create report</button>
+                    <button id="reset" class="btn btn-default">Reset</button>
+                </div>
+
+            </form>
+        </div>
+        <script>
+            /*<![CDATA[*/
+            $(function () {
+                $('.dateInput').datepicker({autoclose: true});
+                $('.dateInput').mask("00/00/0000", {placeholder: "  /  /    "});
+                $('#affiliates,#vendors,#policyMetas').multiselect({
+                    enableFiltering: true,
+                    buttonWidth: 550,
+                    maxHeight: 400,
+                    enableCaseInsensitiveFiltering: true,
+                    includeSelectAllOption: true,
+                    filterStyle : 'beginWith'
+                });
+                $('#interval').selectpicker();
+                $("#reset").on("click", function () {
+                    $("#departDateFrom").val(null);
+                    $("#departDateTo").val(null);
+                    clearBootstrapMultiselect('#affiliates');
+                    clearBootstrapMultiselect('#policyMetas');
+                });
+                $('#reportBtn').click(function (e) {
+                    var errors = '';
+                    if ($('#departDateFrom').val() == '') {
+                        errors += '<div><span>Date \'from\' cannot be empty!</span></div>';
+                    }
+                    if ($('#departDateTo').val() == '') {
+                        errors += '<div><span>Date \'to\' cannot be empty!</span></div>';
+                    }
+                    if ($('#departDateFrom').val() != '' && $('#departDateTo').val() != '' && $('#interval').val() == 'DAILY') {
+                        var startDate = new Date($('#departDateFrom').val());
+                        var endDate = new Date($('#departDateTo').val());
+                        var days = moment.range(startDate, endDate).diff('days');
+                        if (days > 30) {
+                            errors += '<div><span>Date \'to\' occurs no more than 30 days after the date \'from\'</span></div>';
+                        }
+                    }
+                    if($("#affiliates option:selected").length == 0) {
+                        errors += '<div><span>Affiliates cannot be empty!</span></div>';
+                    }
+                    if($("#policyMetas option:selected").length == 0) {
+                        errors += '<div><span>Plans cannot be empty!</span></div>';
+                    }
+                    if (errors != '') {
+                        e.preventDefault();
+                        errors = '<div class="alert alert-danger alert-dismissible" role="alert" style="border: none; margin-left: 40px">' +
+                                errors + '</div>';
+                        $('#errors').html(errors);
+                    } else {
+                        $('#errors').html('');
+                    }
+                });
+            });
+            /*]]>*/
+        </script>
+    </div>
+</div>
+</body>
+</html>

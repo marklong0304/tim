@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TIM</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link href="css/jquery.bxslider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid" id="header">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 hidden-sm hidden-xs">
+                    <div class="logo">
+                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 hidden-sm hidden-xs">
+                    <div class="phone">800-222-3456</div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                    <div class="mainMenu">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <div class="logo visible-xs visible-sm">
+                                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                                    </div>
+                                    <div class="phone visible-sm">800-222-3456</div>
+                                    <div class="phone visible-xs">800-222-3456</div>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Learn <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Learn1</a></li>
+                                                    <li><a href="#">Learn2</a></li>
+                                                    <li><a href="#">Learn3</a></li>
+                                                </ul>
+                                            </div></li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Quote <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Quote1</a></li>
+                                                    <li><a href="#">Quote2</a></li>
+                                                    <li><a href="#">Quote3</a></li>
+                                                </ul>
+                                            </div>  
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="login">
+                                            <div class="dropdown visible-xs visible-sm">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    Login
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="login hidden-xs hidden-sm">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    <span class="hidden-md">Welcome, <span class="username">Adminnnnnnnn</span>!</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="container-fluid" id="searchResultContent">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                        <div class="row">
+                            <div class="orderInfo clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 backLinks">
+                                    <a href="#" class="back">Edit Quote</a>
+                                    <a href="#">Save Quote</a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <p>Departure Date: <b>03/29/2015</b></p>
+                                    <p>Return Date: <b>03/31/2015</b></p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <p>Resident of: <b>Texas, United States</b></p>
+                                    <p>Destination: <b>Mexico</b></p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <p>Trip Cost: <b>$5,000</b></p>
+                                    <p>Travelers Ages: <b>30, 27</b></p>
+                                </div>
+                            </div>    
+                            <div class="col-lg-12 col-md-12 coverage clearfix">
+                                <h3><span class="red">Got it!</span>  This plan will give you maximum coverage for your money!</h3>
+                            </div>
+                            <div class="standartOrderPosition clearfix">
+                                <div class="col-lg-9 col-md-9">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <img src="img/logoOrderSearch.jpg" alt="" />
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Cancellation<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex1Slider'>$<span>5,000</span></span>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Primary Medical<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex2Slider'>$<span>50,000</span></span>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Baggage Delay<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex3Slider'>$<span>200</span></span>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <strong>Platinum NW6600</strong>
+                                            <a href="#" class="planDetails">Plan Details</a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Trip Interruption<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex4Slider'>$<span>7,500</span></span>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Emergency Medical<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex5Slider'>$<span>75,000</span></span>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span class="positionName">Baggage Lost<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                            <span class="positionCost" data-slider-id='ex6Slider'>$<span>1,500</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 allSummForOrder col-lg-offset-0 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+                                    <div class="costTrip clearfix">
+                                        <span class="cost">$87.00</span>
+                                        <span class="forPeople">total for 2 people</span>
+                                    </div>
+                                    <a href="#" class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2 purchase">Purchase</a>
+                                </div>
+                            </div>
+                            <div class="horizontalSplitterBlock col-sm-12 clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Cancellation</span>
+                                    <input id="ex1" class="ex" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="5000"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Primary Medical</span>
+                                    <input id="ex2" class="ex" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="50000"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Baggage Delay</span>
+                                    <input id="ex3" class="ex" data-slider-id='ex3Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="3000"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Trip Interruption</span>
+                                    <input id="ex4" class="ex" data-slider-id='ex4Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="15000"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Emergency Medical</span>
+                                    <input id="ex5" class="ex" data-slider-id='ex5Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="5000"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <span class="positionName">Baggage Lost</span>
+                                    <input id="ex6" class="ex" data-slider-id='ex6Slider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="200000"/>
+                                </div>
+                            </div>
+                            <div class="moreOptionsForOrder clearfix">
+                                <a class="moreOptions col-lg-12 col-md-12" data-toggle="collapse" href="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                                    <span></span>
+                                </a>
+                                <div class="collapse" id="collapse">
+                                    <div class="well">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+                                                <a href="#" class="reset right">Reset</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <div class="wellItemWrap">
+                                                    <h5>Cancellation</h5>
+                                                    <div class="inputWrap numeric" data-id="ex7" data-slider-id="ex7Slider"><input type="checkbox" id="cancellation1" name="cancellation"/><label for="cancellation1">Trip Interruption</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation2" name="cancellation" disabled="disabled"/><label for="cancellation2">Hurricane & Weather</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation3" name="cancellation" disabled="disabled"/><label for="cancellation3">Terrorism</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation4" name="cancellation" disabled="disabled"/><label for="cancellation4">Financial Default</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation5" name="cancellation" disabled="disabled"/><label for="cancellation5">Employment Layoff</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation6" name="cancellation" disabled="disabled"/><label for="cancellation6">Cancel for medical</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation7" name="cancellation" disabled="disabled"/><label for="cancellation7">Cancel for work reasons</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="cancellation8" name="cancellation"/><label for="cancellation8">Cancel for any reason</label></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <div class="wellItemWrap">
+                                                    <h5>Medical</h5>
+                                                    <div class="inputWrap numeric" data-id="ex8" data-slider-id="ex8Slider"><input type="checkbox" id="medical1" name="medical"/><label for="medical1">Primary Medical</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="medical2" name="medical"/><label for="medical2">Emergency Medical </label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="medical3" name="medical"/><label for="medical3">Pre-existing Medical</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="medical4" name="medical"/><label for="medical4">Medical Deductible</label></div>
+                                                </div>
+                                                <div class="wellItemWrap">
+                                                    <h5>Evacuation</h5>
+                                                    <div class="inputWrap"><input type="checkbox" id="evacuation1" name="evacuation"/><label for="evacuation1">Medical Evacuation</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="evacuation2" name="evacuation"/><label for="evacuation2">Non-Medical Evacuation</label></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <div class="wellItemWrap">
+                                                    <h5>Loss or Delay</h5>
+                                                    <div class="inputWrap numeric" data-id="ex9" data-slider-id="ex9Slider"><input type="checkbox" id="lossOrDelay1" name="lossOrDelay"/><label for="lossOrDelay1">Travel Delay</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="lossOrDelay2" name="lossOrDelay"/><label for="lossOrDelay2">Baggage Delay</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="lossOrDelay3" name="lossOrDelay"/><label for="lossOrDelay3">Baggage Lost</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="lossOrDelay4" name="lossOrDelay"/><label for="lossOrDelay4">Missed Connection</label></div>
+                                                </div>
+                                                <div class="wellItemWrap">
+                                                    <h5>Accidental Death</h5>
+                                                    <div class="inputWrap"><input type="checkbox" id="accidentalDeath1" name="accidentalDeath"/><label for="accidentalDeath1">24 Hour AD&D</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="accidentalDeath2" name="accidentalDeath"/><label for="accidentalDeath2">Flight Only AD&D</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="accidentalDeath3" name="accidentalDeath"/><label for="accidentalDeath3">Common Carrier AD&D</label></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <div class="wellItemWrap">
+                                                    <h5>Sports</h5>
+                                                    <div class="inputWrap"><input type="checkbox" id="sports1" name="sports"/><label for="sports1">Hazardous Sports</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="sports2" name="sports"/><label for="sports2">Amateur Sports</label></div>
+                                                </div>
+                                                <div class="wellItemWrap">
+                                                    <h5>Other Benefits</h5>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits1" name="otherBenefits"/><label for="otherBenefits1">Rental Car</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits2" name="otherBenefits"/><label for="otherBenefits2">Money Back Guarantee</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits3" name="otherBenefits"/><label for="otherBenefits3">24 Hour Assistance Service</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits4" name="otherBenefits"/><label for="otherBenefits4">Identity Theft</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits5" name="otherBenefits"/><label for="otherBenefits5">Renewable Policy</label></div>
+                                                    <div class="inputWrap"><input type="checkbox" id="otherBenefits6" name="otherBenefits"/><label for="otherBenefits6">Renewable Policy</label></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 col-xs-offset-2 col-sm-offset-3 col-md-offset-4 col-lg-offset-4 showMorePlans">
+                                <a href="#">Show more plans</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>About Us</h4>
+                        <a href="#">Why Choose Us Customer Testimonials Our Guarantees</a>
+                        <a href="#">Customer Testimonials</a>
+                        <a href="#">Our Guarantees</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Connect With Us</h4>
+                        <a href="#">Affiliate Program</a>
+                        <a href="#">Insurance Providers</a>
+                        <a href="#">Business Partners</a>
+                        <a href="#">Privacy/ Security/ Legal</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Support</h4>
+                        <a href="#">Travel Insurance Basics</a>
+                        <a href="#">Group Insurance</a>
+                        <a href="#">Filing a Claim</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerPhone">+1-800-123-4567</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial facebook"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial twitter"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial google"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial inst"><a href="#"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 copyright">Travel Insurance Master © 2015</div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="js/jquery.bxslider.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function imgTopMargin(img) {
+                    var imgHeight = img.height();
+                    img.css('margin-top', -imgHeight / 2);
+                }
+                imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                $(window).resize(function () {
+                    imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                    imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                });
+                $(".numeric input[type=checkbox]").change(function() {
+                    var chb = $(this).is(':checked');
+                    var titleBlock = $(this).parent('.numeric').find('label').html();
+                    var dataId = $(this).parent('.numeric').data('id');
+                    var dataSliderId = $(this).parent('.numeric').data('sliderId');
+                    if (chb) {
+                        var contentSplitter = '<div class="col-lg-4 col-md-4 col-sm-6 newSplitterBlock">' +
+                                '<span class="positionName">' + titleBlock + '</span>' +
+                                '<input id="' + dataId + '" class="ex" data-slider-id="' + dataSliderId + '" type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="0"/>' +
+                                '</div>';
+                        $('.horizontalSplitterBlock').append(contentSplitter);
+                        $('.ex').slider({
+                        formatter: function(value) {
+                            var newValue = (value/1000).toFixed(3);
+                            var newValue2 = newValue.replace('.', ',');
+                                return newValue2;
+                        }
+                });
+                        $('.newSplitterBlock').animate({opacity: 1}, 1000);
+                    }
+                    else {
+                        $('input[type=text][data-slider-id=' + dataSliderId + ']').parent('.newSplitterBlock').animate({
+                            opacity: 0
+                          }, 500, function() {
+                            $(this).remove();
+                          });
+                    }
+                });
+                $('.ex').slider({
+                        formatter: function(value) {
+                            var newValue = (value/1000).toFixed(3);
+                            var newValue2 = newValue.replace('.', ',');
+                                return newValue2;
+                        }
+                });
+                $(".ex").on("slide", function (slideEvt) {
+                    var dataParam = $(this).attr('data-slider-id');
+                    var newVal = (slideEvt.value/1000).toFixed(3);
+                    var newVal2 = newVal.replace('.', ',');
+                    $('.positionCost[data-slider-id=' + dataParam + '] span').text(newVal2);
+                });
+                $('#collapse').on('show.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').addClass('openCollapse');
+                });
+                $('#collapse').on('hide.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').removeClass('openCollapse');
+                });
+                
+            });
+        </script>
+<span class="goTopLink" style="display: inline;"><i>Top</i></span>
+    </body>
+</html>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:simpleType name="actioncode">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MODIFY"/>
+            <xsd:enumeration value="NEW"/>
+            <xsd:enumeration value="CANCEL"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="travelers">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" name="traveler">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="travelerfirstname" type="xsd:string"/>
+                            <xsd:element name="travelerlastname" type="xsd:string"/>
+                            <xsd:element name="age" type="xsd:int"/>
+                            <xsd:element name="tripcost" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="coverages">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" name="coverage">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="coveragetype" type="xsd:string"/>
+                            <xsd:element name="coveragedescription" type="xsd:string"/>
+                            <xsd:element name="effectivedate" type="xsd:string"/>
+                            <xsd:element name="unlimited" type="xsd:int"/>
+                            <xsd:element name="policylimit" type="xsd:decimal"/>
+                            <xsd:element name="individuallimit" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="error">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="message" type="xsd:string"/>
+                <xsd:element name="missinginputs">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="missinginput" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="errorid" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="purchaserequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="actioncode" type="actioncode"/>
+                <xsd:element name="policynumber" type="xsd:string"/>
+                <xsd:element name="aff" type="xsd:string"/>
+                <xsd:element name="producer" type="xsd:string"/>
+                <xsd:element name="productclass" type="xsd:string"/>
+                <xsd:element name="bookingreservno" type="xsd:string"/>
+                <xsd:element name="numinsured" type="xsd:int"/>
+                <xsd:element name="departdate" type="xsd:string"/>
+                <xsd:element name="returndate" type="xsd:string"/>
+                <xsd:element name="tripcost" type="xsd:decimal"/>
+                <xsd:element name="initdate" type="xsd:string"/>
+                <xsd:element name="finalpaymentdate" type="xsd:string"/>
+                <xsd:element name="triptype" type="xsd:string"/>
+                <xsd:element name="destination" type="xsd:string"/>
+                <xsd:element name="supplier" type="xsd:string"/>
+                <xsd:element name="airline" type="xsd:string"/>
+                <xsd:element ref="travelers"/>
+                <xsd:element name="address1" type="xsd:string"/>
+                <xsd:element name="city" type="xsd:string"/>
+                <xsd:element name="state" type="xsd:string"/>
+                <xsd:element name="zipcode" type="xsd:string"/>
+                <xsd:element name="telephonehome" type="xsd:decimal"/>
+                <xsd:element name="printpolconfltr" type="xsd:int"/>
+                <xsd:element name="emailaddress" type="xsd:string"/>
+                <xsd:element name="agentid" type="xsd:string"/>
+                <xsd:element name="agentemail" type="xsd:string"/>
+                <xsd:element name="beneficiaryfirstname" type="xsd:string"/>
+                <xsd:element name="beneficiarylastname" type="xsd:string"/>
+                <xsd:element name="beneficiaryrelationship" type="xsd:string"/>
+                <xsd:element name="price" type="xsd:decimal"/>
+                <xsd:element ref="options"/>
+                <xsd:element name="cdw" type="xsd:int"/>
+                <xsd:element name="cdwstartdate" type="xsd:string"/>
+                <xsd:element name="cdwenddate" type="xsd:string"/>
+                <xsd:element name="paymentmethod" type="xsd:string"/>
+                <xsd:element name="ccorcheckno" type="xsd:decimal"/>
+                <xsd:element name="ccexpiration" type="xsd:string"/>
+                <xsd:element name="ccname" type="xsd:string"/>
+                <xsd:element name="cczipcode" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="quoterequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="aff" type="xsd:string"/>
+                <xsd:element name="producer" type="xsd:string"/>
+                <xsd:element name="productclass" type="xsd:string"/>
+                <xsd:element name="numinsured" type="xsd:int"/>
+                <xsd:element name="departdate" type="xsd:string"/>
+                <xsd:element name="returndate" type="xsd:string"/>
+                <xsd:element name="initdate" type="xsd:string"/>
+                <xsd:element name="triptype" type="xsd:string"/>
+                <xsd:element name="tripcost" type="xsd:decimal"/>
+                <xsd:element name="destination" type="xsd:string"/>
+                <xsd:element ref="travelers"/>
+                <xsd:element ref="options"/>
+                <xsd:element name="cdw" type="xsd:int"/>
+                <xsd:element name="cdwstartdate" type="xsd:string"/>
+                <xsd:element name="cdwenddate" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="quoteresponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="product" type="xsd:string"/>
+                <xsd:element name="quoteid" type="xsd:int"/>
+                <xsd:element name="price" type="xsd:decimal"/>
+                <xsd:element ref="coverages"/>
+                <xsd:element ref="error"/>
+            </xsd:sequence>
+            <xsd:attribute name="haserror" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="errorresponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="error"/>
+            </xsd:sequence>
+            <xsd:attribute name="haserror" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="response">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="quoteresponse"/>
+                <xsd:element ref="purchaseresponse"/>
+                <xsd:element ref="errorresponse"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="purchaseresponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="product" type="xsd:string"/>
+                <xsd:element name="price" type="xsd:decimal"/>
+                <xsd:element name="actioncode" type="actioncode"/>
+                <xsd:element name="policynumber" type="xsd:string"/>
+                <xsd:element ref="coverages"/>
+                <xsd:element ref="error"/>
+            </xsd:sequence>
+            <xsd:attribute name="haserror" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="options">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="option">
+                    <xsd:complexType>
+                        <xsd:simpleContent>
+                            <xsd:extension base="xsd:string">
+                                <xsd:attribute type="xsd:string" name="type"/>
+                            </xsd:extension>
+                        </xsd:simpleContent>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

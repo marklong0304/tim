@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>User management</title>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js" th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/admin/users/users.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/users}">Users</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">User management</h1></div>
+            <div class="col-md-4 text-right">
+                <h1 class="adminTitle"><a th:href="@{/users/create}" class="btn btn-success xcrud-action "><i
+                        class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="users">
+            <thead>
+            <tr class="info">
+                <th width="22%">Username</th>
+                <th width="22%">Email</th>
+                <th width="16%">User roles</th>
+                <th width="10%">Company</th>
+                <th width="10%">Created</th>
+                <th width="12%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" th:id="'user-' + ${user.id}">
+                <td th:text="${user.name + ' ' + user.userInfo.lastName}"/>
+                <td th:text="${user.email}"/>
+                <td><span th:each="role, iterationStatus : ${user.roles}" th:text="${role.getCaption()} + (${iterationStatus.last==false} ? ', ' : '')" /></td>
+                <td th:text="${user.userInfo.companyName}"/>
+                <td th:text="${user.created} ? ${#dates.format(user.created, 'dd-MM-yyyy')}"/>
+                <td>
+                    <a class="btn btn-primary" type="button" title="Edit" th:href="@{/users/edit/{id}(id=${user.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete"
+                          data-th-title="${user.canDelete} ? 'Delete' : 'Can\'t delete user with purchases, salary corrections or company\'s manager!'">
+                        <button type="button" title="Delete" class="btn btn-danger"
+                                th:classappend="${!user.canDelete} ? 'disabled' : ''"
+                                th:onclick="${user.canDelete} ? 'javascript:deleteUser(\'' + ${user.id} + '\');' : ''">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Bookings"
+                          data-th-title="${user.hasBookings} ? 'Bookings' : 'User doesn\'t have success bookings.'">
+                        <a class="btn btn-info" type="button" title="Bookings"
+                           th:href="@{/commissions/payments/(id=${user.id})}"
+                           th:classappend="${!user.hasBookings} ? 'disabled' : ''">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

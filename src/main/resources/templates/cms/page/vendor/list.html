@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Vendor page management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/vendorPage.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/vendor_page}">Vendor page</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Vendor page management</h1></div>
+        </div>
+        <table class="table table-hover table-bordered" id="vendorPages">
+            <thead>
+            <tr class="info">
+                <th width="10%">Logo</th>
+                <th width="15%">Vendor</th>
+                <th width="10%">Caption</th>
+                <th width="10%">Name</th>
+                <th width="10%">Status</th>
+                <th width="10%">Create date</th>
+                <th width="10%">Modified date</th>
+                <th width="10%">Author</th>
+                <th width="10%">View</th>
+                <th width="5%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vendorPage : ${vendorPages}" th:id="'vendorPage-' + ${vendorPage.id}">
+                <td>
+                    <div class="img-box">
+                        <img th:id="'logonocache'+${vendorPage.vendor.id}"
+                             th:src="${vendorPage.vendor.logoSrcRandom}"
+                             class="img-responsive" alt="Empty"/>
+                    </div>
+                </td>
+                <td th:text="${vendorPage.vendor.name}"/>
+                <td th:text="${vendorPage.name}"/>
+                <td th:text="${vendorPage.caption}"/>
+                <td th:text="${vendorPage.status}"/>
+                <td th:text="${#dates.format(vendorPage.createDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${#dates.format(vendorPage.modifiedDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${vendorPage.author.name}"/>
+                <td>
+                    <a th:href="@{${'/page/provider/'+vendorPage.name}}" target="_blank">view page</a>
+                </td>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Edit"
+                       th:href="@{/cms/vendor_page/edit/{id}(id=${vendorPage.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input id="lastModified" type="hidden" th:value="${lastModifiedPageId}"/>
+    </div>
+</div>
+</body>
+</html>

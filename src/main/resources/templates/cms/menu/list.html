@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Menu management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/menu.js?ver={version}(version=${appVersion.version})}" src="/js/custom/cms/page.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/menu}">Menu</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Menu management</h1>
+        <table class="table table-hover table-bordered" id="menus">
+            <thead>
+            <tr class="info">
+                <th width="70%">Title</th>
+                <th width="15%">Menu type</th>
+                <th width="10%">Build</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="menu : ${menus}" th:id="'menu-' + ${menu.id}">
+                <td th:text="${menu.title}"/>
+                <td th:text="${menu.menuType}"/>
+                <td>
+                    <a th:href="@{${'/cms/menu/build/'+menu.id}}">build menu</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input id="lastModified" type="hidden" th:value="${lastModifiedMenuId}"/>
+    </div>
+</div>
+</body>
+</html>

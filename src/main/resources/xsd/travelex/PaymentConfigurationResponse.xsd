@@ -1,0 +1,11 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.travelexinsurance.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="PaymentConfigurationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="TsepUrl" minOccurs="0" />
+                <xs:element type="xs:boolean" name="Status" />
+                <xs:element type="xs:string" name="ErrorMessage" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

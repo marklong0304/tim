@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${page.caption}"></title>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div th:utext="${page.content}"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Policy matrix</title>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/policies/policyMatrix.js?ver={version}(version=${appVersion.version})}"/>
+    <style>
+        .borderTop {
+            border-top: 1px solid lightgray;
+            padding-bottom: 15px;
+        }
+        .paddingTop {
+            padding-top: 15px;
+        }
+        .noWrap {
+            white-space: nowrap;
+        }
+        .noRightMargin {
+            margin-right: 0px;
+        }
+
+        .noLeftMargin {
+            padding-left: 0px;
+        }
+        .form-horizontal .control-label{
+            text-align:left !important;
+        }
+        label {
+            font-weight: normal !important;
+        }
+        #restrictions > .row {
+            padding-top: 10px;
+        }
+        /* Full screen modal */
+        #modalDialog {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #modalContent {
+            height: auto;
+            min-height: 100%;
+            border-radius: 0;
+        }
+        .modalBlock {
+            background-color: #DCDCDC;
+        }
+        .focusedInput {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+        .form-horizontal .form-group {
+            margin-bottom: 8px;
+        }
+        #modalDialog span {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid" id="searchResultContent">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/policyMeta">Vendors</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!--Edit restriction modal-->
+        <div class="modal fade bs-example-modal-lg modalAbsPosit" id="editRestrictionModal" role="dialog">
+            <div class="modal-dialog modal-lg" id="modalDialog">
+                <div class="modal-content" id="modalContent">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title text-center">Choose States and Countries</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="usStatesBlock">
+                            <div class="row">
+                                <div class="col-md-12 text-center modalBlock">USA states</div>
+                            </div>
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-md-1">States</div>
+                                <span class="col-md-11">
+                                    <label style="margin-right: 10px;" th:each="state: ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}">
+                                        <input th:id="|state-${state}|" th:value="${state}" type="checkbox"/>
+                                        <span th:text="|${state.caption} (${state})|">...</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-11">
+                                    <a style="margin-right: 15px;" href="#" id="selectAllUsStates">Select All</a>
+                                    <a href="#" id="deselectAllUsStates">Deselect All</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="caStatesBlock">
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-md-12 text-center modalBlock">Canada states</div>
+                            </div>
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-md-1">States</div>
+                                <span class="col-md-11">
+                                    <label style="margin-right: 10px;" th:each="state: ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}">
+                                        <input th:id="|state-${state}|" th:value="${state}" type="checkbox"/>
+                                        <span th:text="|${state.caption} (${state})|">...</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-11">
+                                    <a style="margin-right: 15px;" href="#" id="selectAllCaStates">Select All</a>
+                                    <a href="#" id="deselectAllCaStates">Deselect All</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="allCountriesBlock">
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-md-12 text-center modalBlock">Countries</div>
+                            </div>
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-md-1">Countries</div>
+                                <span class="col-md-11">
+                                    <label style="margin-right: 10px;" th:each="country: ${T(com.travelinsurancemaster.model.CountryCode).values()}">
+                                        <input th:id="|country-${country}|" th:value="${country}" type="checkbox"/>
+                                        <span th:text="|${country.caption} (${country})|">...</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-11">
+                                    <a style="margin-right: 15px;" href="#" id="selectAllCountries">Select All</a>
+                                    <a href="#" id="deselectAllCountries">Deselect All</a>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="restrictionIndex"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success btn-submit" id="saveStateCountriesChk">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10">
+                <h1 class="adminTitle" th:text="|${policyMeta.vendor.name} - ${policyMeta.displayName}|"/>
+            </div>
+            <div class="col-md-2 text-right">
+                <a id="cancelBtn" class="btn btn-default" disabled="disabled">
+                    Cancel
+                </a>
+                <button type="button" id="saveAll" class="btn btn-success">
+                    Save
+                </button>
+            </div>
+        </div>
+        <div id="pageError" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
+            <button type="button" class="close alertClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <span>Policy meta category values have incorrect data or duplicate values. Fix errors before Save.</span>
+        </div>
+        <div id="pageSuccess" class="alert alert-success alert-dismissible" role="alert" style="display: none">
+            <button type="button" class="close alertClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <span>Saved</span>
+        </div>
+        <form id="filterForm" th:action="@{/vendors/policyMatrix/showMatrix/{id}(id=${policyMeta.id})}" method="post">
+            <input id="residenceSelectedArray" type="hidden" name="residenceSelectedArray[]"/>
+            <input id="citizenshipSelectedArray" type="hidden" name="citizenshipSelectedArray[]"/>
+            <input id="destinationSelectedArray" type="hidden" name="destinationSelectedArray[]"/>
+            <input id="sessionId" type="hidden" th:value="${sessionId}" name="sessionId"/>
+        </form>
+        <input id="policyMetaId" type="hidden" th:value="${policyMeta.id}"/>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Residence</label>
+                <select id="residence" multiple="multiple">
+                    <optgroup label="UNITED STATES">
+                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                th:value="${'US-'+s}" th:text="${s.caption}">State
+                        </option>
+                    </optgroup>
+                    <optgroup label="CANADA">
+                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                th:value="${'CA-'+s}" th:text="${s.caption}">State
+                        </option>
+                    </optgroup>
+                    <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                            th:if="${c != T(com.travelinsurancemaster.model.CountryCode).US and c != T(com.travelinsurancemaster.model.CountryCode).CA}"
+                            th:value="${c}" th:text="${c.caption}"> Country
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="citizenshipCountry">Citizenship</label>
+                <select id="citizenshipCountry" multiple="multiple">
+                    <option th:each="citizenshipCountry : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                            th:value="${citizenshipCountry}" th:text="${citizenshipCountry.caption}"/>
+                </select>
+            </div>
+            <div class="col-md-4 text-right">
+                <label for="destinationCountry">Destination</label>
+                <select id="destinationCountry" multiple="multiple">
+                    <option th:each="destinationCountry : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                            th:value="${destinationCountry}" th:text="${destinationCountry.caption}"/>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div id="categories" class="col-md-7 noRightMargin borderTop paddingTop" style="height: 550px; overflow: auto;">
+                <h3 class="adminTitle">Categories</h3>
+                <div style="padding-top: 8px;" class="row categoryRow" th:each="category : ${allCategories}">
+                    <div class="col-md-3">
+                        <div th:text="${category.name}"></div>
+                    </div>
+                    <div class="col-md-9 noWrap" th:with="policyMetaCategories=${policyMetaCategoriesMap.get(category.id)}">
+                        <div class="row">
+                            <input type="hidden" class="categoryName" th:value="${category.name}"/>
+                            <th:block th:unless="${#lists.isEmpty(policyMetaCategories)}" th:each="policyMetaCategory, rowCategory: ${policyMetaCategories}">
+                                <div th:id="|categoryBlock-${category.id}-${__rowCategory.index__}|" class="col-md-3">
+                                    <input type="hidden" class="policyMetaCategoryIndex" th:value="${rowCategory.index}"/>
+                                    <div th:each="categoryValue, rowValue: ${policyMetaCategory.values}">
+                                        <input th:id="|category-${category.id}-${__rowCategory.index__}-${__rowValue.index__}|" style="margin-bottom: 3px;" type="text" th:value="${categoryValue.caption}" class="form-control"/>
+                                        <input type="hidden" class="categoryValueIndex" th:value="${rowValue.index}"/>
+                                        <input type="hidden" class="categoryValue" th:value="${categoryValue.value}"/>
+                                        <input type="hidden" class="valueDuplicatesError" value="false"/>
+                                        <input type="hidden" class="categoryValueProperiesErrors" value="false"/>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div class="col-md-1">
+                                <a th:id="|addCategoryBlock-${category.id}|" href="#" title="Add category value">
+                                    <span class="glyphicon glyphicon-plus-sign" style="color: lightgray; top: 4px;"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rightBlock" class="col-md-5 noLeftMargin borderTop paddingTop" style="height: 550px; overflow: auto; padding-left: 10px; display: none;">
+                <form id="categoryValuePropertiesForm" th:object="${categoryValue}">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h3 class="adminTitle">Value properties for <span id="categoryName"></span></h3>
+                        </div>
+                        <div class="col-md-5 text-right">
+                            <button type="button" th:onclick="'javascript:deleteCategoryValue();'" class="btn btn-danger" title="Remove category value">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                            <button type="button" th:onclick="'javascript:addCategoryValue();'" class="btn btn-success">
+                                <i class="glyphicon glyphicon-plus-sign"></i>Add value
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-horizontal" style="margin-top: 10px;">
+                        <div class="form-group" style="color: red; padding-left: 15px; padding-bottom: 10px;">
+                            <span id="valuePropertiesError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Caption</label>
+                            <div class="col-md-5">
+                                <input th:field="*{caption}" id="caption" type="text" class="form-control protected" readonly="readonly"/>
+                                <span class="errorRed"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary editValueProperties" type="button" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Value</label>
+                            <div class="col-md-3">
+                                <input th:field="*{value}" id="value" type="text" readonly="readonly" class="form-control protected"/>
+                                <span class="errorRed"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary editValueProperties" type="button" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Value type</label>
+                            <div class="col-md-3">
+                                <select th:field="*{valueType}" id="valueType" class="form-control protected" disabled="disabled">
+                                    <option th:each="valueType : ${T(com.travelinsurancemaster.model.dto.ValueType).values()}"
+                                            th:value="${valueType}" th:text="${valueType.caption}"/>
+                                </select>
+                                <span class="errorRed"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary editValueProperties" type="button" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Api value</label>
+                            <div class="col-md-3">
+                                <input th:field="*{apiValue}" id="apiValue" type="text" readonly="readonly" class="form-control protected"/>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary editValueProperties" type="button" title="Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Days after initial deposit</label>
+                            <div class="col-md-3">
+                                <input th:field="*{daysAfterInitialDeposit}" id="daysAfterInitialDeposit" type="text" class="form-control negativeNumericValue"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Days after final payment</label>
+                            <div class="col-md-3">
+                                <input th:field="*{daysAfterFinalPayment}" id="daysAfterFinalPayment" type="text" class="form-control negativeNumericValue"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Min age</label>
+                            <div class="col-md-3">
+                                <input th:field="*{minAge}" id="minAge" type="text" class="form-control smallNumericInput"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Max age</label>
+                            <div class="col-md-3">
+                                <input th:field="*{maxAge}" id="maxAge" type="text" class="form-control smallNumericInput"/>
+                            </div>
+                        </div>
+                        <div>
+                            <input th:field="*{sortOrder}" id="sortOrder" value="1"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">Secondary</label>
+                            <div class="col-md-3">
+                                <select class="form-control" th:field="*{secondary}">
+                                    <option value="true">True</option>
+                                    <option value="false" selected="selected">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedPolicyMetaCategoryId" name="selectedPolicyMetaCategoryId"/>
+                        <input type="hidden" id="selectedPolicyMetaCategoryIndex" name="selectedPolicyMetaCategoryIndex"/>
+                        <input type="hidden" id="selectedCategoryValueIndex" name="selectedCategoryValueIndex"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h3 class="adminTitle">Subcategories</h3>
+                        </div>
+                    </div>
+                    <div id="subcategoryValues"></div>
+                </form>
+                <!-- Policy meta category restriction modal-->
+                <div th:replace="fragments/restrictions :: restrictionsFragment"></div>
+                <div id="restrictionsBlock" style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h3 class="adminTitle" style="float: left">Restrictions</h3>
+                            <label style="padding-left: 30px;"><input id="policyCategoryRestriction" type="checkbox" /> plan level</label>
+                        </div>
+                        <div class="col-md-5 text-right">
+                            <button id="createRestrictionBtn" class="btn btn-success" th:onclick="'javascript:clearRestrictionFields(); $(\'#actionName\').text(\'Create\'); $(\'#addRestriction\').attr(\'name\', \'addRestrictionToMatrix\'); changeDialogTitle(); enableSelects();'" data-target="#addRestrictionModal" data-toggle="modal">
+                                <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;Create
+                            </button>
+                        </div>
+                    </div>
+                    <div id="restrictions">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            var filterChanged = false;
+            var residenceSelectedArray = [[${residenceSelectedArray}]];
+            var citizenshipSelectedArray = [[${citizenshipSelectedArray}]];
+            var destinationSelectedArray = [[${destinationSelectedArray}]];
+            $('#residence, #citizenshipCountry, #destinationCountry').multiselect({
+                buttonWidth: 400,
+                maxHeight: 372,
+                enableCaseInsensitiveFiltering: true,
+                includeSelectAllOption: true,
+                filterStyle: 'beginWith',
+                onDropdownHide: function() {
+                    if (filterChanged) {
+                        var residenceSelected = $('#residence option:selected');
+                        var residenceArray = [];
+                        $(residenceSelected).each(function () {
+                            residenceArray.push($(this).val());
+                        });
+                        $('#residenceSelectedArray').val(residenceArray);
+                        var citizenshipSelected = $('#citizenshipCountry option:selected');
+                        var citizenshipArray = [];
+                        $(citizenshipSelected).each(function () {
+                            citizenshipArray.push($(this).val());
+                        });
+                        $('#citizenshipSelectedArray').val(citizenshipArray);
+                        var destinationSelected = $('#destinationCountry option:selected');
+                        var destinationArray = [];
+                        $(destinationSelected).each(function () {
+                            destinationArray.push($(this).val());
+                        });
+                        $('#destinationSelectedArray').val(destinationArray);
+                        $('#filterForm').submit();
+                    }
+                },
+                onChange: function(option, checked, select) {
+                    filterChanged = true;
+                }
+            });
+            $('#residence').multiselect('select', residenceSelectedArray);
+            $('#citizenshipCountry').multiselect('select', citizenshipSelectedArray);
+            $('#destinationCountry').multiselect('select', destinationSelectedArray);
+        });
+        /*]]>*/
+    </script>
+</div>
+</body>
+</html>

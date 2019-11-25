@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Best Travelers Insurance Providers | Travel Insurance Master</title>
+    <meta name="description" content="Travel Insurance Master is the best travel insurance provider in Boston that offers travel insurance package and tourist health insurance coverage to the travelers." />
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <main class="mainPage">
+        <div th:if="${message != null}"
+             class="modal fade" id="notificationModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-info">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" th:text="${dialogCaption}"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div th:text="${message}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="errors" class="errors-div"/>
+        <section class="travelform">
+            <div class="container-fluid pattern">
+                <div class="row no-gutter" id="hero-inner">
+                    <div class="col-md-5 col-lg-6 slogan-box">
+                        <div class="travel"><travel>Travel</travel> <with>with</with><br/>peace of mind</div>
+                    </div>
+                    <div class="col-md-7 col-lg-6 forminfo-box">
+                        <div class="forminfo">
+
+                            <div class="row steps">
+                                <div class="col-xs-4 step-line step-line-1 active"><span>ABOUT TRIP</span><div class="round">1</div></div>
+                                <div class="col-xs-4 step-line step-line-2 "><span>ABOUT YOU</span><div class="round">2</div></div>
+                                <div class="col-xs-4 step-line step-line-3 "><span>ABOUT DONE</span><div class="round">3</div></div>
+                            </div>
+
+                            <form th:object="${step1Form}" th:action="@{/}" method="post" class="form active" id="step1Form">
+                                <input type="hidden" name="timezoneOffset" class="timezoneOffset" />
+                                <div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="destination">Destination</label>
+                                            <select id="destination" th:field="*{destinationCountry}" class="selectpicker form-control ddown" data-live-search="true" title="Select a Destination">
+                                                <option value="" th:text="${''}" class="destination-option"></option>
+                                                <option th:each="c : ${destinationCountries}"
+                                                        th:value="${c}" th:text="${c.caption}">
+                                                    Country
+                                                </option>
+                                            </select>
+                                            <span class="note">Visiting multiple countries? Select only the first country you're traveling to.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <div class="row no-gutter">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="departDatePicker">Departure Date</label>
+                                                    <div class='input-group date'>
+                                                        <input id="departDatePicker" th:field="*{departDate}" type='text' class="form-control dateSel" placeholder="Select a Date"
+                                                        data-date-format="mm/dd/yyyy" autocomplete="off" inputmode="numeric"/>
+                                                        <span class="input-group-addon">
+                                                          <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg}" alt="datepicker" class="calendar"/>
+                                                        </span>
+                                                    </div>
+                                                    <span class="note">When do you leave home for your trip?</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="returnDatePicker">Return Date</label>
+                                                    <div class='input-group date'>
+                                                        <input id="returnDatePicker" th:field="*{returnDate}" type='text' class="form-control dateSel" placeholder="Select a Date"
+                                                        data-date-format="mm/dd/yyyy" autocomplete="off" inputmode="numeric"/>
+                                                        <span class="input-group-addon">
+                                                          <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg}" alt="datepicker" class="calendar"/>
+                                                        </span>
+                                                    </div>
+                                                    <span class="note">When do you return home?</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <div class="row no-gutter">
+                                            <div class="col-sm-6">
+                                                <div class="form-group cost">
+                                                    <label class="control-label" for="tripCost">Trip Cost</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">$</span>
+                                                        <input id="tripCost" th:field="*{tripCost}" value="0" class="form-control numeric tripCost" type="text" placeholder="0" required="required" autocomplete="off" inputmode="numeric"/>
+                                                        <input id="confirmZeroCostVal" hidden="hidden" value="false"/>
+                                                    </div>
+                                                    <span class="note">Prepaid and non-refundable expenses.</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group total">
+                                                    <input id="customRadio1" th:field="*{tripCostTotal}" th:value="true" class="radio-custom"  type="radio" checked="true"/>
+                                                    <label for="customRadio1" class="radio-custom-label">Total for All</label>
+                                                </div>
+                                                <div class="form-group per">
+                                                    <input id="customRadio2" th:field="*{tripCostTotal}" th:value="false" class="radio-custom" type="radio"/>
+                                                    <label for="customRadio2" class="radio-custom-label">Per Traveler</label>
+                                                </div>
+                                                <input id="confirmOneDayDiffVal" hidden="hidden" value="false"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btnbox">
+                                        <button class="btn btn-block btnnext nextForm firstSlide step1">Next</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form th:object="${step2Form}" th:action="@{/}" method="post" class="form" id="step2Form">
+
+                                <div class="form-group">
+                                    <label class="control-label" for="travelers">Travelers</label>
+                                    <select id="travelers" class="ageSelectpicker form-control ddown" th:value="${#lists.size(step2Form.travelers)}" th:title="${#lists.size(step2Form.travelers)}">
+                                        <option th:each="i : ${#numbers.sequence(1, 9, 1)}" th:text="${i}"
+                                                th:selected="${#lists.size(step2Form.travelers) == i}">
+                                        </option>
+                                    </select>
+                                    <span class="note"># of insureds</span>
+                                </div>
+
+                                <div class="form-group ages">
+                                    <label class="control-label">Age or Date Of Birth</label>
+                                    <div class="input-group"  th:each="traveler, row : ${step2Form.travelers}">
+                                        <input th:id="${'age-'+row.index}" type="text" maxlength="10" autocomplete="off"
+                                               placeholder="Age or mm/dd/yyyy" inputmode="numeric"
+                                               th:field="*{travelers[__${row.index}__].ageOrBirthday}" class="form-control ageField ageordate"/>
+                                    </div>
+                                    <input id="mainFormTravelersCount" type="hidden" th:value="${#lists.size(step2Form.travelers)}"/>
+                                    <input id="travelersString" type="hidden" th:field="*{travelersString}" th:value="null"/>
+                                    <span class="note">How old are the travelers as of today?</span>
+                                </div>
+
+                                <div class="form-group col-sm-12 about-select">
+                                    <label class="control-label" for="citizenship">Citizen of</label>
+                                    <select id="citizenship" th:field="*{citizenCountry}" class="selectpicker form-control ddown" data-live-search="true" title="Select a Country">
+                                        <option value="" th:text="${''}" class="citizenship-option"></option>
+                                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                        th:value="${c}" th:text="${c.caption}"> Country</option>
+                                    </select>
+                                    <span class="note">If you have dual citizenship, select only one country.</span>
+                                </div>
+
+                                <div class="form-group col-sm-12 about-select">
+                                    <label class="control-label" for="residence">Resident of</label>
+                                    <select id="residence" th:field="*{residentCountryStatePair}" class="selectpicker form-control ddown" data-live-search="true" title="Select a Country">
+                                        <option value="" th:text="${''}" class="residence-option"></option>
+                                        <optgroup label="UNITED STATES">
+                                            <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                    th:value="${'US-'+s}" th:text="${s.caption}">State
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="CANADA">
+                                            <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                    th:value="${'CA-'+s}" th:text="${s.caption}">State
+                                            </option>
+                                        </optgroup>
+                                        <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                                th:if="${c != T(com.travelinsurancemaster.model.CountryCode).US and c != T(com.travelinsurancemaster.model.CountryCode).CA}"
+                                                th:value="${c}" th:text="${c.caption}"> Country
+                                        </option>
+                                    </select>
+                                    <span class="note">Select your primary country/state/territory of residence.</span>
+                                </div>
+
+                                <div class="btnbox">
+                                    <input type="hidden" th:field="*{includesUS}" />
+                                    <button class="btn btn-block btnnext nextSlide firstSlide step2">Next</button>
+                                </div>
+                                <div id="goBack" data="2" class="prev"><span>Back</span></div>
+                            </form>
+
+                            <form th:object="${step3Form}" th:action="@{/}" method="post" class="form" id="step3Form">
+                                <input type="hidden" id="preExistingCondition" th:field="*{preExistingMedicalAndCancellation}"/>
+                                <p>To determine eligibility for pre-existing medical conditions waiver and other time sensitive benefits, please enter the dates of your initial trip deposit and final payment.</p>
+                                <div class="row no-gutter">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="depositDatePicker">Initial Deposit Date</label>
+                                            <div class='input-group date' >
+                                                <input th:field="*{depositDate}" id="depositDatePicker" data-date-format="mm/dd/yyyy" type='text' class="form-control dateSel" placeholder="Select a Date" inputmode="numeric"/>
+                                                <span class="input-group-addon">
+                                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg}" alt="datepicker" class="calendar"/>
+                                                </span>
+                                            </div>
+                                            <span class="note">The earliest date a payment was made toward your trip.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="paymentDatePicker">Final Payment Date</label>
+                                            <div class='input-group date' >
+                                                <input th:field="*{paymentDate}" id="paymentDatePicker" data-date-format="mm/dd/yyyy" type='text' class="form-control dateSel" placeholder="Select a Date" inputmode="numeric"/>
+                                                <span class="input-group-addon">
+                                                  <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/calendar.svg}" alt="datepicker" class="calendar"/>
+                                                </span>
+                                            </div>
+                                            <span class="note">The date the final payment was made toward your trip.</span>
+                                            <input id="noPayment" class="checkbox-custom" name="checkbox-1" type="checkbox"/>
+                                            <label for="noPayment" class="checkbox-custom-label" id="finalpay">I have not yet made my final payment.</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btnbox">
+                                    <button id="show-results" class="btn btn-block btnnquote finishSlide firstSlide step3">Get Quote</button>
+                                </div>
+                                <div id="goBack" data="3" class="prev"><span>Back</span></div>
+                                <input id="step3QuoteStorageId" type="hidden" name="quoteStorageId" value=""/>
+                            </form>
+                            <form id="searchResultForm" th:action="@{/api/searchQuote}" method="post" autocomplete="off">
+                                <input id="quoteStorageId" type="hidden" name="quoteStorageId" value=""/>
+                                <input id="isMobileDevice" type="hidden" name="isMobileDevice" value="false"/>
+                                <input type="submit" id="searchResult"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div class="container-fluid pattern hidden-xs">
+                <div class="container-fluid graybg">
+
+                    <div id="benefitCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#benefitCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#benefitCarousel" data-slide-to="1"></li>
+                            <li data-target="#benefitCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+
+                            <div class="item active">
+                                <div class="sun1" id="sun-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/sun-bg.svg}" alt="Sun"/></div>
+                                <div class="carousel-box">
+                                    <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/knot.svg}" alt="Knot"/></div>
+
+                                    <h3 class="heading">We'll find you the perfect fit</h3>
+                                    <div class="hline"></div>
+                                    <p class="text">Researching travel insurance options can be overwhelming. Our trusted algorithm recommends the best insurance option for your travel needs, so you can spend more time planning your vacation.</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="sun2" id="sun-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/sun-bg.svg}" alt="Sun"/></div>
+                                <div class="carousel-box">
+
+                                    <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ship-wheel.svg}" alt="Ship Wheel"/></div>
+
+                                    <h3 class="heading">You're in good hands</h3>
+                                    <div class="hline"></div>
+                                    <p class="text">From plans that offer money back during their review period, to support before, during and after your trip, we're here to help every step of the way. We love to travel and helping others travel at peace is our priority.</p>
+                                </div>
+                            </div>
+                            <div class="item bgvawe">
+                                <!-- <div class="sun3" id="sun-box"><newdesign src="newdesign/sun-bg.svg" alt="Sun"></div> -->
+                                <div class="carousel-box">
+                                    <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/paper-boat.svg}" alt="Paper Boat"/></div>
+
+                                    <h3 class="heading">Stress-free travel </h3>
+                                    <div class="hline"></div>
+                                    <p class="text">While you can't control the weather, you can find comfort in knowing your trip is well protected. All plans we sell are at state regulated prices, and we never charge additional fees.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="benefits-mob hidden-sm hidden-md hidden-lg">
+
+                <div class="row no-gutter">
+                    <div class="col-xs-12">
+                        <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/knot.svg}" alt="Knot"/></div>
+
+                        <h3 class="heading">We'll find you the perfect fit</h3>
+                        <div class="hline"></div>
+                        <p class="text">Researching travel insurance options can be overwhelming. Our trusted algorithm recommends the best insurance option for your travel needs, so you can spend more time planning your vacation.</p>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/ship-wheel.svg}" alt="Ship Wheel"/></div>
+
+                        <h3 class="heading">You're in good hands</h3>
+                        <div class="hline"></div>
+                        <p class="text">From plans that offer money back during their review period, to support before, during and after your trip, we're here to help every step of the way. We love to travel and helping others travel at peace is our priority.</p>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="image-box"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/paper-boat.svg}" alt="Paper Boat"/></div>
+
+                        <h3 class="heading">Stress-free travel </h3>
+                        <div class="hline"></div>
+                        <p class="text">While you can't control the weather, you can find comfort in knowing your trip is well protected. All plans we sell are at state regulated prices, and we never charge additional fees.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <div class="container-fluid providers">
+                <h1 class="heading">Our Travel Insurance Providers</h1>
+                <ul class="row row-centered">
+                    <th:block th:each="vendor : ${vendors}">
+                            <li th:if="${vendor.value != null}" class="col-xs-1 col-centered">
+                                <a th:href="@{/page/provider/{vendorPageName}(vendorPageName=${vendor.value})}">
+                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${vendor.key})}" alt="Provider"/>
+                                </a>
+                            </li>
+
+                            <li th:unless="${vendor.value != null}" class="col-xs-1 col-centered">
+                                <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${vendor.key})}" alt="Provider"/></a>
+                            </li>
+                    </th:block>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="container testaments">
+
+                <div class="color-bg">
+                    <div class="color-navy"></div>
+                    <div class="color-blue"></div>
+                </div>
+                <div class="quote">
+                    <div class="image"><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/quotation-mark.svg}" alt="quotation mark"/></div>
+
+                    <div id="testamentCarousel" class="carousel slide" data-ride="carousel">
+
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <p class="text">I never used travel insurance before, and now I'll never go anywhere without it. Thanks for making everything easy and hassle free!</p>
+                                <span class="author">ANDREA VILLANUEVA<span class="author-sep"><sep> | </sep>SAN DIEGO, CA</span></span>
+                            </div>
+
+                            <div class="item">
+                                <p class="text">I never used travel insurance before, and now I'll never go anywhere without it. Thanks for making everything easy and hassle free! </p>
+                                <span class="author">ANDREA VILLANUEVA<span class="author-sep"><sep> | </sep>SAN DIEGO, CA</span></span>
+                            </div>
+
+                            <div class="item">
+                                <p class="text">I never used travel insurance before, and now I'll never go anywhere without it. Thanks for making everything easy and hassle free!</p>
+                                <span class="author">ANDREA VILLANUEVA<span class="author-sep"><sep> | </sep>SAN DIEGO, CA</span></span>
+                            </div>
+                        </div>
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#testamentCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#testamentCarousel" data-slide-to="1"></li>
+                            <li data-target="#testamentCarousel" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+
+        <section class="getquote">
+            <div class="container-fluid pattern">
+                <div class="container-fluid bgpalms">
+                    <div class="select-date">
+                        <a th:href="@{/newQuote}" class="btn btnfreeq">Get Your Free Quote</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+
+<!-- modal -->
+<div layout:fragment="pageModal" th:remove="tag">
+    <div class="modal fade" id="expiredSessionModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Session notification</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="expiredtime">Session has expired, please repeat your request!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${registrationCompleted}"
+         class="modal fade" id="registrationCompletedModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Sign Up Complete!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="expiredtime">Thank you!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div layout:fragment="pageScript" th:remove="tag">
+    <script th:src="@{/js/custom/quoteRequest.min.js?ver={version}(version=${appVersion.version})}" src="/js/custom/quoteRequest.min.js"/>
+    <script>
+        $(document).ready(function(){
+            resizeDiv();
+            $(':checkbox:checked').prop('checked',false);
+
+            //Carosel Interval
+            $("#benefitCarousel").carousel({interval: 10000});
+        });
+        //Top notification
+        $('#notfback').affix({
+            offset: {
+                top: $('#notfback').offset().top + $('#notfback').innerHeight()
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

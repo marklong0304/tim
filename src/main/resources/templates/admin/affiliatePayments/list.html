@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Affiliate Payments</title>
+    <link rel="stylesheet" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/jquery.modal.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-select.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/selectize.bootstrap3.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/customAdmin.css?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/lib/jquery.modal.js}"></script>
+    <script th:src="@{/js/lib/all.js}"></script>
+    <script th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-select.min.js}"></script>
+    <script th:src="@{/js/lib/selectize.js}"></script>
+    <script th:src="@{/js/lib/hashmap.js}"></script>
+    <script th:src="@{/js/custom/admin/customDataTable.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/createNote.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/createTooltip.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/bootstrapMultiselectInit.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/removeDuplicated.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/drawSelectItputs.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/utils/selectizeSearchInit.js?ver={version}(version=${appVersion.version})}"></script>
+    <script th:src="@{/js/custom/admin/affiliatePayments/affiliatePayments.js?ver={version}(version=${appVersion.version})}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeffreydwalter/ColReorderWithResize@9ce30c640e394282c9e0df5787d54e5887bc8ecc/ColReorderWithResize.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid planDetails b2b quotes" id="searchResultContent">
+        <div id="showNote" class="modal">
+            <a href="#" rel="modal:close">Close</a>
+        </div>
+        <div class="row payments">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row adminDataTables">
+                    <div class="col-lg-6 col-md-6 col-sm-5 col-sm-12">
+                        <h3>Affiliate payments</h3>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-5 col-sm-12">
+                        <form id="exportForm" th:action="@{/commissions/payments/export}" th:method="post">
+                            <a class="btn btn-success from-control" id="export" role="button" style="float: right;">Export
+                                to excel</a>
+                            <input type="hidden" name="filterData" id="filterData"/>
+                        </form>
+                    </div>
+                    <br/>
+                    <!-- jq dataTable -->
+                    <div class="formBlockLine clearfix">
+                        <div class="col-lg-3 col-md-12 col-sm-12 ">
+                            <div class="panel-group">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Filters</div>
+                                    <div class="panel-body">
+                                        <div class="formBlockLine clearfix affiliates">
+                                            <div class="col-lg-6 col-md-4 col-xs-12 fullWidth">
+                                                <input id="affiliates"
+                                                       class="form-control filter"/>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix companies">
+                                            <div class="col-lg-6 col-md-4 col-xs-12 fullWidth">
+                                                <input id="companies"
+                                                       class="form-control filter"/>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix users">
+                                            <div class="col-lg-6 col-md-4 col-xs-12 fullWidth">
+                                                <input id="users"
+                                                       class="form-control filter"/>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix travellers">
+                                            <div class="col-lg-6 col-md-4 col-xs-12 fullWidth">
+                                                <input id="travellers"
+                                                       class="form-control filter"/>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <div class="col-lg-6 col-md-4 col-xs-12" style="width: 50%;">
+                                                <label style="font-size:13px"><b>Vendor</b></label><br/>
+                                                <select class="form-control filter" id="vendors" multiple="multiple">
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                                 style="margin-bottom: 10px; width: 50%;">
+                                                <label style="font-size:13px"><b>Policies</b></label><br/>
+                                                <select class="form-control filter" id="policies" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Departure Date:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="departDateFrom" type="text"
+                                                           title="From"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="departDateTo" type="text"
+                                                           title="To"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Purchase Date:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="purchaseDateFrom" type="text"
+                                                           title="From"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="purchaseDateTo" type="text"
+                                                           title="To"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Trip Cost:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="tripCostFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="tripCostTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Policy $:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="policyPriceFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="policyPriceTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel"></p>
+                                            <div class="col-lg-12 col-md-10 col-sm-12 col-xs-12 ">
+                                                <div>
+                                                    <label style="font-size:13px"><b>Policy Number:</b></label>
+                                                    <input id="policyNumber" type="text" class="form-control input-sm filter"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Payment Date:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="paymentDateFrom" type="text"
+                                                           title="From"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="paymentDateTo" type="text"
+                                                           title="To"
+                                                           class="form-control input-sm dateInput filter"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="formBlockLine clearfix">
+                                            <p class="fromToLabel">Payment Total:</p>
+                                            <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 ">
+                                                <div style="margin-right: 10px;">
+                                                    <input id="paymentTotalFrom" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="From"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-5 col-sm-10 col-xs-10 ">
+                                                <div style="margin-left: 10px;">
+                                                    <input id="paymentTotalTo" type="text"
+                                                           class="form-control input-sm numberInput filter"
+                                                           placeholder="To"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 formApply">
+                                            <div class="purchaseFormBlock"
+                                                 style="border: none; margin: 0; padding-right: 10px; padding-left: 10px">
+                                                <button id="doFilter" class="btn btn-success">Apply</button>
+                                                <button id="reset" class="btn btn-default">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped  tableThreeDotsCell" id="affiliatePayments" width="100%" style="font-size:12px">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Affiliate</th>
+                                        <th>Company</th>
+                                        <th>Payment Option</th>
+                                        <th>Payment Date</th>
+                                        <th>Total</th>
+                                        <th>View</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

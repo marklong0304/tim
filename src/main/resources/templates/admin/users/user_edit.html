@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>User info</title>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Menu</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="adminTitle">User Info</h1>
+
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+
+                <form id="editUserForm" action="#" th:action="@{/users/edit/{userId}(userId=${user.id})}"
+                      th:object="${user}" method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}">
+                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <div>
+                                <label for="mail">Email</label>
+                                <input id="mail" type="email" name="email" placeholder="Email Address"
+                                       th:field="*{email}"
+                                       class="form-control"/>
+                            </div>
+                            <span th:errors="*{email}" style="color: red">Name Error</span>
+                            <span th:if="${!user.verified}" th:text="${'Not verified'}"
+                                  style="color: red">Name Error</span>
+                            <a th:if="${!user.verified}" href="javascript:void(0)" id="verify" class="verify">Verify</a>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="roles">Roles:</label> <br/>
+                            <select th:field="*{roles}" id="roles" class="form-control" multiple="multiple">
+                                <option th:each="role : ${T(com.travelinsurancemaster.model.security.Role).values()}"
+                                        th:value="${role}" th:text="${role.getCaption()}"/>
+                            </select>
+                            <span th:errors="*{roles}" style="color: red"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="company">Company: </label>
+
+                            <select th:field="*{company}" id="company" class="form-control">
+                                <option value=""> NONE</option>
+                                <option th:each="company : ${companies}"
+                                        th:value="${company.id}" th:text="${company.name}"/>
+                            </select>
+                            <span th:errors="*{company}" style="color: red"/>
+                        </div>
+                    </div>
+                    <input type="submit" value="Update User type" id="updateUserType" name="updateUserType"
+                           class="btn btn-info form-control"
+                           style="display: none"/>
+                    <div class="form-row row">
+                        <div class="col-sm-12"></div>
+                    </div>
+                    <div class="form-row row">
+                        <div th:if="${user.hasCompensation()}">
+                            <div class="form-group col-sm-4">
+                                <label for="percentTypeSelect">Compensation type:</label>
+                                <select th:field="*{userInfo.percentType}" id="percentTypeSelect"
+                                        class="form-control percentType">
+                                    <option th:each="percentType : ${T(com.travelinsurancemaster.model.PercentType).values()}"
+                                            th:value="${percentType}" th:text="${percentType.type}"/>
+                                </select>
+                                <span th:errors="*{userInfo.percentType}" style="color: red"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div th:if="${user.hasCompensation()}">
+                            <div th:each="percentInfo, row : ${user.userInfo.percentInfo}" id="percentInfo"
+                                 class="form-group col-sm-12">
+                                <div th:id="${'percentPanel' + __${row.index}__}" class="panel panel-info">
+                                    <div class="panel-heading clearfix">
+                                        <div class="panel-title">
+                                            <span th:if="${user.userInfo.percentType.commissionValueType.name() == 'PERCENT'}"> Percent value</span>
+                                            <span th:if="${user.userInfo.percentType.commissionValueType.name() == 'FIX'}"> Fixed value</span>
+                                            <span th:if="${user.userInfo.percentType.commissionValueType.name() == 'CALCULATED'}"> Calculated value</span>
+                                            <button type="submit" th:value="${row.index}" name="removeRange"
+                                                    th:unless="${row.index} == 0"
+                                                    class="btn btn-primary pull-right"
+                                                    onclick="return confirmRemove();">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group"
+                                             th:unless="*{userInfo.percentType.name() == 'CALCULATED'}">
+                                            <label for="percentValue" th:for="${'percentValue' + __${row.index}__}">Value: </label>
+                                            <input type="text" id="percentValue"
+                                                   th:id="${'percentValue' + __${row.index}__}" name="percentValue"
+                                                   th:placeholder="${user.userInfo.percentType.commissionValueType.name() == 'FIX' ? 'Fixed value' : 'Percent value'}"
+                                                   th:field="*{userInfo.percentInfo[__${row.index}__].value}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{userInfo.percentInfo[__${row.index}__].value}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group"
+                                             th:if="*{userInfo.percentType.name() == 'RANGE_PERCENT' || userInfo.percentType.name() == 'RANGE_FIXED'}">
+                                            <label for="valueFrom" th:for="${'valueFrom' + __${row.index}__}">Value
+                                                From: </label>
+                                            <input id="valueFrom" th:id="${'valueFrom' + __${row.index}__}" type="text"
+                                                   name="valueFrom" placeholder="Value from"
+                                                   th:field="*{userInfo.percentInfo[__${row.index}__].valueFrom}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{userInfo.percentInfo[__${row.index}__].valueFrom}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group"
+                                             th:if="*{userInfo.percentType.name() == 'RANGE_PERCENT' || userInfo.percentType.name() == 'RANGE_FIXED'}">
+                                            <label for="valueTo" th:for="${'valueTo' + __${row.index}__}">Value
+                                                To: </label>
+                                            <input id="valueTo" th:id="${'valueTo' + __${row.index}__}" type="text"
+                                                   name="valueTo" placeholder="Value to"
+                                                   th:field="*{userInfo.percentInfo[__${row.index}__].valueTo}"
+                                                   class="form-control numericValue"/>
+                                            <span th:errors="*{userInfo.percentInfo[__${row.index}__].valueTo}"
+                                                  style="color: red"/>
+                                        </div>
+                                        <div class="form-group" th:if="*{userInfo.percentType.name() == 'CALCULATED'}">
+                                            <label for="textValue" th:for="${'textValue' + __${row.index}__}">Text
+                                                Value: </label>
+                                            <textarea id="textValue" th:id="${'textValue' + __${row.index}__}"
+                                                      type="text" name="textValue" placeholder="Script text"
+                                                      th:field="*{userInfo.percentInfo[__${row.index}__].textValue}"
+                                                      class="form-control"/>
+                                            <h6><i> Use JavaScript syntax. Result variable is used to return value.
+                                                <br/>Such constants can be used: <b>price, destinationCountry,
+                                                    tripCost, departDate, returnDate, residenceState, residenceCountry,
+                                                    citizenShip, ages.</b></i></h6>
+                                            <h6><i> Example expression: <b>var result = price * 0.1 + 20;</b></i></h6>
+                                            <span th:errors="*{userInfo.percentInfo[__${row.index}__].textValue}"
+                                                  style="color: red"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" class="btn btn-info" id="addRangeButton" value="Add range"
+                                       th:if="*{userInfo.percentType.name() == 'RANGE_PERCENT' || userInfo.percentType.name() == 'RANGE_FIXED'}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="firstName">First name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="First name"
+                                   th:field="*{name}"/>
+                            <span th:errors="*{name}" style="color: red">Name Error</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="lastName">Last name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Last name"
+                                   th:field="*{userInfo.lastName}"/>
+                            <span th:errors="*{userInfo.lastName}" style="color: red">Name Error</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" class="form-control" placeholder="Address"
+                                   th:field="*{userInfo.address}"/>
+                            <span th:errors="*{userInfo.address}" style="color: red">Name Error</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-control" placeholder="City"
+                                   th:field="*{userInfo.city}"/>
+                            <span th:errors="*{userInfo.city}" style="color: red">Name Error</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label class="control-label" for="countrySelect">Country</label>
+                            <select id="countrySelect" th:field="*{userInfo.country}"
+                                    class="custom-select selectpicker form-control ddown" data-live-search="true"
+                                    title="Select a Country"
+                            >
+                                <option value="" th:text="${''}" style="display: none"></option>
+                                <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                        th:value="${c}" th:text="${c.caption}">Country
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4" id="stateDiv">
+                            <label class="control-label" for="residence">State</label>
+                            <select id="residence" th:field="*{userInfo.stateOrProvince}"
+                                    class="custom-select selectpicker form-control ddown" data-live-search="true"
+                                    title="Select a State"
+                            >
+                                <option value="" th:text="${''}" style="display: none"></option>
+                                <optgroup label="UNITED STATES">
+                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                            th:value="${s}" th:text="${s.caption}">State
+                                    </option>
+                                </optgroup>
+                                <optgroup label="CANADA">
+                                    <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                            th:value="${s}" th:text="${s.caption}">State
+                                    </option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div class="form-group col-sm-4">
+                            <label for="zipCode">Zip Code</label>
+                            <input type="text" id="zipCode" class="form-control" placeholder="Zip Code"
+                                   th:field="*{userInfo.zipCode}"/>
+                            <span th:errors="*{userInfo.zipCode}" style="color: red">Name Error</span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="phone">Phone</label>
+                            <input type="text" id="phone" class="form-control" placeholder="Phone"
+                                   th:field="*{userInfo.phone}" pattern="^\+?[\+\d\(\) \-\.]{5,30}$"
+                                   oninvalid="setCustomValidity('Phone has invalid format!')"
+                                   oninput="setCustomValidity('')"/>
+                            <span th:errors="*{userInfo.phone}" style="color: red">Name Error</span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="contactName">Tax ID</label>
+                            <input type="text" id="taxId" class="form-control" placeholder="Tax ID"
+                                   th:field="*{userInfo.taxId}"/>
+                            <span th:errors="*{userInfo.taxId}" style="color: red">Tax ID Error</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row row">
+                        <div th:if="${user.userInfo.isCompany()}">
+                            <div class="form-group col-sm-6">
+                                <label for="contactName">Contact name</label>
+                                <input type="text" id="contactName" class="form-control" placeholder="Contact name"
+                                       th:field="*{userInfo.contactName}"/>
+                                <span th:errors="*{userInfo.contactName}" style="color: red">Name Error</span>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="contactName">Website</label>
+                                <input type="text" id="website" class="form-control" placeholder="Website"
+                                       th:field="*{userInfo.website}"/>
+                                <span th:errors="*{userInfo.website}" style="color: red">Name Error</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row row">
+                        <div class="form-group col-sm-12">
+                            <button type="button" class="btn btn-default" onclick="openDialog()">
+                                Update password
+                            </button>
+                        </div>
+                        <input type="hidden" name="id" th:field="*{id}"/>
+                        <input type="hidden" name="isVerified" th:field="*{verified}"/>
+                    </div>
+                    <div class="form-row row">
+                        <div class="form-group col-sm-12">
+                            <a th:href="@{${backUrl}}" class="btn btn-default back-btn" style="padding: 6px 17px;">Back</a>
+                            <button type="submit" class="btn btn-success" style="margin-left: 4px; padding: 6px 17px;">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="passwordUpdateDlg" tabindex="-1" role="dialog" style="color: black;"
+         aria-labelledby="passwordUpdateDlgLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="passwordUpdateDlgLabel">Update Password</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Password"
+                           autocomplete="off"/>
+                    <span id="passwordError" style="color: red"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="updatePassword()">Save new password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            const selectedCode = $('#countrySelect').val();
+            selectedCode === 'US' || selectedCode === 'CA' ? $('#stateDiv').show() : $('#stateDiv').hide();
+
+            $('#roles').multiselect({
+                buttonWidth: '100%',
+                maxHeight: 372,
+                enableCaseInsensitiveFiltering: true,
+                includeSelectAllOption: true,
+                filterStyle: 'beginWith'
+            });
+            //   $('#country').selectpicker({liveSearch: true, liveSearchStyle: 'begins'});
+            $('#verify').click(function () {
+                var verifyMailUrl = context + 'users/verification';
+                $.post(verifyMailUrl, $('#editUserForm').serialize(), function (data) {
+                    alert(data);
+                }).fail(function () {
+                    alert('Failure sending verification mail')
+                });
+            });
+            $('#percentTypeSelect').change(function () {
+                $('#editUserForm').append('<input type="hidden" name="changePercentType" value="1"/>').submit();
+            });
+            $('#addRangeButton').click(function () {
+                $('#editUserForm').append('<input type="hidden" name="addRange" value="1"/>').submit();
+            });
+            $('#countrySelect').change(function () {
+                const selectedCode = $('#countrySelect').val();
+                selectedCode === 'US' || selectedCode === 'CA' ? $('#stateDiv').show() : $('#stateDiv').hide();
+            });
+        });
+
+        function openDialog() {
+            $('#password').val('');
+            $('#passwordError').empty();
+            $('#passwordUpdateDlg').modal('show');
+        }
+
+        var updatePassURL = context + 'users/edit/password/' + window.location.pathname.split('/').pop();
+
+        function updatePassword() {
+            $.ajax({
+                url: updatePassURL,
+                type: "POST",
+                data: "password=" + $('#password').val(),
+                success: function (response) {
+                    if (response == 'success') {
+                        $('#passwordError').hide();
+                        $('#passwordUpdateDlg').modal('hide');
+                        $('#editUserForm').prepend('<div class="alert alert-success alert-dismissible" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                            '<span>Password updated</span>' +
+                            '</div>');
+                    } else {
+                        $('#passwordError').empty().text(response).show();
+                    }
+                }
+            }).fail(function () {
+                $('#passwordError').empty().text('Error updating password').show();
+            });
+            return false;
+        }
+
+    </script>
+</div>
+</body>
+</html>

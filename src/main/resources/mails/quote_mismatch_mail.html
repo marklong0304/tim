@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Quote mismatch notification</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+Dear Admin,
+<br/>
+<br/>
+Quote for policy "<span th:text="${policyMeta.displayName}">Policy Name</span>" to the vendor "<span th:text="${vendor.name}">Vendor Name</span>"
+returned $<span th:text="${returnedQuote}">Returned Quote</span>, while locally we have $<span th:text="${localQuote}">Local Quote</span>.
+<br/>
+<br/>
+Quote request:
+<br/>
+<span th:remove="tag" th:utext="${quoteRequest}">Quote Request</span>
+</body>
+</html>

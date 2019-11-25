@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Search Results</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+</head>
+<body>
+<div layout:fragment="notification" th:remove="tag">
+    <div class="fScrollCont">
+        <div class="fContFake"></div>
+    </div>
+    <input id="sign" type="text" val='0' hidden="hidden"/>
+</div>
+<div layout:fragment="content" th:remove="tag">
+    <input id="quoteId" type="hidden" th:value="${quoteId}"/>
+    <input type="hidden" id="quoteRequestJson" name="quoteRequestJson" th:value="${quoteRequestJson}"/>
+    <main id="main" class="comparePage">
+        <div id="app">
+            <section class="summary">
+                <div class="container-fluid pattern">
+                    <div class="container-fluid summary-inner">
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <!-- <a id="edit-quote" th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}"><u>Edit Quote</u></a> -->
+                                <a id="editQuote" href="javascript:void(0);" onclick="openEditQuote()"
+                                   class="disabled-link"><u>Edit Quote</u></a>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Destination: <b th:if="${quoteRequest.destinationState != null}"
+                                                        th:text="${quoteRequest.destinationState?.getCaption()+','}">Thailand</b>
+                                        <b th:text="${quoteRequest.destinationCountry.getCaption()}"></b>
+                                    </li>
+                                    <li>Departure Date: <b
+                                            th:text="${#temporals.format(quoteRequest.departDate,'MM/dd/yyyy')}">10/28/2016</b>
+                                    </li>
+                                    <li>Return Date: <b
+                                            th:text="${#temporals.format(quoteRequest.returnDate,'MM/dd/yyyy')}">11/11/2016</b>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Trip Cost: <b th:text="${quoteRequest.tripCostText}">$9,000</b></li>
+                                    <li>Travelers Ages: <b
+                                            th:each="traveler,iterationStatus : ${quoteRequest.travelers}"
+                                            th:text="${traveler.age} + (${iterationStatus.last==false} ? ', ' : '')">30,
+                                        28, 25</b></li>
+                                    <li>Resident of: <b th:if="${quoteRequest.residentState != null}"
+                                                        th:text="${#strings.toUpperCase(quoteRequest.residentState?.getCaption())+','}">California</b>
+                                        <b th:text="${#strings.toUpperCase(quoteRequest.residentCountry.getCaption())}">
+                                            United States</b></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li>Citizen of: <b th:text="${quoteRequest.citizenCountry.getCaption()}">United
+                                        States</b></li>
+                                    <li>Deposit Date: <b
+                                            th:text="${quoteRequest.depositDate!=null and quoteRequest.tripCost != 0 ? #temporals.format(quoteRequest.depositDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                                    </li>
+                                    <li>Final Payment Date: <b
+                                            th:text="${quoteRequest.paymentDate!=null and quoteRequest.tripCost != 0 and quoteRequest.preExistingMedicalAndCancellation ? #temporals.format(quoteRequest.paymentDate,'MM/dd/yyyy'):'-'}">05/12/16</b>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="edit-quote"
+                                   th:class="${#authorization.expression('isAuthenticated()')}?'':'disabled-link'"
+                                   th:href="@{/results/saveQuote/{quoteId}(quoteId=${quoteId},plans=${plans},bestPlanCode=${bestPlanCode},sortOrder=${sortOrder})}"><u>Save
+                                    Quote</u></a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <results></results>
+
+            </section>
+
+            <scroll></scroll>
+            <modal></modal>
+
+        </div>
+    </main>
+    <form id="purchaseForm" th:action="@{/results/purchasePage/{quoteId}(quoteId=${quoteId})}" method="get">
+        <input type="hidden" name="comparePlans" value="true" />
+        <input id="purchaseUniqueCode" type="hidden" name="uniqueCode" />
+        <input id="purchaseQuoteId" name="purchaseQuoteId" type="hidden"/>
+        <input id="purchaseRequestId" name="purchaseRequestId" type="hidden"/>
+    </form>
+</div>
+
+<!-- modal -->
+<div layout:fragment="pageModal" th:remove="tag">
+    <div id="plandetailsModal" class="modal fade" role="dialog"></div>
+    <div id="editQuoteModal" class="modal"></div>
+    <div class="modal fade" id="linkModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}"
+                                alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info"><span id="zeroCostMessage">For Trip Cancellation benefit the Trip Cost must be more than zero. Enter Trip Cost?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btnmodal" th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="depositAndPaymentModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}"
+                                alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">Trip Cost, Initial Deposit Date and Final Payment Date must be filled. Enter
+                        the missing values?</p>
+                </div>
+                <div class="modal-footer">
+                    <a th:if="${quoteRequest.tripCost > 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuoteStep3/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a th:if="${quoteRequest.tripCost == 0}" class="btn btn-primary btnmodal"
+                       th:href="@{/results/editQuote/{quoteId}(quoteId=${quoteId})}">Yes</a>
+                    <a data-dismiss="modal" class="btn btnmodal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="secondaryModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}"
+                                alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+
+                </div>
+                <div class="modal-body popup-text">
+                    <p class="popup-info">Secondary Coverage will pay the balance after your Primary collectible
+                        insurance has paid
+                        the claim and its limits have been exhausted. Secondary coverage may include your primary
+                        insurance deductible if any.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="pageScript" th:remove="tag">
+    <!--<script th:src="@{https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js}"></script>-->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.1/vuex.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.5/vue-router.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js}"></script>
+
+    <!--<script type="text/javascript" th:src="@{/js/lib/jquery.sticky-kit.js}"></script>-->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/templates/templates.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/sticky.js}"></script>-->
+
+    <script type="module" th:src="@{/js/custom/compare/vue/templates/modalTemplate.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/components/modal.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/templates/scrollTemplate.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/components/scroll.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/templates/filtersTemplate.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/components/filters.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/templates/compareTemplate.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/components/comparePlans.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/templates/resultsTemplate.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/components/results.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <script type="module" th:src="@{/js/custom/compare/vue/app.min.js?ver={version}(version=${appVersion.version})}"></script>
+
+
+    <script type="text/javascript" th:src="@{/js/custom/results/resultsCommons.min.js?ver={version}(version=${appVersion.version})}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/custom/results/filters.js?ver={version}(version=${appVersion.version})}"></script>-->
+    <script type="text/javascript" th:src="@{/js/lib/jquery.autoellipsis-1.0.10.min.js?ver={version}(version=${appVersion.version})}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/custom/details.min.js?ver={version}(version=${appVersion.version})}"></script>-->
+    <script type="text/javascript" th:src="@{/js/custom/details.js?ver={version}(version=${appVersion.version})}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/custom/compare/comparePage.js?ver={version}(version=${appVersion.version})}"></script>-->
+    <script type="text/javascript" th:src="@{/js/custom/results/editQuote.js?ver={version}(version=${appVersion.version})}"></script>
+</div>
+
+</body>
+</html>

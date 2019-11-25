@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Edit category</title>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/custom/admin/category.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="alert alert-success alert-dismissable" th:if="${success}">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-hidden="true">
+                &times;
+            </button>
+            Success!
+        </div>
+        <div class="alert alert-danger alert-dismissable" th:if="${error}">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-hidden="true">
+                &times;
+            </button>
+            Error ! Change few things.
+        </div>
+        <div th:if="${category.id != null}" class="modal fade" id="addSubcategoryModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="addSubcategoryForm" th:object="${subcategory}" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title text-center">Create subcategory for
+                                <th:block><span style="font-weight: bolder;" th:text="${category.name}"/></th:block> category</h4>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="subcategoryName">Name:</label>
+                                    <input type="text" id="subcategoryName" th:field="*{subcategoryName}" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subcategoryCode">Code:</label>
+                                    <input type="text" id="subcategoryCode" th:field="*{subcategoryCode}" class="form-control"/>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subcategoryTemplate">Template:</label>
+                                    <input type="text" id="subcategoryTemplate" th:field="*{template}" class="form-control"/>
+                                    <h6><i> Template example: <b>some text ... $subcategory-code ... some text</b></i></h6>
+                                    <span class="errorRed"></span>
+                                </div>
+                                <input type="hidden" name="order" id="order" th:field="*{order}"/>
+                                <input type="hidden" name="id" id="subcategoryId" th:field="*{id}"/>
+                                <input type="hidden" name="category.id" th:value="${category.id}"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="addSubcategory" name="addSubcategory">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                    <li th:if="${category.id == null}"><a th:href="@{/admin/categories/edit}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <div>
+            <h1 class="adminTitle" th:if="${category.id != null}">Edit category</h1>
+            <h1 class="adminTitle" th:if="${category.id == null}">Create category</h1>
+        </div>
+        <div>
+            <form id="editCategoryForm" th:action="@{/admin/categories/edit/{categoryId}(categoryId=${category.id})}" th:object="${category}" method="post">
+                <div class="row">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div th:each="e : ${#fields.detailedErrors()}">
+                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                            <span th:text="${e.message}">The error message</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="name">Category name: </label>
+                        <input id="name" type="text" th:field="*{name}" placeholder="Name" class="form-control" required="required"/>
+                        <span th:errors="*{name}" style="color: red"/>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="code">Category code: </label>
+                        <input id="code" type="text" th:field="*{code}" placeholder="Code" class="form-control" required="required"
+                               th:classappend="${category.id == null} ? '' : 'disabled-pointer'"/>
+                        <span th:errors="*{code}" style="color: red"/>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="type">Category filter type: </label>
+                        <select th:field="*{type}" id="type" class="form-control">
+                            <option th:each="type : ${T(com.travelinsurancemaster.model.dto.Category.CategoryType).values()}"
+                                    th:value="${type}" th:text="${type}"/>
+                        </select>
+                        <span th:errors="*{type}" style="color: red"/>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="group">Group: </label>
+                        <select th:field="*{group}" id="group" class="form-control">
+                            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"/>
+                        </select>
+                        <span th:errors="*{group}" style="color: red"/>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="type">Value type: </label>
+                        <select th:field="*{valueType}" id="valueType" class="form-control">
+                            <option th:each="valueType : ${T(com.travelinsurancemaster.model.dto.ValueType).values()}"
+                                    th:value="${valueType}" th:text="${valueType.caption}"/>
+                        </select>
+                        <span class="help-block">Please select value type if category type <i>CATALOG</i>.</span>
+                        <span th:errors="*{valueType}" style="color: red"/>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="asFilter">Display as filter: </label>
+                        <select th:field="*{displayAsFilter}" id="asFilter" class="form-control"
+                                th:classappend="${categoryReduceResult.contains(category.code)}?'disabled-pointer'">
+                            <option th:value="${'true'}" th:text="${'Yes'}"/>
+                            <option th:value="${'false'}" th:text="${'No'}"/>
+                        </select>
+                    </div>
+                    <div id="categoryConditionBlock" style="display: none;" class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="categoryConditionTextArea">Category condition (groovy script):</label>
+                        <div style="height: 130px;" id="categoryConditionHighlightDiv"></div>
+                        <textarea style="display: none;" placeholder="Category condition" id="categoryConditionTextArea" th:field="*{categoryCondition}" class="form-control"/>
+                        <span th:errors="*{categoryCondition}" style="color: red"/>
+                        <h6><i> Use groovy syntax. Function <b>util.has(param1, param2, param3)</b><br/>
+                            1st param - <b>category code</b><br/>
+                            2nd param - <b>value type</b><br/>
+                            3rd param - <b>filter value</b><br/>
+                        </i></h6>
+                        <h6><i> Example expression: <b>util.has('emergency-medical', '$', '50000')</b></i></h6>
+                    </div>
+                    <div id="templateBlock" class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <label for="template">Template: </label>
+                        <input type="text" id="template" th:field="*{template}" class="form-control"/>
+                        <h6><i> Template example: <b>Of $category-code, $subcategory-code per day</b></i></h6>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+                <input type="hidden" name="filterOrder" th:field="*{filterOrder}"/>
+                <input type="hidden" name="id" th:field="*{id}"/>
+            </form>
+        </div>
+
+        <div id="subcategoryBlock" th:if="${category.id != null}">
+            <hr/>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Subcategories</h2>
+                </div>
+                <div class="col-md-4 text-right">
+                    <h2>
+                        <a th:onclick="'javascript: $(\'#subcategoryCode\').removeClass(\'disabled-pointer\'); clearSubcategoryFields();'" data-toggle="modal" data-target="#addSubcategoryModal" class="btn btn-success xcrud-action ">
+                            <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="subcategoriesTable" style="width: 100%;">
+                    <thead>
+                        <tr class="info">
+                            <th width="20%">Name</th>
+                            <th width="20%">Code</th>
+                            <th width="47%">Template</th>
+                            <th width="13%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="subcategory, stats : ${category.subcategoriesList}" th:id="'subcategory-' + ${subcategory.id}">
+                            <td th:text="${subcategory.subcategoryName}"/>
+                            <td th:text="${subcategory.subcategoryCode}"/>
+                            <td th:text="${subcategory.template}"/>
+                            <td style="text-align: center">
+                                <a title="up" class="link"
+                                   th:classappend="${stats.index==0?'disabled-link':''}" style="cursor: pointer"
+                                   th:onclick="'javascript:subcategoryUp(\'' + ${subcategory.id} + '\');'">
+                                    <span class="glyphicon glyphicon-chevron-up"></span></a>
+                                <a title="down" class="link" style="cursor: pointer"
+                                   th:classappend="${stats.index==#lists.size(category.subcategoriesList)-1?'disabled-link':''}"
+                                   th:onclick="'javascript:subcategoryDown(\'' + ${subcategory.id} + '\');'">
+                                    <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <a class="btn btn-primary" type="button" title="Edit"
+                                   th:onclick="'javascript:showSubcategory(\'' + ${subcategory.id} + '\');'">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <button class="btn btn-danger" type="button" title="Delete"
+                                        th:onclick="'javascript:deleteSubcategory(\'' + ${subcategory.id} + '\');'">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            $(function () {
+                var createCategoryAction = context + 'admin/categories/edit';
+                if ($('#id').val() == "") {
+                    $('#editCategoryForm').attr('action', createCategoryAction);
+                }
+            })
+        </script>
+
+        <script type="application/javascript">
+
+            var categoryConditionEditor;
+            $(document).ready(function () {
+
+                categoryConditionEditor = ace.edit("categoryConditionHighlightDiv");
+                categoryConditionEditor.setTheme("ace/theme/chrome");
+                categoryConditionEditor.getSession().setMode("ace/mode/groovy");
+                categoryConditionEditor.getSession().setValue($('#categoryConditionTextArea').val());
+                categoryConditionEditor.getSession().on('change', function () {
+                    var categoryConditionValue = categoryConditionEditor.getSession().getValue();
+                    $('#categoryConditionTextArea').val(categoryConditionValue);
+                });
+
+                updateCategoryType($('#type'));
+
+                $('#type').change(function () {
+                    updateCategoryType(this);
+                });
+
+                $('#addSubcategory').click(function() {
+                    clearSubcategoryModalErrors();
+                    var addSubcategoryUrl = context + 'admin/categories/subcategory/create/';
+                    $.post(addSubcategoryUrl, $('#addSubcategoryForm').serialize()
+                    ).done(function(data) {
+                        if (data.status == true) {
+                            $('#addSubcategoryModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $.each(data.fieldErrorsList, function(key, responseError) {
+                                $("[id='" + responseError.field + "']").parent().find('span.errorRed').text(responseError.defaultMessage);
+                            });
+                        }
+                    }).fail(function()  {
+                        alert('error!');
+                    });
+                });
+
+                $('#addSubcategoryModal').on('hidden.bs.modal', function () {
+                    clearSubcategoryModalErrors();
+                });
+
+                $('#subcategoriesTable').DataTable({
+                    stateSave: true,
+                    info: false,
+                    "bPaginate": false,
+                    "aoColumns": [
+                        null,
+                        null,
+                        {"bSortable": false}
+                    ]
+                });
+            });
+
+            function clearSubcategoryModalErrors() {
+                $('.errorRed').text('');
+            }
+
+
+            function updateCategoryType(categoryTypeValue) {
+                if ($(categoryTypeValue).val() == 'CONDITIONAL') {
+                    $('#templateBlock').hide();
+                    $('#template').prop('disabled', true);
+                    $('#asFilter option[value="true"]').prop('selected', 'selected');
+                    $('#asFilter').addClass('disabled-pointer');
+                    $('#categoryConditionBlock').show();
+                    $('#categoryConditionTextArea').prop('disabled', false);
+                    $('#subcategoryBlock').hide();
+                } else {
+                    $('#templateBlock').show();
+                    $('#template').prop('disabled', false);
+                    $('#asFilter').removeClass('disabled-pointer');
+                    $('#categoryConditionBlock').hide();
+                    $('#categoryConditionTextArea').prop('disabled', true);
+                    $('#subcategoryBlock').show();
+                }
+            }
+
+            function clearSubcategoryFields() {
+                $('#subcategoryName').val('');
+                $('#subcategoryCode').val('');
+                $('#subcategoryId').val('');
+            }
+
+            function showSubcategory(id) {
+                var showSubcategoryUrl = context + 'admin/categories/subcategory/edit/' + id;
+                $.get(showSubcategoryUrl).done(function (data) {
+                    clearSubcategoryFields();
+                    $('#subcategoryId').val(data.id);
+                    $('#subcategoryName').val(data.subcategoryName);
+                    $('#subcategoryCode').val(data.subcategoryCode);
+                    $('#subcategoryTemplate').val(data.template);
+                    $('#subcategoryCode').addClass('disabled-pointer');
+                    $('#addSubcategoryModal').modal('show');
+                });
+            }
+
+            function deleteSubcategory(id) {
+                if (confirm("Confirm Delete?")) {
+                    var deleteSubcategoryUrl = context + 'admin/categories/subcategory/delete/' + id;
+                    $.ajax({
+                        url: deleteSubcategoryUrl,
+                        type: "POST",
+                        success: function (response) {
+                            $('#subcategory-' + id).hide()
+                        }
+                    }).fail(function () {
+                        alert("Error");
+                    });
+                }
+            }
+
+        </script>
+
+    </div>
+</div>
+</body>
+</html>

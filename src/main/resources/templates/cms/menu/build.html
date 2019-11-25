@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Menu builder</title>
+    <script src="/js/lib/tree.jquery.js"
+            th:src="@{/js/lib/tree.jquery.js}"></script>
+    <link rel="stylesheet" href="/css/lib/jqtree.css"
+          th:href="@{/css/lib/jqtree.css}"/>
+    <script th:src="@{/js/custom/cms/menuBuild.js?ver={version}(version=${appVersion.version})}" src="/js/custom/cms/menuBuild.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none">
+        <li><a tabindex="-1" class="add" href="#">Add submenu</a></li>
+        <li><a tabindex="-1" class="edit" href="#">Edit</a></li>
+        <li><a tabindex="-1" class="remove" href="#">Remove</a></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Menu</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Build <span th:text="${menu.title}"/> menu</h1>
+
+        <div>
+            <form action="#" th:action="@{/cms/menu/build/{menuId}(menuId=${menu.id})}" th:object="${menu}" method="post">
+                <div>
+
+                </div>
+                <div id="errors"></div>
+                <div id="success"></div>
+                <div class="form-group">
+
+                    <input id="menuData" type="hidden" th:value="${jsonMenu}"/>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="menu" class="tree"></div>
+
+
+                        </div>
+                        <div class="col-md-6" id="add-new" style="display: none">
+                            <div style="padding-bottom: 5px;">
+                                <h3 style="margin-top: 0px;"><span id="type-text">Add</span> new menu item</h3>
+                            </div>
+                            <input type="hidden" id="nodeId"/>
+                            <input type="hidden" id="type"/>
+
+                            <div class="form-group">
+                                <label for="title">Menu item title: </label>
+                                <input id="title" type="text" placeholder="Title" class="form-control" required="required"/>
+                            </div>
+                            <div id="urlBlock">
+                                <div class="form-group">
+                                    <label for="url">Menu item url: </label>
+                                    <input id="url" type="text" placeholder="Url" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="page">Menu item page: </label>
+                                    <select id="page" class="form-control">
+                                        <option value="">Not selected</option>
+                                        <option th:each="page : ${pages}"
+                                                th:value="${page.id}" th:text="|${page.caption} (${page.name})|" th:data="${page.name}"/>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                                <div class="btn-group" role="group">
+                                    <button id="closeItem" type="button" class="btn btn-default btn-hover-red" role="button">Close</button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button id="saveItem" type="button" class="btn btn-default btn-hover-green" role="button">Save</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" id="data" name="data"/>
+
+                <div class="form-group">
+                    <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

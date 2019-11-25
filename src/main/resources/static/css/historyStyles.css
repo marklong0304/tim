@@ -1,0 +1,395 @@
+body {
+    font-family: 'Work Sans', sans-serif;
+    background-color: #f7f7f7;
+}
+
+button, a {
+    font-family: 'Work Sans', sans-serif;
+}
+
+
+@media only screen and (max-width: 1600px) and (min-width: 768px) {
+    .navigation {
+        padding-top: 1.688rem;
+        padding-bottom: 1.688rem;
+    }
+}
+.notfback {
+    display: none;
+}
+
+.navigation {
+    background-color: white;
+    padding-top: 27px;
+    padding-bottom: 27px;
+    padding-left: 5%;
+    padding-right: 5%;
+    position: relative;
+    z-index: 201;
+}
+
+.navigation .logo {
+    display: inline;
+}
+
+.navigation .logo a {
+    font-size: 16px;
+    color: #333333;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+a:hover, a:active, a:focus, a:visited {
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 768px) {
+    .navigation .logo img {
+        padding-bottom: 0.25rem;
+        padding-right: 0.4375rem;
+    }
+}
+
+.navigation .logo img {
+    padding-bottom: 4px;
+    padding-right: 7px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.navigation .list li {
+    display: block;
+    float: left;
+}
+
+#logoutMenu {
+    /* display: none; */
+    height: 21px;
+    position: relative;
+    top: 1px;
+}
+
+.logInOut > button > .caret {
+    display: none;
+}
+
+.logInOut .dropdown-menu {
+    z-index: 200;
+    background-color: #eeeeee;
+    margin-top: 8px;
+}
+
+.navigation .list li {
+    display: block;
+    float: left;
+}
+
+#logoutMenu .dropdown-menu > li > a {
+    padding: 5px 16px;
+}
+
+.logInOut .dropdown-menu > li > a {
+    color: black;
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 768px) {
+    .navigation .list li > a {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+.navigation .list li > a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#logoutMenu .dropdown-menu > li {
+    border-bottom: 1px solid #dedede;
+}
+
+.logInOut .dropdown-menu > li, .logInOut .dropdown-menu > form li {
+    display: block;
+    min-width: 212px;
+}
+
+.navigation .list li {
+    display: block;
+    float: left;
+}
+
+#logoutMenu .dropdown-menu > li:last-child {
+    border-bottom: none;
+}
+
+.navigation .list li {
+    display: block;
+    float: left;
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 768px) {
+    .navigation .list li > a {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+.navigation .list li > a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.burgerbtn {
+    background: transparent;
+    padding: 0 0.75rem;
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 768px) {
+    .burgerbtn img {
+        float: left;
+        width: 1.688rem;
+        height: 1.688rem;
+    }
+}
+
+.burgerbtn img {
+    float: left;
+    width: 27px;
+    height: 27px;
+}
+
+.side-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    z-index: 1000;
+    top: 0;
+    width: 46%;
+    min-width: 291px;
+    background: #333333;
+    padding: 31px 45px 40px 45px;
+    min-height: 100%;
+}
+
+.side-menu .login {
+    line-height: 13px;
+    margin-bottom: 22px;
+}
+
+#logoutMenu {
+    /* display: none; */
+    height: 21px;
+    position: relative;
+    top: 1px;
+}
+
+.side-menu .login a {
+    font-size: 16px;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 0 14px;
+    cursor: pointer;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.logInOut .dropdown-menu {
+    z-index: 200;
+    background-color: #eeeeee;
+    margin-top: 8px;
+}
+
+.side-menu ul {
+    margin-bottom: 26px;
+}
+
+.side-menu .login a {
+    font-size: 16px;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 0 14px;
+    cursor: pointer;
+}
+
+.crossbtn img {
+    width: 20px;
+    height: 20px;
+    vertical-align: baseline;
+}
+
+.side-menu h3 {
+    opacity: 0.95;
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.btnaff {
+    width: 197px;
+    height: 52px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    opacity: 0.95;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    color: #333333 !important;
+    margin-top: 6px;
+    line-height: 52px;
+}
+
+.pattern {
+    position: relative;
+    background: url(https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/pattern3.svg), #fff;
+    background-repeat: repeat;
+    background-size: 40px 60px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+footer .pattern, footer .bgfooter {
+    min-height: 384px;
+}
+
+.bgfooter {
+    width: 95%;
+    min-height: 384px;
+    top: 0;
+    right: 5%;
+    margin-right: 5%;
+    background-color: #333333;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 57px;
+}
+
+.links {
+    padding-left: 102px;
+    padding-right: 95px;
+}
+
+.bgfooter .links > .no-gutter {
+    margin-right: 0;
+}
+
+.links .row:first-child {
+    padding-bottom: 39px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+footer h3 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 0;
+    margin-bottom: 19px;
+}
+
+footer .social ul > li > a > img {
+    margin-bottom: 15px;
+}
+
+.copyright {
+    background: url(https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg) no-repeat;
+    background-size: 35px 35px;
+    background-position: center center;
+    margin-top: 33px;
+}
+
+.copyright, .copyright a {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.63;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#logoutMenu .dropdown-toggle {
+    border: none;
+    font-size: 16px;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    padding: 0;
+}
+
+.side-menu ul > li > a {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.63;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.side-menu h4.bold {
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.side-menu h4 {
+    opacity: 0.95;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 9px;
+}
+
+footer, footer a {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+footer ul {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.63;
+}
+
+footer .social ul {
+    max-width: 28px;
+    float: none;
+    margin: auto;
+}
+
+footer .social h3 {
+    text-align: center;
+}
+
+#searchResultContent {
+    padding: 40px 5%;
+    background-color: #f7f7f7;
+}
+
+.row.payments {
+    background-color: white;
+}
+

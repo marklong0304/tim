@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<!-- Policy meta restriction table-->
+<div th:fragment="restrictionsTableFragment">
+    <hr/>
+    <div>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Policy
+                    <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}">meta</th:block>
+                    <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCategoryRestriction)}">meta category</th:block>
+                    <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCodeRestriction)}">meta code</th:block>
+                    <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaPackageRestriction)}">meta package</th:block>
+                    <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyQuoteParamRestriction)}">quote param</th:block>
+                    restriction
+                </h2>
+
+            </div>
+            <div class="col-md-4 text-right">
+                <h2>
+                    <a th:onclick="'javascript:clearRestrictionFields();$(\'#actionName\').text(\'Create\');'" data-toggle="modal" data-target="#addRestrictionModal" class="btn btn-success xcrud-action ">
+                        <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a>
+                </h2>
+            </div>
+        </div>
+        <div class="overflowXMD">
+            <table class="table table-hover table-bordered" id="restrictionsTable">
+                <thead>
+                <tr class="info">
+                    <th width="10%"> Restriction Type</th>
+                    <th width="10%"> Restriction Permit</th>
+                    <th width="18%"> Calculated restrictions</th>
+                    <th width="21%"> Countries</th>
+                    <th width="21%"> States</th>
+                    <th width="6%"> Min value</th>
+                    <th width="6%"> Max value</th>
+                    <th style="width: 8%"> Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaRestriction)}">
+                    <div th:replace="fragments/restrictionsTable :: restrictionsIterationFragment(${policyMeta.policyMetaRestrictions})"></div>
+                </th:block>
+                <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCategoryRestriction)}">
+                    <div th:replace="fragments/restrictionsTable :: restrictionsIterationFragment(${policyMetaCategory.policyMetaCategoryRestrictions})"></div>
+                </th:block>
+                <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaCodeRestriction)}">
+                    <div th:replace="fragments/restrictionsTable :: restrictionsIterationFragment(${policyMetaCode.policyMetaCodeRestrictions})"></div>
+                </th:block>
+                <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyMetaPackageRestriction)}">
+                    <div th:replace="fragments/restrictionsTable :: restrictionsIterationFragment(${policyMetaPackage.policyMetaPackageRestrictions})"></div>
+                </th:block>
+                <th:block th:if="${restriction instanceof T(com.travelinsurancemaster.model.dto.PolicyQuoteParamRestriction)}">
+                    <div th:replace="fragments/restrictionsTable :: restrictionsIterationFragment(${quoteParam.policyQuoteParamRestrictions})"></div>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:fragment="restrictionsIterationFragment(restrictionsArray)">
+        <tr th:each="restriction : ${restrictionsArray}" th:id="'restriction-' + ${restriction.id}">
+            <td th:text="${restriction.restrictionType}"/>
+            <td th:text="${restriction.restrictionPermit}"/>
+            <td> <p class="trimExtraText" th:text="${restriction.calculatedRestrictions}" /> </td>
+            <td>
+                <span th:each="country : ${restriction.countries}" th:text="${country}"></span>
+            </td>
+            <td>
+                <span th:each="state : ${restriction.states}" th:text="${state}"></span>
+            </td>
+            <td th:text="${restriction.minValue}"/>
+            <td th:text="${restriction.maxValue}"/>
+            <td>
+                <a class="pull-left btn btn-primary" type="button" title="Edit"
+                   th:onclick="'javascript:showRestriction(\'' + ${restriction.id} + '\');'">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <button class="pull-right btn btn-danger" type="button" title="Delete"
+                        th:onclick="'javascript:deleteRestriction(\'' + ${restriction.id} + '\');'">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </div>
+    <script type="application/javascript">
+        $('document').ready(function () {
+            $('#restrictionsTable').DataTable({
+                stateSave: true,
+                info: false,
+                "bPaginate": false,
+                "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"bSortable": false}
+                ]
+            });
+        });
+
+        function showRestriction(id) {
+            var showRestrictionUrl;
+            if (policyMetaRestrictionInstance) {
+                showRestrictionUrl = context + 'vendors/policy/policyMetaRestriction/edit/' + id;
+            } else if (policyMetaCategoryRestrictionInstance){
+                showRestrictionUrl = context + 'vendors/policy/policyMetaCategoryRestriction/edit/' + id;
+            } else if (policyMetaCodeRestrictionInstance) {
+                showRestrictionUrl = context + 'vendors/policy/policyMetaCodeRestriction/edit/' + id;
+            } else if (policyMetaPackageRestrictionInstance) {
+                showRestrictionUrl = context + 'vendors/policy/policyMetaPackageRestriction/edit/' + id;
+            } else if (policyQuoteParamRestrictionInstance) {
+                showRestrictionUrl = context + 'vendors/policy/policyQuoteParamRestriction/edit/' + id;
+            }
+            $.get(showRestrictionUrl).done(function (data) {
+                clearRestrictionFields();
+                $('#actionName').text('Edit');
+                $('#restrictionId').val(data.id);
+                $('#restrictionType').val(data.restrictionType);
+                $('#restrictionPermit').val(data.restrictionPermit);
+                $('#countries').multiselect('select', data.countries);
+                $('#states').multiselect('select', data.states);
+                $('#minValue').val(data.minValue);
+                $('#maxValue').val(data.maxValue);
+                $('#calculatedRestrictions').val(data.calculatedRestrictions);
+                $('#addRestrictionModal').modal('show');
+            });
+        }
+
+        function deleteRestriction(id) {
+            if (confirm("Confirm Delete?")) {
+                var removeRestrictionUrl;
+                if (policyMetaRestrictionInstance) {
+                    removeRestrictionUrl = context + 'vendors/policy/policyMetaRestriction/delete/' + id;
+                } else if (policyMetaCategoryRestrictionInstance) {
+                    removeRestrictionUrl = context + 'vendors/policy/policyMetaCategoryRestriction/delete/' + id;
+                } else if (policyMetaCodeRestrictionInstance) {
+                    removeRestrictionUrl = context + 'vendors/policy/policyMetaCodeRestriction/delete/' + id;
+                } else if (policyMetaPackageRestrictionInstance) {
+                    removeRestrictionUrl = context + 'vendors/policy/policyMetaPackageRestriction/delete/' + id;
+                } else if (policyQuoteParamRestrictionInstance) {
+                    removeRestrictionUrl = context + 'vendors/policy/policyQuoteParamRestriction/delete/' + id;
+                }
+                $.ajax({
+                    url: removeRestrictionUrl,
+                    type: "POST",
+                    success: function (response) {
+                        $('#restriction-' + id).hide()
+                    }
+                }).fail(function () {
+                    alert("Error");
+                });
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

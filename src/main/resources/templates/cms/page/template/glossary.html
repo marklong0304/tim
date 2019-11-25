@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Multi-Trip Travel Insurance Glossary | Travel Insurance Master</title>
+    <meta name="description" content="If you are looking for the reliable trip cancellation insurance and travel medical insurance plans, then go through the Travel Master Insurance Glossary." />
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row stickParent">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <ul class="breadcrumb noPadding">
+                    <li><a th:href="@{/page/providers}">Providers</a></li>
+                    <li>Insurance Terms</li>
+                    <div class="pull-right panel-controls"
+                         sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/category_content}" data-toggle="tooltip" data-placement="top"
+                           title="Edit glossary"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <div class="table-title table">
+                    <div class="tr">
+                        <div class="td td-title">
+                            <h1>Insurance Terms</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glossaryWrap">
+                    <div class="posRel" th:each="categoryContent : ${categoryContentList}">
+                        <div class="anchorLink" th:id="${categoryContent.code}"></div>
+                        <div class="inner">
+                            <div>
+                                <h3 th:text="${categoryContent.name}">Lorem ipsum dolor</h3>
+
+                                <p th:utext="${categoryContent.content}">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec lacinia urna.
+                                    Suspendisse sagittis iaculis
+                                    porttitor. Nunc nec massa nisi. Sed eget magna quis lectus pellentesque
+                                    pellentesque. Nunc lobortis ex sit amet ultricies ultrices. In hac
+                                    habitasse
+                                    platea dictumst. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                    nascetur ridiculus mus. Nulla facilisi. Proin lectus ligula,
+                                    consequat
+                                    scelerisque massa et, porta posuere erat. Cras at dictum tortor, quis convallis leo.
+                                    Nulla venenatis lorem nisl, at tempus arcu interdum nec.
+                                    Praesent
+                                    lobortis leo eget dui pellentesque, laoreet posuere justo tincidunt. Nunc facilisis
+                                    porttitor libero vitae porta. In vitae eros vel est
+                                    malesuada
+                                    feugiat vel in ipsum. Sed efficitur leo volutpat libero porttitor, et finibus leo
+                                    posuere. Ut at sagittis mauris.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12 positStatic">
+                <div class="stickContainer">
+                    <div class="paddGlosary">
+                        <div class="blueContainer glossary hidden-sm hidden-xs">
+                            <h4>Insurance Terms</h4>
+                            <ul>
+                                <li th:each="categoryContent : ${categoryContentList}">
+                                    <a th:href="'#'+${categoryContent.code}" th:text="${categoryContent.name}"
+                                       th:id="${categoryContent.code+'-link'}"
+                                       onclick="changeActive(this)">
+                                        Missed Connection Coverage
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div layout:fragment="pageScript" th:remove="tag">
+    <script type="text/javascript" th:src="@{/js/lib/jquery.sticky-kit.min.js}"/>
+    <script type="application/javascript">
+        // <![CDATA[
+        $(document).ready(function () {
+            var id = $(location).attr('hash').substring(1);
+            id = $("#" + id.replace(/(&)/g, "\\$1") + "-link");
+            id.addClass("activeInner");
+        });
+
+        function changeActive(e) {
+            $("a[id$='-link']").removeClass("activeInner");
+            $("#" + $(e).attr("href").substring(1).replace(/(&)/g, "\\$1") + "-link").addClass("activeInner");
+        }
+        // ]]>
+        $(document).ready(function () {
+            $(".stickContainer").stick_in_parent({
+                parent: '.stickParent'
+            });
+        })
+    </script>
+</div>
+</body>
+</html>

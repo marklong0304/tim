@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Filing claim page</title>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb noPadding">
+                    <li>Filing a claim</li>
+                    <div class="pull-right panel-controls"
+                         sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/filing_claim_page}" data-toggle="tooltip" data-placement="top"
+                           title="Edit filing claim pages"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <h1 class="bold pt5">Filing a Claim</h1>
+
+                <div class="noteH1">Please click on your travel insurance provider logo below for more information.
+                </div>
+            </div>
+        </div>
+        <div class="row stickParent">
+            <div class="col-lg-9 col-md-9  col-sm-12 col-xs-12 ">
+                <div class="plansContainer row">
+                    <div class="col-lg-3 col-sm-4 col-xs-6" th:each="filingClaimPage : ${filingClaimPages}">
+                        <div class="shortPlanDescr filingPlan">
+                            <div class="imgLogo">
+                                <a th:href="@{/page/filingClaim/}+${filingClaimPage.name}">
+                                    <img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${filingClaimPage.vendorPage.vendor.code})}"
+                                         alt="Provider Logo" width="" height=""/>
+                                </a>
+                            </div>
+                            <div class="descr">
+                                <span class="gray">Filing a Claim</span>
+                                <span th:text="${filingClaimPage.phoneNumber}">phone</span><br/>
+                                <span th:text="${filingClaimPage.schedulePerDay}">schedulePerDay</span>
+                                <br/>
+                                <span th:text="${filingClaimPage.schedulePerWeek}">schedulePerWeek</span>
+                            </div>
+                            <div class="wrapA">
+                                <a th:href="@{/page/filingClaim/}+${filingClaimPage.name}">More details</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12 positStatic">
+                <div class="stickContainer">
+                    <div class="pb1">
+                        <div class="blueContainer providers hidden-sm hidden-xs">
+                            <h4>Providers</h4>
+                            <ul>
+                                <li>
+                                    <a th:each="filingClaimPage : ${filingClaimPages}"
+                                       th:text="${filingClaimPage.caption}"
+                                       th:href="@{/page/filingClaim/}+${filingClaimPage.name}">
+                                        Allianz
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div layout:fragment="pageScript" th:remove="tag">
+    <script type="text/javascript" th:src="@{/js/lib/jquery.sticky-kit.min.js}"/>
+    <script type="application/javascript">
+        // <![CDATA[
+        $(document).ready(function () {
+            var id = $(location).attr('hash').substring(1);
+            id = $("#" + id.replace(/(&)/g, "\\$1") + "-link");
+            id.addClass("activeInner");
+        });
+
+        function changeActive(e) {
+            $("a[id$='-link']").removeClass("activeInner");
+            $("#" + $(e).attr("href").substring(1).replace(/(&)/g, "\\$1") + "-link").addClass("activeInner");
+        }
+        // ]]>
+        $(document).ready(function () {
+            $(".stickContainer").stick_in_parent({
+                parent: '.stickParent'
+            });
+        })
+    </script>
+</div>
+</body>
+</html>

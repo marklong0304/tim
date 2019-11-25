@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Affiliate Balance</title>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+
+        <br/><br/>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a th:href="@{${backUrl}}" class="btn btn-primary">Back</a>
+        </div>
+
+        <h3 th:if="${affiliatePaymentDataList != null and affiliatePaymentDataList.size() > 0}">
+            Affiliate Payments
+        </h3>
+
+        <table class="table" th:if="${affiliatePaymentDataList != null and affiliatePaymentDataList.size() > 0}">
+            <thead>
+            <tr>
+                <th>Vendor</th>
+                <th>Policy</th>
+                <th>Policy#</th>
+                <th>Purchase Date</th>
+                <th>Canceled</th>
+                <th>Salary</th>
+                <th>Paid / Payment Adjusted</th>
+                <th>Payment Date</th>
+                <th>Balance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="affiliatePaymentData, row : ${affiliatePaymentDataList}">
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <span th:text="${affiliatePaymentData.vendorName}">
+                        Vendor Name
+                    </span>
+                </td>
+                <td th:unless="${affiliatePaymentData.vendorName}" colspan="6">
+                    <span style="font-weight: bold; font-style: italic;">
+                        Salary Correction
+                    </span>
+                    <span th:text="${affiliatePaymentData.note != null ? ' (' + affiliatePaymentData.note + ')' : ''}">
+                        Note
+                    </span>
+                </td>
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <span th:text="${affiliatePaymentData.displayName}">
+                        Policy Name
+                    </span>
+                </td>
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <a th:target="_blank" th:with="baseUrl=(${report}? '/reports/purchase/MyBooking/{uuid}' : '/commissions/purchase/payments/{uuid}')"
+                       th:href="@{${baseUrl}(uuid=${affiliatePaymentData.purchaseUuid})}">
+                        <span th:text="${affiliatePaymentData.policyNumber}">
+                            Policy#
+                        </span>
+                    </a>
+                </td>
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <span th:text="${affiliatePaymentData.purchaseDate != null ? #dates.format(affiliatePaymentData.purchaseDate, 'MM/dd/yy') : ''}">
+                        Purchase Date
+                    </span>
+                </td>
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <span th:text="${affiliatePaymentData.cancelled ? 'Canceled' : ''}">
+                        Canceled
+                    </span>
+                </td>
+                <td th:if="${affiliatePaymentData.vendorName}">
+                    <span th:text="${!affiliatePaymentData.cancelled ? affiliatePaymentData.salaryToPay : ''}">
+                        Salary To Pay
+                    </span>
+                </td>
+                <td>
+                    <span th:text="${affiliatePaymentData.salaryPaid}">
+                        Salary Paid
+                    </span>
+                </td>
+                <td>
+                    <a th:target="_blank" th:with="baseUrl=(${report}? '/reports/MyPayment/{id}' : '/commissions/affiliatePayment/{id}')"
+                       th:href="@{${baseUrl}(id=${affiliatePaymentData.paymentId})}">
+                        <span th:text="${#dates.format(affiliatePaymentData.paymentDate, 'MM/dd/yy')}">
+                            Payment Date
+                        </span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${(affiliatePaymentData.salaryToPay != null and !affiliatePaymentData.cancelled ? affiliatePaymentData.salaryToPay : 0) - affiliatePaymentData.salaryPaid}">
+                        Balance
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="5">Total</th>
+                <th><span th:text="${totalSalaryToPay}">Total Salary To Pay</span></th>
+                <th><span th:text="${totalSalaryPaid}">Total Salary Paid</span></th>
+                <th></th>
+                <th><span th:text="${totalBalance}">Total Balance</span></th>
+            </tr>
+            </tfoot>
+        </table>
+
+        <h3>Affiliate Details</h3>
+
+        <div class="row" th:if="${affiliateUser}">
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Name</label>
+                <input th:field="${affiliateUser.fullName}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Email</label>
+                <input th:field="${affiliateUser.email}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Phone</label>
+                <input th:field="${affiliateUser.userInfo.phone}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <label>Address</label>
+                <input th:field="${affiliateUser.userInfo.address}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <label>City</label>
+                <input th:field="${affiliateUser.userInfo.city}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                <label>State</label>
+                <input th:field="${affiliateUser.userInfo.stateOrProvince}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-3 col-md-3` col-sm-12 col-xs-12">
+                <label>Country</label>
+                <input th:value="${affiliateUser.userInfo.country.caption}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                <input th:field="${affiliateUser.userInfo.country}" class="form-control" type="hidden" autocomplete="off" readonly="readonly"/>
+            </div>
+        </div>
+
+        <div class="row" th:if="${affiliateCompany}">
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Company Name</label>
+                <input th:field="${affiliateCompany.name}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="row" th:if="${affiliateCompany != null and affiliateCompany.companyManager != null}">
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Contact Name</label>
+                <input th:field="${affiliateCompany.companyManager.fullName}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Email</label>
+                <input th:field="${affiliateCompany.companyManager.email}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <label>Phone</label>
+                <input th:field="${affiliateCompany.companyManager.userInfo.phone}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <label>Address</label>
+                <input th:field="${affiliateCompany.companyManager.userInfo.address}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <label>City</label>
+                <input th:field="${affiliateCompany.companyManager.userInfo.city}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                <label>State</label>
+                <input th:field="${affiliateCompany.companyManager.userInfo.stateOrProvince}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+            </div>
+            <div class="form-group col-lg-3 col-md-3` col-sm-12 col-xs-12">
+                <label>Country</label>
+                <input th:value="${affiliateCompany.companyManager.userInfo.country.caption}" class="form-control" type="text" autocomplete="off" readonly="readonly"/>
+                <input th:field="${affiliateCompany.companyManager.userInfo.country}" class="form-control" type="hidden" autocomplete="off" readonly="readonly"/>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

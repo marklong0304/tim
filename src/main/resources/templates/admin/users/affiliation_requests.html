@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Affiliation requests</title>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js" th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css" th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/admin/users/affiliationRequests.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <br/><br/>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">Affiliation requests</h1></div>
+        </div>
+        <table class="table table-hover table-bordered" id="affilitationRequests">
+            <thead>
+            <tr class="info">
+                <th width="30%">Username</th>
+                <th width="30%">Email</th>
+                <th width="10%">Company</th>
+                <th width="20%">Requested</th>
+                <th width="10%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" th:id="'user-' + ${user.id}">
+                <td th:text="${user.name + ' ' + user.userInfo.lastName}"/>
+                <td th:text="${user.email}"/>
+                <td th:text="${user.userInfo.companyName}"/>
+                <td th:text="${user.affiliationRequested} ? ${#dates.format(user.affiliationRequested, 'dd-MM-yyyy HH:mm')}"/>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Approve" th:onclick="'javascript:approveAffiliationRequest(' + ${user.id} + ');'">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </a>
+                    <button class="pull-right btn btn-danger" type="button" title="Remove" th:onclick="'javascript:removeAffiliationRequest(' + ${user.id} + ');'">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

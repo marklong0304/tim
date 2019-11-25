@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Create Policy Meta Code</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/vendors/policy/policyMetaPackage/create/{id}(id=${policyMetaPackage.policyMeta.id})}">Create</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Create Policy Meta Package for <span style="font-weight: bolder;" th:text="${policyMeta.displayName}"/> policy</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form action="#" th:action="@{/vendors/policy/policyMetaPackage/create/{id}(id=${policyMetaPackage.id})}" th:object="${policyMetaPackage}" method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}" th:each="e : ${#fields.detailedErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name: </label>
+                        <input id="name" type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="fixedCost">Package Fixed Cost: </label>
+                        <input id="fixedCost" type="text" th:field="*{fixedCost}" placeholder="Fixed Cost" class="form-control"/>
+                    </div>
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <input type="hidden" name="policy" th:field="*{policyMeta.id}"/>
+                    <div class="form-group">
+                        <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

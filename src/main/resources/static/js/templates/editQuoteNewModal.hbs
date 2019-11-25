@@ -1,0 +1,183 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content plans-plans">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">EDIT QUOTE REQUEST</h4>
+        </div>
+        <div class="plans-plans-content">
+            <form id="editQuoteForm">
+                <input type="hidden" id="policyUniqueCode" name="policyUniqueCode" value="{{policyUniqueCode}}" />
+                <input type="hidden" id="requestId" name="requestId" value="{{requestId}}" />
+                <input type="hidden" name="step1Form.timezoneOffset" class="timezoneOffset" />
+                <input type="hidden" id="comparePlans" name="comparePlans" value="{{comparePlans}}" />
+                <div class="row">
+                    <!-- Destination country -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="destination">Destination</label>
+                            <select id="destination" name="step1Form.destinationCountry" class="selectpicker form-control ddown" data-live-search="true" title="Select a Destination">
+                                {{#each countries}}
+                                {{#ifCond code 'US'}}
+                                    <option value="{{code}}" {{selected code ../step1Form.destinationCountry}} data-tokens="usa united states">{{caption}}</option>
+                                {{else}}
+                                    <option value="{{code}}" {{selected code ../step1Form.destinationCountry}}>{{caption}}</option>
+                                {{/ifCond}}
+                                {{/each}}
+                            </select>
+                            <span class="note">Visiting multiple countries? Select only the first country you're traveling to.</span>
+                        </div>
+                    </div>
+                     <div class="col-sm-3">
+                       <div class="form-group cost">
+                         <label class="control-label" for="tripCost">Trip Cost</label>
+                         <div class="input-group">
+                           <span class="input-group-addon">$</span>
+                           <input id="tripCost" name="tripCost" value="{{step1Form.tripCost}}" class="form-control numeric tripCost" type="text" inputmode="numeric" placeholder="0" required="required"/>
+                           <input name="step1Form.tripCost" value="0" type="hidden"/>
+                           <input id="confirmZeroCostVal" hidden="hidden" value="false"/>
+                          </div>
+                            <span class="note">Prepaid and non-refundable expenses.</span>
+                         </div>
+                     </div>
+                      <!-- Total for all-->
+                      <div class="col-sm-3">
+                        <div class="form-group total">
+                          <input id="customRadio1" name="step1Form.tripCostTotal" value="true" class="radio-custom"  type="radio" {{checked step1Form.tripCostTotal true}}/>
+                          <label for="customRadio1" class="radio-custom-label">Total for All</label>
+                        </div>
+                      <div class="form-group per">
+                          <input id="customRadio2" name="step1Form.tripCostTotal" value="false" class="radio-custom" type="radio" {{checked step1Form.tripCostTotal false}}/>
+                          <label for="customRadio2" class="radio-custom-label">Per Traveler</label>
+                      </div>
+                      <input id="confirmOneDayDiffVal" hidden="hidden" value="false"/>
+                   </div>
+                </div>
+                <div class="row">
+                    <!-- Departure Date -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="departDatePicker">Departure Date</label>
+                            <div class='input-group date'>
+                                <input id="departDatePicker" name="step1Form.departDate" value="{{step1Form.departDate}}" type='text' inputmode='numeric' class="form-control dateInput" placeholder="Select a Date" data-date-format="mm/dd/yyyy"/>
+                                <span class="input-group-addon"><img src="{{context}}images/newdesign/calendar.svg" alt="datepicker" class="calendar"/></span>
+                            </div>
+                            <span class="note">When do you leave home for your trip?</span>
+                        </div>
+                    </div>
+                    <!-- Return Date -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="returnDatePicker">Return Date</label>
+                            <div class='input-group date'>
+                                <input id="returnDatePicker" name="step1Form.returnDate" value="{{step1Form.returnDate}}" type='text' inputmode="numeric" class="form-control dateInput" placeholder="Select a Date" data-date-format="mm/dd/yyyy"/>
+                                <span class="input-group-addon"><img src="{{context}}images/newdesign/calendar.svg" alt="datepicker" class="calendar"/></span>
+                            </div>
+                            <span class="note">When do you return home?</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Trip Cost -->
+
+                </div>
+                <div class="row">
+                    <!-- Travelers -->
+                    <div class="col-xs-3 col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label" for="travelers">Travelers</label>
+                            <select id="travelers" class="ageSelectpicker form-control ddown"
+                                    value="{{step2Form.travelers.length}}" title="{{step2Form.travelers.length}}">
+                                {{printOptionWithSelected step2Form.travelers.length}}
+                            </select>
+                            <span class="note"># of insureds</span>
+                        </div>
+                    </div>
+                    <!-- Ages -->
+                    <div class="col-sm-9">
+                        <div class="form-group ages">
+                            <label class="control-label">Ages or Birthdates</label>
+                            {{#each step2Form.travelers}}
+                            <div class="input-group">
+                                <input id="age-{{@index}}" type="text" maxlength="10" name="step2Form.travelers.age" value="{{ageOrBirthday}}" class="form-control ageordate ageField" placeholder="Age or mm/dd/yyyy" inputmode="numeric" />
+                            </div>
+                            {{/each}}
+                            <input id="mainFormTravelersCount" type="hidden" value="{{step2Form.travelers.length}}"/>
+                            <input id="travelersString" type="hidden" name="step2Form.travelersString"/>
+                            <span class="note" style="margin-top: 0">How old are the travelers as of today?</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Citizen -->
+                    <div class="form-group col-sm-6">
+                        <label class="control-label" for="citizenship">Citizen of</label>
+                        <select id="citizenship" name="step2Form.citizenCountry" class="selectpicker form-control ddown" data-live-search="true" title="Select a Country">
+                            {{#each countries}}
+                            <option value="{{code}}" {{selected code ../step2Form.citizenCountry}}>{{caption}}</option>
+                            {{/each}}
+                        </select>
+                        <span class="note">If you have dual citizenship, select only one country.</span>
+                    </div>
+                    <!-- Resident -->
+                   <div class="form-group col-sm-6">
+                     <label class="control-label" for="residence">Resident of</label>
+                     <select id="residence" name="step2Form.residentCountryStatePair" class="selectpicker form-control ddown" data-live-search="true" title="Select a Country">
+                     <optgroup label="UNITED STATES">
+                        {{#each states.usStates}}
+                     <option value="US-{{code}}" {{selectedWithPref 'US' code ../step2Form.residentCountryStatePair}}>{{caption}}</option>
+                        {{/each}}
+                     </optgroup>
+                     <optgroup label="CANADA">
+                        {{#each states.caStates}}
+                     <option value="CA-{{code}}" {{selectedWithPref 'CA' code ../step2Form.residentCountryStatePair}}>{{caption}}</option>
+                        {{/each}}
+                     </optgroup>
+                        {{#each countries}}
+                         {{printOptionIfNotCond code caption ../states.excludedCountryCodes ../step2Form.residentCountryStatePair}}
+                        {{/each}}
+                     </select>
+                     <span class="note">Select your primary country/state/territory of residence.</span>
+                   </div>
+                     <div class="col-sm-12">
+                       <input type="hidden" id="includesUS" name="step2Form.includesUS" value="{{step2Form.includesUS}}"/>
+                       <input id="includesUSCheckbox" class="checkbox-custom" type="checkbox"/>
+                       <label id="includesUSCheckboxLabel" for="includesUSCheckbox" class="checkbox-custom-label">My trip includes USA</label>
+                     </div>
+                </div>
+
+                <div class="row">
+                    <input type="hidden" id="preExistingCondition" name="step3Form.preExistingMedicalAndCancellation" value="{{step3Form.preExistingMedicalAndCancellation}}"/>
+                    <!-- Deposit Date -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="depositDatePicker">Initial Deposit Date</label>
+                            <div class='input-group date' >
+                                <input name="step3Form.depositDate" id="depositDatePicker" value="{{step3Form.depositDate}}" data-date-format="mm/dd/yyyy" type='text' inputmode="numeric" autocomplete="new-password" class="form-control dateInput" placeholder="Select a Date" />
+                                <span class="input-group-addon"><img src="{{context}}images/newdesign/calendar.svg" alt="datepicker" class="calendar"/></span>
+                            </div>
+                            <span class="note">The earliest date a payment was made toward your trip.</span>
+                        </div>
+                    </div>
+                    <!-- Payment Date -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="paymentDatePicker">Final Payment</label>
+                            <label for="noPayment" class="checkbox-custom-label" id="finalpay">(Check if not yet paid </label>
+                            <input id="noPayment" class="checkbox-custom" type="checkbox"/>
+                            <label for="noPayment" class="checkbox-custom-label" id="finalPay">)</label>
+                            <div class='input-group date' >
+                                <input name="step3Form.paymentDate" id="paymentDatePicker" value="{{step3Form.paymentDate}}" data-date-format="mm/dd/yyyy" type='text' inputmode="numeric" autocomplete="new-password" class="form-control dateInput" placeholder="Select a Date" />
+                                <span class="input-group-addon"><img src="{{context}}images/newdesign/calendar.svg" alt="datepicker" class="calendar"/></span>
+                            </div>
+                            <span class="note">The date the final payment was made toward your trip.</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btnmodal" id="saveEditQuote">Save</a>
+            <a data-dismiss="modal" class="btn btnmodal" id="removeM">Cancel</a>
+        </div>
+    </div>
+</div>

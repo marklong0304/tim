@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>File management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/cms/attachment.js?ver={version}(version=${appVersion.version})}" src="/js/custom/cms/page.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="modal fade" id="linkModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Document link</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input id="link" type="text" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/attachment}">File attachment</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"><h1 class="adminTitle">File management</h1></div>
+            <div class="col-md-4 text-right">
+                <h1><a th:href="@{/cms/attachment/create}" class="btn btn-success xcrud-action "><i
+                        class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" id="attachments">
+            <thead>
+            <tr class="info">
+                <th width="10%">Name</th>
+                <th width="10%">Type</th>
+                <th width="10%">Size</th>
+                <th width="15%">Create date</th>
+                <th width="15%">Modified date</th>
+                <th width="10%">Author</th>
+                <th width="10%">View file link</th>
+                <th width="10%">Download</th>
+                <th width="5%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="attachment : ${attachments}" th:id="'attachment-' + ${attachment.id}">
+                <td th:text="${attachment.name}"/>
+                <td th:text="${attachment.mimeType}"/>
+                <td th:text="${attachment.prettySize}"/>
+                <td th:text="${#dates.format(attachment.createDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${#dates.format(attachment.modifiedDate, 'MM/dd/yyyy')}"/>
+                <td th:text="${attachment.author.name}"/>
+                <td><a class="viewLink" href="/#" th:data="${attachment.fileUid}">view file link</a></td>
+                <td><a th:href="@{/cms/attachment/{uid}(uid=${attachment.fileUid})}" target="_blank">download</a></td>
+                <td>
+                    <a class="pull-left btn btn-primary" type="button" title="Edit"
+                       th:href="@{/cms/attachment/edit/{id}(id=${attachment.id})}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <button class="pull-right btn btn-danger" type="button" title="Delete"
+                            th:onclick="'javascript:deleteAttachment(\'' + ${attachment.id} + '\');'">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input id="lastModified" type="hidden" th:value="${lastModifiedAttachmentId}"/>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Vendor Matrix</title>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/vendors/restrictionMatrix.js?ver={version}(version=${appVersion.version})}"/>
+    <script>
+        var table;
+        function initT() {
+            var h = $(window).height() - /*$('#footer').height()*/ 20 - 80 - $('#header').height() - 100;
+            table = $('#matrix').DataTable({
+                stateSave: true,
+                "info": false,
+                "ordering": false,
+                "paging": false,
+                "scrollY": Math.max(h, 300),
+                "scrollX": true
+            });
+        }
+        $(function () {
+            initT();
+            $('.vendor').click(function () {
+                window.open(context + 'vendors/edit/' + $(this).data("el_id"));
+            });
+            $('.policyMeta').click(function () {
+                window.open(context + 'vendors/policy/edit/' + $(this).data("el_id"));
+            });
+            $('.metaRestriction').click(function () {
+                //window.open(context + 'vendors/policy/metaRestriction/edit/' + $(this).data("el_id"));
+                editRestriction($(this).data("el_id"), $(this).data("el_policyid"), $(this).data("el_policyname"));
+            });
+            $('#vendorSearch').on('keyup change', function () {
+                table.column(0).search(this.value).draw();
+            });
+            $('#planSearch').on('keyup change', function () {
+                table.column(1).search(this.value).draw();
+            });
+        });
+    </script>
+    <style>
+        .vendor, .policyMeta, .metaRestriction {
+            cursor: pointer;
+        }
+        .metaRestriction:hover {
+            text-decoration: underline;
+        }
+        thead input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+        .table-div {
+            font-size: 14px;
+        }
+        #searchResultContent {
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a th:href="@{/vendors}">Vendors</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/vendors/restriction-matrix}">Restriction Matrix</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="coll-md-12 table-div">
+                <!-- Policy meta restriction modal-->
+                <div th:replace="fragments/restrictions :: restrictionsFragment"></div>
+                <!-- selected plan id for validation -->
+                <input type="hidden" id="policyMetaId" value=""/>
+                <table class="table table-hover table-bordered" id="matrix">
+                    <thead>
+                        <tr>
+                            <th><input id="vendorSearch" type="text" placeholder="Search Vendor" /></th>
+                            <th><input id="planSearch" type="text" placeholder="Search Plan" /></th>
+                            <th th:each="restrictionType : ${restrictionTypes}">
+                                <span th:text="${restrictionType}"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="policyMeta : ${policyMetas}">
+                            <th class="vendor" th:attr="data-el_id=${policyMeta.vendor.id}">
+                                <span th:text="${policyMeta.vendor.name}" />
+                            </th>
+                            <th class="policyMeta" th:attr="data-el_id=${policyMeta.id}">
+                                <span th:text="${policyMeta.displayName}" />
+                            </th>
+                            <td th:each="restrictionType : ${restrictionTypes}">
+                                <a th:onclick="'javascript:addRestriction(\''+${policyMeta.id}+'\', \''+${policyMeta.displayName}+'\', \''+${restrictionType}+'\');'" data-toggle="modal"
+                                   data-target="#addRestrictionModal" style="cursor: pointer">Add</a>
+
+                                <div th:each="restriction : ${policyMeta.getRestrictions(restrictionType)}" class="metaRestriction"
+                                     th:attr="data-el_id=${restriction.id}, data-el_policyId=${policyMeta.id}, data-el_policyName=${policyMeta.displayName}">
+                                    <span th:text="${restriction.restrictionPermit}"></span>
+
+                                    <div th:if="${restrictionType.name() == 'CITIZEN' or restrictionType.name() == 'DESTINATION' or restrictionType.name() == 'RESIDENT'}">
+                                        <span th:if="${not #sets.isEmpty(restriction.countries)}"
+                                              th:text="${#strings.setJoin(restriction.countries,',')}"></span>
+                                        <br th:if="${not #sets.isEmpty(restriction.countries)}" />
+                                        <span th:if="${not #sets.isEmpty(restriction.states)}"
+                                              th:text="${#strings.setJoin(restriction.states,',')}"></span>
+                                    </div>
+
+                                    <div th:if="${restrictionType.name() == 'AGE' or restrictionType.name() == 'TRIP_COST_PER_TRAVELER' or restrictionType.name() == 'TRIP_COST' or restrictionType.name() == 'LENGTH_OF_TRAVEL'}">
+                                        <span th:text="${restriction.minValue != null ? restriction.minValue : '*'}"></span>
+                                        <span> - </span>
+                                        <span th:text="${restriction.maxValue != null ? restriction.maxValue : '*'}"></span>
+                                    </div>
+                                    <div th:if="${restrictionType.name() == 'CALCULATE'}">
+                                        <span th:text="${restriction.calculatedRestrictions != null ? restriction.calculatedRestrictions : ''}"></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

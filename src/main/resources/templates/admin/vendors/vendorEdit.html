@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Edit Vendor</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/percentInfo.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/lib/jquery-ui.min.js}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/jquery-ui.min.css}"/>
+    <script th:src="@{/js/custom/admin/policies/policies.js?ver={version}(version=${appVersion.version})}"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div id="errors" class="errors-div"/>
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="adminTitle">Edit Vendor</h1>
+
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#lists.isEmpty(errors)==false}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${errors}">
+                        <span th:text="${e}">The error message</span>
+                    </div>
+                </div>
+                <div>
+                    <form action="#" th:action="@{/vendors/edit/{vendorId}(vendorId=${vendor.id})}"
+                          th:object="${vendor}" method="post">
+                        <div class="alert alert-danger alert-dismissible" role="alert"
+                             th:if="${#fields.hasErrors('*')}">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <div th:each="e : ${#fields.detailedErrors()}">
+                                <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                                <span th:text="${e.message}">The error message</span>
+                            </div>
+                        </div>
+
+                        <h3 style="padding-bottom: 10px;">Vendor info</h3>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="name">Vendor Name: </label>
+                                <input id="name" type="text" th:field="*{name}"
+                                       placeholder="Name" class="form-control"/>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="code">Vendor Code: </label>
+                                <input id="code" type="text" th:field="*{code}"
+                                       placeholder="Code" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="panel-group col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#collapse1">Show vendor configuration</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                        <span th:text="${apiUrl}" style="white-space: pre-line">No configuration found, please add in VendorController</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="unsupportedCardTypes">Not supported cards:</label>
+                                <select th:field="*{unsupportedCardTypes}" id="unsupportedCardTypes"
+                                        class="form-control" multiple="multiple">
+                                    <option th:each="unsupportedCardType : ${T(com.travelinsurancemaster.model.webservice.common.CardType).values()}"
+                                            th:value="${unsupportedCardType}" th:text="${unsupportedCardType}"/>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="active">Vendor Active: </label>
+                                <select th:field="*{active}" id="active" class="form-control">
+                                    <option th:value="${'true'}" th:text="${'True'}"/>
+                                    <option th:value="${'false'}" th:text="${'False'}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="ageFromDepartDate">Count age from depart date: </label>
+                                <select th:field="*{ageFromDepartDate}" id="ageFromDepartDate" class="form-control">
+                                    <option th:value="${'true'}" th:text="${'True'}"/>
+                                    <option th:value="${'false'}" th:text="${'False'}"/>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="beneficiaryType">Beneficiary type:</label>
+                                <select th:field="*{beneficiaryType}" id="beneficiaryType" class="form-control">
+                                    <option th:each="beneficiaryType : ${T(com.travelinsurancemaster.model.webservice.common.BeneficiaryType).values()}"
+                                            th:value="${beneficiaryType}" th:text="${beneficiaryType.caption}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="id" th:field="*{id}"/>
+
+                        <h3 style="padding-bottom: 10px;">Terms and conditions</h3>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-6">
+                                <label for="active">Display on purchase page:</label>
+                                <select th:field="*{termsAndConditionsIsActive}" id="termsAndConditionsIsActive"
+                                        class="form-control">
+                                    <option th:value="${'true'}" th:text="${'True'}"/>
+                                    <option th:value="${'false'}" th:text="${'False'}"/>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label for="termsAndConditionsType">Terms and conditions type:</label>
+                                <select th:field="*{termsAndConditionsType}" id="termsAndConditionsType"
+                                        class="form-control">
+                                    <option th:each="type : ${T(com.travelinsurancemaster.model.dto.TermsAndConditionsType).values()}"
+                                            th:value="${type}" th:text="${type.caption}"/>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-12">
+                                <label for="termsAndConditionsText">Terms and conditions text:</label><br/>
+                                <input id="termsAndConditionsText" type="hidden" th:field="*{termsAndConditionsText}"
+                                       class="form-control"/>
+
+                                <div id="summernote"/>
+                                <iframe th:src="@{/cms/page/wysiwyg}" style="border: none; width:100%; height: 460px"
+                                        onload="init()"/>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-12">
+                                <table>
+                                    <tr>
+                                        <td style="padding: 0 20px 0 0; vertical-align: top;">
+                                            <input id="test" type="checkbox" th:field="*{test}"/>
+                                            <label for="test">Test vendor</label>
+                                        </td>
+                                        <td style="padding: 0 20px 0 0; vertical-align: top;">
+                                            <div id="testUserIds" th:style="${vendor.test} ? '' : 'display:none'">
+                                                <div><b>Choose users to show quotes:</b></div>
+                                                <select th:field="*{longTestUserIds}" size="10" multiple="multiple">
+                                                    <option th:each="user : ${userList}"
+                                                            th:value="${user.id}"
+                                                            th:text="${user.email}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: top;">
+                                            <div id="chosenTestUserIds" th:style="${vendor.test} ? '' : 'display:none'">
+                                                <div><b>Choosen users:</b></div>
+                                                <table>
+                                                    <tr th:each="user : ${chosenUserList}">
+                                                        <td th:text="${user.email}">user@user.com</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-12" id="divTestUserIds">
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-12">
+                                <input type="checkbox" th:field="*{showPureConsumers}"/>
+                                <label for="test">Block view to not logged-in or to users with single role=consumer (if checked will be blocked)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-row row">
+                            <div class="form-group col-sm-12">
+                                <a th:href="@{${backUrl}}" class="btn btn-default back-btn" style="padding: 6px 17px;">Back</a>
+                                <button type="submit" class="btn btn-success"
+                                        style="margin-left: 4px; padding: 6px 17px;">Save
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="well">
+                    <form method="POST" enctype="multipart/form-data" th:action="@{/vendorLogo/upload}">
+                        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${uploadError}">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <span th:text="${uploadError}">uploadError</span>
+                        </div>
+                        <div class="alert alert-success alert-dismissible" role="alert" th:if="${uploadSuccess}">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <span th:text="${uploadSuccess}">uploadSuccess</span>
+                        </div>
+                        <input type="hidden" name="vendorId" th:value="${vendor.id}"/>
+
+                        <div class="form-group">
+                            <label>Logo(preferable ratio is 2.1):</label>
+                            <img id="logonocache" th:src="${vendor.logoSrcRandom}" class="img-responsive"
+                                 style="max-width: 200px;" alt="Logo"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="logo" type="file" name="logo" accept="image/png"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <input type="submit" class="btn btn-success form-control " value="Upload logo"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <form action="#" th:action="@{/vendors/sync/{vendorId}(vendorId=${vendor.getId()})}"
+                      th:object="${vendor}" method="post">
+                    <button type="submit" class="btn btn-success btn-submit">Sync to test</button>
+                </form>
+                <div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8"><h1>Vendor Policies</h1></div>
+                        <div class="col-md-4 col-sm-4 text-right">
+                            <h1>
+                                <a th:href="@{/vendors/policy/create/{vendorId}(vendorId=${vendor.getId()})}"
+                                   class="btn btn-success xcrud-action ">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create
+                                </a>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="overflowXMD searchFieldNoScroll">
+                        <table class="table table-hover table-bordered" id="policyMetas">
+                            <thead>
+                            <tr class="info">
+                                <th width="35%"> Display Name</th>
+                                <th width="35%"> Unique code</th>
+                                <th width="10%"> Active</th>
+                                <th width="10%"> Purchasable</th>
+                                <th width="10%"> Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="policyMeta : ${policyMetaList}" th:id="'policy-' + ${policyMeta.id}">
+                                <td th:text="${policyMeta.displayName}">policyMeta display name</td>
+                                <td>
+                                    <p id="uniqueCode" class="trimExtraText" th:title="${policyMeta.uniqueCode}"
+                                       th:text="${policyMeta.uniqueCode}">policyMeta uniqueCode</p>
+                                </td>
+                                <td th:text="${policyMeta.active}">policyMeta active</td>
+                                <td th:text="${policyMeta.purchasable}">policyMeta purchasable</td>
+                                <td style="display: flex; width: 215px; white-space: nowrap;">
+
+                                    <a class=" btn btn-primary admin-btn" type="button" title="Edit"
+                                       th:href="@{/vendors/policy/edit/{id}(id=${policyMeta.id})}">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                    <a class=" btn btn-primary admin-btn" type="button" title="View Certificate"
+                                       th:href="@{/cms/certificate/{id}(id=${policyMeta.id})}">
+                                        <span class="glyphicon glyphicon-book"></span>
+                                    </a>
+                                    <a class=" btn btn-primary admin-btn" type="button" title="View policy matrix"
+                                       th:href="@{/vendors/policyMatrix/showMatrix/{id}(id=${policyMeta.id})}">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </a>
+                                    <a class=" btn btn-danger admin-btn" type="button" title="Delete"
+                                       th:onclick="'javascript:deletePolicy(\'' + ${policyMeta.id} + '\');'">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $(".btn-submit").on('click', function (e) {
+                e.preventDefault();
+                if ($('iframe').contents().find("#summernote").code().length > 100000) {
+                    $('label[for="termsAndConditionsText"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Content Length is 100000 symbols </span>');
+                } else {
+                    $("#termsAndConditionsText").val($('iframe').contents().find("#summernote").code());
+                    this.form.submit();
+                }
+            });
+
+            $('#unsupportedCardTypes').multiselect({
+                buttonWidth: '100%',
+                maxHeight: 372,
+                enableCaseInsensitiveFiltering: true,
+                includeSelectAllOption: true,
+                filterStyle: 'beginWith'
+            });
+
+            $("#test").change(function () {
+                if ($('#test').prop("checked")) {
+                    $('#testUserIds').show();
+                    $('#chosenTestUserIds').show();
+                } else {
+                    $('#testUserIds').hide();
+                    $('#chosenTestUserIds').hide();
+                }
+            });
+        });
+
+        function init() {
+            $('iframe').contents().find("#summernote").code($("#termsAndConditionsText").val());
+        }
+    </script>
+</div>
+</body>
+</html>

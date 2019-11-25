@@ -1,0 +1,58 @@
+{{#each products}}
+<section class="plans-plans plans-box {{#if best}}recommended{{/if}}">
+    <div class="row plans-row no-gutter">
+        <div class="col-md-3 col-lg-2 col-lg-push-9 col-md-push-9  price {{#if best}}recom-price{{/if}}">
+            <p class="sum">${{fixed totalPrice}}</p>
+            <p class="total">
+                {{#if countOfTravelers}}
+                <span class="forPeople"> total for {{countOfTravelers}} person</span>
+                {{else}}
+                <span class="forPeople"> total for {{countOfTravelers}} people</span>
+                {{/if}}
+            </p>
+            {{#if purchasable}}
+            <a class="purchase btn btnplan" onclick="getPurchase('{{policyMetaUniqueCode}}', null, null, '{{../requestId}}')">Buy Plan</a>
+            {{else}}
+            <a class="purchase disabled btn btnplan" href="#">Buy Plan</a>
+            {{/if}}
+
+            <div class="form-group">
+                <input id="{{policyMetaUniqueCode}}" class="checkbox-custom checkbox-recomm"
+                       name="{{policyMetaUniqueCode}}" type="checkbox"/>
+                <label for="{{policyMetaUniqueCode}}" class="checkbox-custom-label checkbox-custom-recomm"
+                       onclick="addToCompare('{{policyMetaUniqueCode}}')">Add to Compare</label>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 ">
+            <div class="provider">
+                <div class="img-box">
+                    <img src="https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{{vendorCode}}.png" alt="{{vendorCode}}" class="img-responsive"/>
+                </div>
+                <p class="plan-name">{{policyMetaCodeName}}</p>
+                <a href="#" id="plandetails" onclick="getDetails(event, {{policyMetaUniqueCode}}, null, '{{../requestId}}')">Plan Details</a>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 ">
+            <ul class="plan-features">
+                {{#each categories}}
+                {{#ifFourth @index}}
+            </ul>
+        </div>
+        <div class="col-md-3 col-lg-3 col-lg-pull-2 col-md-pull-3 ">
+            <ul class="plan-features">
+                {{/ifFourth}}
+                <li>
+                    <h6>{{categoryName}}</h6>
+                    <p>{{categoryCaption}}</p>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 otherPlansPrice">
+            <div class="costTrip clearfix"></div>
+        </div>
+    </div>
+</section>
+{{/each}}

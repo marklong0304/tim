@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>vendor management</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <script th:src="@{/js/custom/admin/vendors/vendors.js?ver={version}(version=${appVersion.version})}" src="/js/custom/vendors.js"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/vendors}" >Vendors</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Vendor management</h1>
+
+        <div class="row">
+            <div class="col-md-8">
+                <a th:href="@{/vendors/matrix}">Policy Category Matrix</a>  <br/>
+                <a th:href="@{/vendors/restriction-matrix}">Policy Restriction Matrix</a>
+            </div>
+            <div class="col-md-4 text-right">
+                <a th:href="@{/vendors/create}" class="btn btn-success xcrud-action ">
+                    <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create
+                </a>
+            </div>
+        </div>
+
+        <div class="overflowXMD">
+            <table class="table table-hover table-bordered" id="vendors">
+                <thead>
+                    <tr class="info">
+                        <th width="10%">Logo</th>
+                        <th width="40%">Name</th>
+                        <th width="20%">Code</th>
+                        <th width="6%">Active</th>
+                        <th width="16%">Percent type</th>
+                        <th width="8%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vendor : ${vendors}" th:id="'vendor-' + ${vendor.id}">
+                    <td>
+                        <div class="img-box">
+                            <img th:id="'logonocache'+${vendor.id}"
+                                 th:src="${vendor.logoSrcRandom}"
+                                 class="img-responsive" alt="Empty"/>
+                        </div>
+                    </td>
+                    <td th:text="${vendor.name}">vendor name</td>
+                    <td th:text="${vendor.code}">vendor code</td>
+                    <td th:text="${vendor.active}">vendor active</td>
+                    <td th:text="${vendor.percentType}">vendor percent type</td>
+                    <td style="display: flex; width: 125px; white-space: nowrap;">
+                        <a class="btn btn-primary" type="button" title="Edit"
+                           th:href="@{/vendors/edit/{id}(id=${vendor.id})}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a class=" btn btn-primary admin-btn" type="button" title="View compensation matrix"
+                           th:href="@{/vendors/compensation/showMatrix/{id}(id=${vendor.id})}">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </a>
+                        <button class="btn btn-danger" type="button" title="Delete"
+                                th:classappend="${!vendor.canDeleted} ? 'disabled' : ''"
+                                th:onclick="'javascript:deleteVendor(\'' + ${vendor.id} + '\');'">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

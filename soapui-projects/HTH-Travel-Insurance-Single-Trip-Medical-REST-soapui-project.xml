@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="HTH Travel Insurance Single Trip Medical REST" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://hthtravelinsurance-staging.betahth.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://hthtravelinsurance-staging.betahth.com</con:endpoint></con:endpoints><con:resource name="Vac_authorize.cfm" path="/purchase_post/travelgap_vacationer/vac_authorize.cfm"><con:settings/><con:parameters><con:parameter><con:name>p_prd_type_id</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_deductible_level</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_maximum_benefit_level</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_fulfillment_type</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_insured_dependents</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_amount</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_cardtype</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_name_on_credit_card</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_cardnum</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_exp_month</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_exp_year</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_link_id</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_date</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_return_date</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_firstname</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_midname</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_lastname</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_dob</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_address1</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_address2</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_city</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_state</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_zip</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_country</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_phone</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>p_email</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Vac_authorize.cfm" method="POST"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/x-www-form-urlencoded</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Excursion purchase" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://hthtravelinsurance-staging.betahth.com</con:endpoint><con:request/><con:originalUri>http://hthtravelinsurance-staging.betahth.com/purchase_post/travelgap_vacationer/vac_authorize.cfm</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="p_link_id" value="128770"/>
+  <con:entry key="p_address2" value="addr"/>
+  <con:entry key="p_phone" value="1234567890"/>
+  <con:entry key="p_address1" value="53rd Street"/>
+  <con:entry key="p_city" value="City"/>
+  <con:entry key="p_midname" value="T."/>
+  <con:entry key="p_dob" value="09/13/1989"/>
+  <con:entry key="p_email" value="test@mail.com"/>
+  <con:entry key="p_name_on_credit_card" value="Test"/>
+  <con:entry key="p_exp_year" value="25"/>
+  <con:entry key="p_country" value="USA"/>
+  <con:entry key="p_exp_month" value="12"/>
+  <con:entry key="p_zip" value="32118"/>
+  <con:entry key="p_lastname" value="Testerson"/>
+  <con:entry key="p_date" value="08/13/2015"/>
+  <con:entry key="p_cardtype" value="Visa"/>
+  <con:entry key="p_firstname" value="Test"/>
+  <con:entry key="p_insured_dependents" value="1"/>
+  <con:entry key="p_deductible_level" value="0"/>
+  <con:entry key="p_prd_type_id" value="75"/>
+  <con:entry key="p_state" value="FL"/>
+  <con:entry key="p_fulfillment_type" value="EMAIL"/>
+  <con:entry key="p_return_date" value="08/13/2015"/>
+  <con:entry key="p_cardnum" value="4111111111111111"/>
+  <con:entry key="p_maximum_benefit_level" value="50000"/>
+  <con:entry key="p_amount" value="9.66"/>
+</con:parameters><con:parameterOrder><con:entry>p_prd_type_id</con:entry><con:entry>p_deductible_level</con:entry><con:entry>p_maximum_benefit_level</con:entry><con:entry>p_fulfillment_type</con:entry><con:entry>p_insured_dependents</con:entry><con:entry>p_amount</con:entry><con:entry>p_cardtype</con:entry><con:entry>p_name_on_credit_card</con:entry><con:entry>p_cardnum</con:entry><con:entry>p_exp_month</con:entry><con:entry>p_exp_year</con:entry><con:entry>p_link_id</con:entry><con:entry>p_date</con:entry><con:entry>p_return_date</con:entry><con:entry>p_firstname</con:entry><con:entry>p_midname</con:entry><con:entry>p_lastname</con:entry><con:entry>p_dob</con:entry><con:entry>p_address1</con:entry><con:entry>p_address2</con:entry><con:entry>p_city</con:entry><con:entry>p_state</con:entry><con:entry>p_zip</con:entry><con:entry>p_country</con:entry><con:entry>p_phone</con:entry><con:entry>p_email</con:entry></con:parameterOrder></con:request><con:request name="Voyager purchase" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://hthtravelinsurance-staging.betahth.com</con:endpoint><con:request/><con:originalUri>http://hthtravelinsurance-staging.betahth.com/purchase_post/travelgap_vacationer/vac_authorize.cfm</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="p_link_id" value="128770"/>
+  <con:entry key="p_address2" value="addr"/>
+  <con:entry key="p_address1" value="53rd Street"/>
+  <con:entry key="p_phone" value="1234567890"/>
+  <con:entry key="p_city" value="City"/>
+  <con:entry key="p_midname" value="T."/>
+  <con:entry key="p_dob" value="09/13/1989"/>
+  <con:entry key="p_email" value="test@mail.com"/>
+  <con:entry key="p_name_on_credit_card" value="Test"/>
+  <con:entry key="p_exp_year" value="25"/>
+  <con:entry key="p_country" value="USA"/>
+  <con:entry key="p_exp_month" value="12"/>
+  <con:entry key="p_zip" value="32118"/>
+  <con:entry key="p_lastname" value="Testerson"/>
+  <con:entry key="p_date" value="08/13/2015"/>
+  <con:entry key="p_cardtype" value="Visa"/>
+  <con:entry key="p_firstname" value="Test"/>
+  <con:entry key="p_insured_dependents" value="1"/>
+  <con:entry key="p_deductible_level" value="0"/>
+  <con:entry key="p_prd_type_id" value="76"/>
+  <con:entry key="p_state" value="FL"/>
+  <con:entry key="p_fulfillment_type" value="EMAIL"/>
+  <con:entry key="p_return_date" value="08/13/2015"/>
+  <con:entry key="p_cardnum" value="4111111111111111"/>
+  <con:entry key="p_amount" value="8.61"/>
+  <con:entry key="p_maximum_benefit_level" value="50000"/>
+</con:parameters><con:parameterOrder><con:entry>p_prd_type_id</con:entry><con:entry>p_deductible_level</con:entry><con:entry>p_maximum_benefit_level</con:entry><con:entry>p_fulfillment_type</con:entry><con:entry>p_insured_dependents</con:entry><con:entry>p_amount</con:entry><con:entry>p_cardtype</con:entry><con:entry>p_name_on_credit_card</con:entry><con:entry>p_cardnum</con:entry><con:entry>p_exp_month</con:entry><con:entry>p_exp_year</con:entry><con:entry>p_link_id</con:entry><con:entry>p_date</con:entry><con:entry>p_return_date</con:entry><con:entry>p_firstname</con:entry><con:entry>p_midname</con:entry><con:entry>p_lastname</con:entry><con:entry>p_dob</con:entry><con:entry>p_address1</con:entry><con:entry>p_address2</con:entry><con:entry>p_city</con:entry><con:entry>p_state</con:entry><con:entry>p_zip</con:entry><con:entry>p_country</con:entry><con:entry>p_phone</con:entry><con:entry>p_email</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

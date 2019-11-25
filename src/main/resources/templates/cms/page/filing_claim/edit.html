@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Filing claim page edit</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/custom/cms/contact.js?ver={version}(version=${appVersion.version})}"/>
+
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row" th:if="${filingClaimPage.id != null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Page</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row" th:if="${filingClaimPage.id == null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/filing_claim_page}">Filing claim page</a></li>
+                    <li><a th:href="@{/cms/filing_claim_page/create}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle" th:if="${filingClaimPage.id != null}">Edit filing claim page</h1>
+
+        <h1 class="adminTitle" th:if="${filingClaimPage.id == null}">Create filing claim page</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form id="filingClaimPageForm" th:action="@{/cms/filing_claim_page/edit/{id}(id=${filingClaimPage.id})}"
+                  th:object="${filingClaimPage}" method="post">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="group">Vendor page: </label>
+                    <select th:field="*{vendorPage}" id="group" class="form-control">
+                        <option th:each="vendorPage : ${vendorPages}" th:value="${vendorPage.id}"
+                                th:text="${vendorPage.caption}"/>
+                    </select>
+                    <span th:errors="*{vendorPage}" style="color: red"/>
+                </div>
+                <div class="form-group">
+                    <label for="name">Filing claim page name: </label>
+                    <input id="name" type="text" th:field="*{caption}" placeholder="Name" class="form-control"/>
+                    <span th:errors="*{caption}" style="color: red"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Filing claim page phone number: </label>
+                    <input id="phone" type="text" th:field="*{phoneNumber}"
+                           placeholder="Phone number" class="form-control"/>
+                    <span th:errors="*{phoneNumber}" style="color: red"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedulePerDay">Filing claim customer schedule per day: </label>
+                    <input id="schedulePerDay" type="text" th:field="*{schedulePerDay}"
+                           placeholder="Customer Service Hours Of Operation" class="form-control"/>
+                    <span th:errors="*{schedulePerDay}" style="color: red"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedulePerWeek">Filing claim customer schedule per week: </label>
+                    <input id="schedulePerWeek" type="text" th:field="*{schedulePerWeek}"
+                           placeholder="Phone number" class="form-control"/>
+                    <span th:errors="*{schedulePerWeek}" style="color: red"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Filing claim page status:</label>
+                    <select th:field="*{status}" id="status" class="form-control">
+                        <option th:each="status : ${T(com.travelinsurancemaster.model.dto.cms.page.PageStatus).values()}"
+                                th:value="${status}" th:text="${status}"/>
+                    </select>
+                    <span th:errors="*{status}" style="color: red"/>
+                </div>
+
+                <input type="hidden" name="version" th:field="*{version}"/>
+
+                <input type="hidden" name="id" th:field="*{id}"/>
+
+                <div class="form-group" th:if="${filingClaimPage.id != null}">
+                    <a th:href="@{${'/page/filing_claim/'+filingClaimPage.name}}" target="_blank">view page</a>
+                </div>
+
+                <div class="form-group">
+                    <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                    <button type="submit" class="btn btn-success btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+        <div th:if="${filingClaimPage.id != null}">
+            <div class="row">
+                <div class="col-md-8"><h1>Contacts</h1></div>
+                <div class="col-md-4 text-right">
+                    <h1>
+                        <a th:href="@{/cms/filing_claim_page/contact/create/{filingClaimPageId}(filingClaimPageId=${filingClaimPage.id})}"
+                           th:if="${hasPolicyMetaPages}"
+                           class="btn btn-success xcrud-action "><i
+                                class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Create</a></h1>
+                </div>
+            </div>
+
+            <div class="overflowXMD">
+                <table class="table table-hover table-bordered" id="contacts">
+                    <thead>
+                    <tr class="info">
+                        <th width="25%">Policy meta pages</th>
+                        <th width="23%">Create date</th>
+                        <th width="23%">Modified date</th>
+                        <th width="20%">Author</th>
+                        <th width="5%">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="contact : ${filingClaimContacts}" th:id="'contact-' + ${contact.id}">
+                        <td><span th:each="policyMetaPage,iterationStatus : ${contact.policyMetaPages}"
+                                  th:text="${policyMetaPage.caption} + (${iterationStatus.last==false} ? ', ' : '')"></span>
+                        </td>
+                        <td th:text="${#dates.format(contact.createDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${#dates.format(contact.modifiedDate, 'MM/dd/yyyy')}"/>
+                        <td th:text="${contact.author.name}"/>
+                        <td>
+                            <a class="pull-left btn btn-primary" type="button" title="Edit"
+                               th:href="@{/cms/filing_claim_page/contact/edit/{id}(id=${contact.id})}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="pull-right btn btn-danger" type="button" title="Delete"
+                                    th:onclick="'javascript:deleteContactPage(\'' + ${contact.id} + '\');'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script th:inline="javascript">
+        // @formatter:off
+        /*<![CDATA[*/
+        var newFilingClaimPage = [[${filingClaimPage.id == null}]];
+        var createUrl = [[@{/cms/filing_claim_page/create}]];
+        /*]]>*/
+        // @formatter:on
+    </script>
+    <script>
+        $(document).ready(function () {
+            if (newFilingClaimPage) {
+                $('#filingClaimPageForm').attr('action', createUrl);
+            }
+        });
+    </script>
+
+</div>
+</body>
+</html>

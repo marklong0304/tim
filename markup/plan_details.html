@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TIM</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link href="css/jquery.bxslider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid" id="header">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 hidden-sm hidden-xs">
+                    <div class="logo">
+                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 hidden-sm hidden-xs">
+                    <div class="phone">800-222-3456</div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                    <div class="mainMenu">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <div class="logo visible-xs visible-sm">
+                                        <a href="#"><img src="img/logo.png" alt=""/></a>
+                                    </div>
+                                    <div class="phone visible-sm">800-222-3456</div>
+                                    <div class="phone visible-xs">800-222-3456</div>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Learn <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Learn1</a></li>
+                                                    <li><a href="#">Learn2</a></li>
+                                                    <li><a href="#">Learn3</a></li>
+                                                </ul>
+                                            </div></li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Quote <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Quote1</a></li>
+                                                    <li><a href="#">Quote2</a></li>
+                                                    <li><a href="#">Quote3</a></li>
+                                                </ul>
+                                            </div>  
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Products <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Product1</a></li>
+                                                    <li><a href="#">Product2</a></li>
+                                                    <li><a href="#">Product3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="login">
+                                            <div class="dropdown visible-xs visible-sm">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    Login
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="login hidden-xs hidden-sm">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                                    <span class="hidden-md">Welcome, <span class="username">Adminnnnnnnn</span>!</span>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                    <form>
+                                                        <input type="email" placeholder="Email" required/>
+                                                        <input type="password" placeholder="Password" required />
+                                                        <input type="submit" value="Login"/>
+                                                        <a href="#">Register now</a>
+                                                        <a href="#">Did you forget your password?</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid planDetails" id="searchResultContent">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 backLinks">
+                            <a href="#" class="back">Back to all Plans</a>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 socialGroup">
+                            <a href="#" class="a"></a>
+                            <a href="#" class="f"></a>
+                            <a href="#" class="t"></a>
+                            <a href="#" class="g"></a>
+                            <a href="#" class="m"></a>
+                        </div>
+                        <div class="standartOrderPosition clearfix">
+                            <div class="col-lg-9 col-md-9">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <img src="img/logoOrderSearch.jpg" alt="" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Cancellation<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex1Slider'>$<span>5,000</span></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Primary Medical<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex2Slider'>$<span>50,000</span></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Baggage Delay<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex3Slider'>$<span>200</span></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <strong>Platinum NW6600</strong>
+                                        <a href="#" class="planDetails">Plan Details</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Trip Interruption<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex4Slider'>$<span>7,500</span></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Emergency Medical<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex5Slider'>$<span>75,000</span></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <span class="positionName">Baggage Lost<i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+                                        <span class="positionCost" data-slider-id='ex6Slider'>$<span>1,500</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 allSummForOrder col-lg-offset-0 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+                                <div class="costTrip clearfix">
+                                    <span class="cost">$87.00</span>
+                                    <span class="forPeople">total for 2 people</span>
+                                </div>
+                                <a href="#" class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2 purchase">Purchase</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Cancellation: <span class="positionCost">$<span>5,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Trip Interruption:</td>
+                                            <td>150% of the trip cost</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hurricane & Weather:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Terrorism:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Financial Default:</td>
+                                            <td>Available</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Employment Layoff:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cancel for medical:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cancel for work reasons:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cancel for any reason:</td>
+                                            <td>Available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Accidental Death: <span class="positionCost">$<span>1,000,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>24 Hour AD&D:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Flight Only AD&D:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Common Carrier AD&D:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Sport: <span class="positionCost">$<span>0</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Hazardous Sports:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amateur Sports:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>    
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">  
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Medical: <span class="positionCost">$<span>75,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Primary Medical:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emergency Medical:</td>
+                                            <td>$50,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pre-existing Medical:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medical Deductible:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Evacuation: <span class="positionCost">$<span>50,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Medical Evacuation:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Non-Medical Evacuation:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Loss or Delay: <span class="positionCost">$<span>1,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Travel Delay:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Baggage Delay:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Baggage Loss:</td>
+                                            <td>$500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Missed Connection:</td>
+                                            <td>$500</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                            <div class="tableWrap">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                <span class="positionName">Other Benefits: <span class="positionCost">$<span>50,000</span></span><i></i><b>Evacuation provides coverage if you are transported to a nearby medical facility for treatment and to your home hospital if 
+                                                        necessary. Repatriation provides coverage to transport a deceased person's remains back to their home city.</b></span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Rental Car:</td>
+                                            <td>Included $50,000 (Per Person/Per Plan)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Money Back Guarantee:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>24 Hour Assistance Service:</td>
+                                            <td>Avalible</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Identity Theft:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Renewable Policy:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Maximum Limit:</td>
+                                            <td>No coverage</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="allSummForOrder bottomSumm">
+                                <div class="costTrip clearfix">
+                                    <span class="cost">$87.00</span>
+                                    <span class="forPeople">total for 2 people</span>
+                                </div>
+                                <a href="#" class="purchase">Purchase</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>About Us</h4>
+                        <a href="#">Why Choose Us Customer Testimonials Our Guarantees</a>
+                        <a href="#">Customer Testimonials</a>
+                        <a href="#">Our Guarantees</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Connect With Us</h4>
+                        <a href="#">Affiliate Program</a>
+                        <a href="#">Insurance Providers</a>
+                        <a href="#">Business Partners</a>
+                        <a href="#">Privacy/ Security/ Legal</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4>Support</h4>
+                        <a href="#">Travel Insurance Basics</a>
+                        <a href="#">Group Insurance</a>
+                        <a href="#">Filing a Claim</a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerPhone">+1-800-123-4567</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial facebook"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial twitter"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial google"><a href="#"></a></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 footersocial inst"><a href="#"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 copyright">Travel Insurance Master © 2015</div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="js/jquery.bxslider.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function imgTopMargin(img) {
+                    var imgHeight = img.height();
+                    img.css('margin-top', -imgHeight / 2);
+                }
+                imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                $(window).resize(function () {
+                    imgTopMargin($('.logo.visible-xs.visible-sm a img'));
+                    imgTopMargin($('.hidden-sm.hidden-xs .logo a img'));
+                });
+                $('.ex').slider();
+                $(".ex").on("slide", function (slideEvt) {
+                    var dataParam = $(this).attr('data-slider-id');
+                    $('.positionCost[data-slider-id=' + dataParam + '] span').text(slideEvt.value);
+                });
+                $('#collapse').on('show.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').addClass('openCollapse');
+                });
+                $('#collapse').on('hide.bs.collapse', function () {
+                    $('#collapse').parent('.moreOptionsForOrder').find('.moreOptions').removeClass('openCollapse');
+                });
+                $(".numeric input[type=checkbox]").change(function () {
+                    var chb = $(this).is(':checked');
+                    var titleBlock = $(this).parent('.numeric').find('label').html();
+                    var dataId = $(this).parent('.numeric').data('id');
+                    var dataSliderId = $(this).parent('.numeric').data('sliderId');
+                    if (chb) {
+                        var contentSplitter = '<div class="col-lg-4 col-md-4 col-sm-6 newSplitterBlock">' +
+                                '<span class="positionName">' + titleBlock + '</span>' +
+                                '<input id="' + dataId + '" class="ex" data-slider-id="' + dataSliderId + '" type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="100" data-slider-value="0"/>' +
+                                '</div>';
+                        $('.horizontalSplitterBlock').append(contentSplitter);
+                        $('.ex').slider();
+                        $('.newSplitterBlock').animate({opacity: 1}, 1000);
+                    }
+                    else {
+                        $('input[type=text][data-slider-id=' + dataSliderId + ']').parent('.newSplitterBlock').animate({
+                            opacity: 0
+                        }, 500, function () {
+                            $(this).remove();
+                        });
+                    }
+                })
+                
+   
+            });
+            
+        </script>
+<span class="goTopLink" style="display: inline;"><i>Top</i></span>
+    </body>
+</html>

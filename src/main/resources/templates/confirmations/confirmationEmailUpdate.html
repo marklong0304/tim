@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Email update confirmation</title>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent" class="container">
+    <div class="row">
+        <div class="message email-update">
+            <p>Thank you for updating your login email address.</p>
+            <a class="goToHome" th:href="@{/}" href="/">Go to Homepage.</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

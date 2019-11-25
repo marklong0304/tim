@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Error</title>
+    <script type="text/javascript" src="/js/custom/search.js" th:src="@{/js/custom/search.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div class="plans purchasing error">
+            <div class=" plans-margin plans-address">
+                <div class="emptyHeader"></div>
+                <div class="container">
+                    <div class="row" id="errorPage">
+                        <div class="errorInfo col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <h4>We're sorry...</h4>
+                            <p th:title="${message}" th:if="${status==404}">The page you are looking for was moved, removed, renamed or might never existed.</p>
+                            <p th:title="${message}" th:if="${status==500}" th:text="'We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.'" />
+                            <p th:title="${message}" th:if="${status==403}" th:text="'Forbidden: You don\'t have permission to access on this server.'" />
+                            <p th:title="${message}" th:if="${status==999}" th:text="${message}" />
+                            <p>Try to search </p>
+                            <form id="searchForm" action="#" th:action="@{/search}" method="get">
+                                <div class="searchError">
+                                    <input id="searchStr" name="q" type="text"
+                                           placeholder="Search" />
+                                    <button id="searchBtn"></button>
+                                </div>
+                            </form>
+                            <p>or go to <a th:href="@{/}">home page</a>.</p>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 pull-right">
+                            <span class="errorNumber" th:text="${status}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hFooter"></div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

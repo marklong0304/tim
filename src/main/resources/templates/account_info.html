@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>My Account</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="plans purchasing">
+
+        <div class="plans purchasing">
+            <div class="plans-box plans-margin plans-address">
+                <form id="accountInfoForm" action="#" th:action="@{/accountInfo}" th:object="${user}" method="post">
+
+                    <h4>User Info</h4>
+
+                    <div class="row no-gutter">
+                        <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <span th:text="${successMessage}">successMessageKey</span>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <div th:each="e : ${#fields.detailedErrors()}">
+                                <span th:text="${e.message}">The error message</span>
+                            </div>
+                        </div>
+                        <div th:unless="${#lists.isEmpty(errors)}">
+                            <div th:each="error : ${errors}" class="alert alert-danger" role="alert">
+                                <span th:text="${error}"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-10" th:if="*{company}">
+                            <div class="form-group">
+                                <label>Company Name<req>*</req></label>
+                                <input type="text" th:value="*{company.name}" placeholder="Company Name" readonly="readonly" class="form-control"/>
+                                <span th:errors="*{name}" class="error-company-name"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label th:unless="*{company}">First Name<req>*</req></label>
+                                <label th:if="*{company}">Contact Fist Name<req>*</req></label>
+                                <input type="text" th:field="*{name}" placeholder="Enter First Name" required="required" class="form-control"/>
+                                <span th:errors="*{name}" class="error-first-name"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label th:unless="*{company}">Last Name<req>*</req></label>
+                                <label th:if="*{company}">Contact Last Name<req>*</req></label>
+                                <input type="text" th:field="*{userInfo.lastName}" placeholder="Enter Last Name" required="required" class="form-control"/>
+                                <span th:errors="*{userInfo.lastName}" class="error-last-name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <label>Address<req>*</req></label>
+                                <input type="text" th:field="*{userInfo.address}" placeholder="Enter Address" required="required" class="form-control"/>
+                                <span th:errors="*{userInfo.address}" class="error-address"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label" for="countrySelect">Country</label>
+                                <select id="countrySelect" th:field="*{userInfo.country}"
+                                        class="selectpicker form-control ddown" data-live-search="true"
+                                        title="Select a Country"
+                                >
+                                    <option value="" th:text="${''}" class="option-select-country" ></option>
+                                    <option th:each="c : ${T(com.travelinsurancemaster.model.CountryCode).values()}"
+                                            th:value="${c}" th:text="${c.caption}">Country
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group" id="stateDiv">
+                                <label class="control-label" for="stateSelect">State</label>
+                                <select id="stateSelect" th:field="*{userInfo.stateOrProvince}"
+                                        class="selectpicker form-control ddown" data-live-search="true"
+                                        title="Select a Country"
+                                >
+                                    <option value="" th:text="${''}" class="option-individual-state"></option>
+                                    <optgroup label="UNITED STATES">
+                                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesUS()}"
+                                                th:value="${s}" th:text="${s.caption}">State
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="CANADA">
+                                        <option th:each="s : ${T(com.travelinsurancemaster.model.StateCode).getStatesCanada()}"
+                                                th:value="${s}" th:text="${s.caption}">State
+                                        </option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>City<req>*</req></label>
+                                <input type="text" th:field="*{userInfo.city}" placeholder="Enter City" required="required" class="form-control"/>
+                                <span th:errors="*{userInfo.city}" class="error-city"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Zip Code<req>*</req></label>
+                                <input type="text" th:field="*{userInfo.zipCode}" placeholder="Enter Code" required="required" class="form-control"/>
+                                <span th:errors="*{userInfo.zipCode}" class="error-zipCode"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Phone<req>*</req></label>
+                                <input type="tel"
+                                       th:field="*{userInfo.phone}"
+                                       required="required"
+                                       data-format="+d (ddd) ddd-dddd"
+                                       class="form-control validate bfh-phone"
+                                />
+                                <span th:errors="*{userInfo.phone}" class="error-phone"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Email<req>*</req></label>
+                                <span th:if="${!user.verified}" th:text="${'Not verified'}" class="not-verified"/>
+                                <a th:if="${!user.verified}" href="javascript:void(0)" id="verify" class="verify">Verify</a>
+                                <input type="email" th:field="*{email}" placeholder="Enter Email" readonly="readonly" class="form-control"/>
+                                <span th:errors="*{email}" class="error-email"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-5">
+                            <div class="row no-gutter">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button id="changePassword" class="btn btnplan">Change password</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button class="btn btnplan viewLink" type="button" name="generateAffiliateLink">Generate affiliate link</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <button id="changeEmailBtn" class="btn btnplan">Change email</button>
+                            </div>
+                        </div>
+                        <input id="userId" type="hidden" name="id" th:field="*{id}"/>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 textBlockForm" th:remove="all">
+                                <h4>Wish I Knew</h4>
+
+                                <p>When you return from your trip, we send you an email inviting you to share any travel tips you may have learned on your trip. Travel tips
+                                    must be approved before they can be published. The following option allows you to be notified when a tip you submit is approved.</p>
+
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:remove="all">
+                                <input type="checkbox" id="userInfo.confirmNotification"
+                                       th:field="*{userInfo.confirmNotification}" th:checked="${user.userInfo.confirmNotification}"/>
+                                <label for="userInfo.confirmNotification">I wish to be notified by email when my travel tip is approved.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-10 pull-right">
+                            <div class="row no-gutter">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button href="" class="cancel btn btnplan-blue" onclick="window.location.reload(); return false;">Cancel</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button th:type="submit" class="save btn btnplan-green">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="pageModal">
+
+    <!-- Affiliate link modal -->
+    <div class="modal fade" id="linkModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button data-dismiss="modal" type="button" class="close" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <div class="modal-body popup-text purchasing">
+                    <h3 class="affiliate-link">Affiliate link</h3>
+                    <div class="form-group">
+                        <input id="link" type="text" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email verification modal -->
+    <div class="modal fade" id="verificationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button data-dismiss="modal" type="button" class="close" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <div class="modal-body popup-text">
+                    <h3 class="modal-title">Email verification</h3>
+                    <p id="verificationMsg" class="popup-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email updateSimpleUser modal -->
+    <div class="modal fade" id="emailUpdateModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container-fluid popup-nav">
+                    <div class="logo">
+                        <a><img th:src="@{https://d3u70gwj4bg98w.cloudfront.net/images/newdesign/logo-gray.svg}" alt="Logo Travel Insurance Master"/>travel insurance master</a>
+                        <button data-dismiss="modal" type="button" class="close" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+                <div class="modal-body popup-text">
+                    <h3 class="modal-title">Email update</h3>
+                    <p id="emailUpdateMsg" class="popup-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="pageScript">
+    <script>
+        $(document).ready(function () {
+            fixCheckBox("input[name=_userInfo\\.autocompletePurchase]");
+            fixCheckBox("input[name=_userInfo\\.confirmNotification]");
+            $('.selectpicker').selectpicker({liveSearch: true, liveSearchStyle: 'begins'});
+            if ($("#country").val() == "") {
+                $('.bootstrap-select [data-id=country] .filter-option').text('Choose Country');
+            }
+            var verifyMailUrl = context + 'users/verification';
+            $('#verify').click(function () {
+                $.post(verifyMailUrl, $('#accountInfoForm').serialize(), function (data) {
+                    $("#verificationMsg").html(data);
+                    $("#verificationModal").modal('show');
+                }).fail(function () {
+                    $("#verificationMsg").html('Failure sending verification mail');
+                    $("#verificationModal").modal('show');
+                });
+            });
+            var changePasswordPage = context + 'users/changePassword';
+            $('#changePassword').click(function (e) {
+                e.preventDefault();
+                window.location.replace(changePasswordPage);
+            });
+            $('#linkModal').on('shown.bs.modal', function () {
+                $('#myInput').focus()
+            });
+
+            $('.viewLink').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: context + "accountInfo/" + $("#userId").val() + "?generateAffiliateLink",
+                    type: "POST",
+                    success: function (response) {
+                        $("#link").val(response);
+                        $("#linkModal").modal('show');
+                    }
+                }).fail(function () {
+                    alert("Error");
+                });
+            });
+            $('#changeEmailBtn').click(function(e) {
+                e.preventDefault();
+                var sendUpdateEmailUrl = context + 'accountInfo/sendUpdateEmail';
+                $.post(sendUpdateEmailUrl, function (data) {
+                    $("#emailUpdateMsg").html(data);
+                    $("#emailUpdateModal").modal('show');
+                }).fail(function () {
+                    $("#emailUpdateMsg").html('Failure sending verification mail');
+                    $("#emailUpdateModal").modal('show');
+                });
+            });
+            $('#countrySelect').change(function () {
+                var selectedCode = $('#countrySelect').val();
+                if (selectedCode == 'US' || selectedCode == 'CA') {
+                    $('#stateDiv').show();
+                } else {
+                    $('#stateDiv').hide();
+                }
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

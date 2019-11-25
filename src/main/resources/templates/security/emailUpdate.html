@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Email update page</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="plans purchasing">
+        <div class="plans-box plans-margin plans-address">
+            <div th:unless="${#lists.isEmpty(errors)}">
+                <div th:each="error : ${errors}" class="alert alert-danger" role="alert">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+            <h4 >Update email</h4>
+            <form name="form" id="signupform" th:action="@{/users/emailUpdate}" method="POST" role="form" data-toggle="validator">
+                <div class="row row-gutter">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label for="newEmail" >New email</label>
+                            <input type="email" class="form-control" name="newEmail" placeholder="New email" id="newEmail" required="required"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-gutter">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <input type="submit" name="emailUpdate" value="Update" id="updateBtn" class="btn btnplan btn-green"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="tokenStr" th:value="${tokenStr}"/>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

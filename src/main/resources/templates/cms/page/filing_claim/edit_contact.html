@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Filing claim page edit</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/custom/cms/policyPage.js?ver={version}(version=${appVersion.version})}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- include summernote css/js-->
+    <link th:href="@{/css/lib/summernote.css}" rel="stylesheet"/>
+    <script th:src="@{/js/lib/summernote.min.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row" th:if="${filingClaimContact.id != null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}">Page</a>
+                    </li>
+                    <li><a th:href="@{/cms/filing_claim_page/contact/edit/{id}(id=${filingClaimContact.id})}">Edit</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row" th:if="${filingClaimContact.id == null}">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/cms/filing_claim_page}">Filing claim pages</a></li>
+                    <li><a th:href="@{/cms/filing_claim_page/edit/{id}(id=${filingClaimContact.filingClaimPage.id})}"
+                           th:text="${filingClaimContact.filingClaimPage.caption}">Filing claim pages</a></li>
+                    <li>
+                        <a th:href="@{/cms/filing_claim_page/contact/create/{id}(id=${filingClaimContact.filingClaimPage.id})}">Create</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle" th:if="${filingClaimContact.id != null}">Edit filing claim contact</h1>
+
+        <h1 class="adminTitle" th:if="${filingClaimContact.id == null}">Create filing claim contact</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form id="contactForm" th:action="@{/cms/filing_claim_page/contact/edit/{id}(id=${filingClaimContact.id})}"
+                  th:object="${filingClaimContact}" method="post">
+                <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <button type="button" class="close" data-dismiss="alert"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div th:each="e : ${#fields.detailedErrors()}">
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="content">Contact content: </label>
+                    <span th:errors="*{content}" style="color: red"/>
+                    <input id="content" type="hidden" th:field="*{content}" class="form-control"/>
+
+                    <div id="summernote"/>
+                    <iframe th:src="@{/cms/page/wysiwyg}" style="border: none; width:100%; height: 560px"
+                            onload="init()"/>
+                </div>
+                <div class="form-group">
+                    <label for="policyMetaPages">Policy meta pages:</label>
+                    <select id="policyMetaPages" class="form-control" multiple="multiple">
+                        <option th:each="policyMetaPage : ${policyMetaPages}"
+                                th:value="${policyMetaPage.id}" th:text="${policyMetaPage.caption}"
+                                th:selected="${#lists.contains(policyMetaPageIds, policyMetaPage.id)}"/>
+                    </select>
+                </div>
+
+                <input type="hidden" th:field="*{policyMetaPagesStr}"/>
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{filingClaimPage.id}"/>
+
+                <div class="form-group">
+                    <a th:href="@{/cms/filing_claim_page/edit/{id}(id=${filingClaimContact.filingClaimPage.id})}"
+                       class="btn btn-default back-btn">Back</a>
+                    <button type="submit" class="btn btn-success btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+        <script th:inline="javascript">
+            // @formatter:off
+            /*<![CDATA[*/
+            var filingClaimPageId = [[${filingClaimContact.filingClaimPage.id}]];
+            var newFilingClaimContact = [[${filingClaimContact.id == null}]];
+            var createUrl = [[@{/cms/filing_claim_page/contact/create/{filingClaimPageId}(filingClaimPageId =${filingClaimContact.filingClaimPage.id})}]];
+            /*]]>*/
+            // @formatter:on
+        </script>
+        <script>
+            $(document).ready(function () {
+                var pmpStr = $("#policyMetaPagesStr");
+                var pmp = $("#policyMetaPages");
+                pmpStr.val(pmp.val());
+                pmp.multiselect({
+                    buttonWidth: 550,
+                    maxHeight: 350,
+                    enableCaseInsensitiveFiltering: true,
+                    includeSelectAllOption: true,
+                    filterStyle: 'beginWith',
+                    onChange: function (element, checked) {
+                        $("#policyMetaPagesStr").val($("#policyMetaPages").val());
+                    }
+                });
+
+                $(".btn-submit").on('click', function (e) {
+                    e.preventDefault();
+                    if ($('iframe').contents().find("#summernote").code().length > 100000) {
+                        $('label[for="content"]').text("Contact content: ");
+                        $('label[for="content"]').append('<span style="color: red;font-style: italic; font-size: 15px;"> Max Content Length is 100000 symbols </span>');
+                    } else {
+                        $("#content").val($('iframe').contents().find("#summernote").code());
+                        this.form.submit();
+                    }
+                });
+
+                if (newFilingClaimContact) {
+                    $('#contactForm').attr('action', createUrl);
+                }
+            });
+            function init() {
+                $('iframe').contents().find("#summernote").code($("#content").val());
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

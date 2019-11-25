@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en">
+    <title>Create Policy Meta Category</title>
+    <script src="/js/lib/jquery.dataTables.min.js"
+            th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script src="/js/lib/dataTables.bootstrap.min.js"
+            th:src="@{/js/lib/dataTables.bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/css/lib/dataTables.bootstrap3.css"
+          th:href="@{/css/lib/dataTables.bootstrap3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap-multiselect.css}"/>
+    <script th:src="@{/js/lib/bootstrap-multiselect.js}"/>
+    <script th:src="@{/js/custom/admin/policies/policies.js?ver={version}(version=${appVersion.version})}"/>
+    <script src="/js/lib/jquery.dataTables.min.js" th:src="@{/js/lib/jquery.dataTables.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/custom/admin/policyMetaCategoryValue.js?ver={version}(version=${appVersion.version})}"/>
+</head>
+<body>
+<div layout:fragment="content" id="searchResultContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li th:each="b : ${breadcrumb}">
+                        <a th:href="@{${b.key}}" th:text="${b.value}" href="/vendors">Vendors</a>
+                    </li>
+                    <li><a th:href="@{/vendors/policy/metaCategory/create/{metaCategoryId}/{categoryCode}(metaCategoryId=${policyMetaCategory.policyMeta.id},categoryCode=${policyMetaCategory.category.code})}">Create</a></li>
+                </ol>
+            </div>
+        </div>
+        <h1 class="adminTitle">Add Meta Category for <span style="font-weight: bolder;" th:text="${policyMetaCategory.policyMeta.vendor.name + ' - ' + policyMetaCategory.policyMeta.displayName}"/> policy</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span th:text="${successMessage}">successMessageKey</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="#" th:action="@{/vendors/policy/metaCategory/create/{metaCategoryId}/{categoryCode}(metaCategoryId=${policyMetaCategory.policyMeta.id},categoryCode=${policyMetaCategory.category.code})}" th:object="${policyMetaCategory}"
+                      method="post">
+                    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasErrors('*')}" th:each="e : ${#fields.detailedErrors()}">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
+                        <span th:text="${e.message}">The error message</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description for admin: </label>
+                        <input id="description" type="text" th:field="*{description}" placeholder="description" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type:</label>
+                        <select th:field="*{type}" id="type" class="form-control">
+                            <option th:each="type : ${T(com.travelinsurancemaster.model.dto.PolicyMetaCategory.MetaParamType).values()}"
+                                    th:value="${type}" th:text="${type}"/>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category.name">Category: </label>
+                        <input type="hidden" th:field="*{category.id}" />
+                        <input type="hidden" th:field="*{category.code}" />
+                        <input type="text" id="category.name" th:field="*{category.name}" readonly="readonly" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-8"><h3>Values</h3></div>
+                            <div class="col-md-4 text-right">
+                                <h1>
+                                    <button type="submit" class="btn btn-success xcrud-action " name="addValue" id="addValue">
+                                        <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;Add
+                                    </button>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="overflowXMD">
+                            <table class="table table-hover table-bordered" id="values">
+                                <thead>
+                                <tr class="info">
+                                    <th>Value</th>
+                                    <th width="10%">Value type</th>
+                                    <th>Caption</th>
+                                    <th class="apiValue">API value</th>
+                                    <th class="fixedCost">Cost</th>
+                                    <th width="18%" th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">Days after
+                                        initial deposit
+                                    </th>
+                                    <th width="15%" th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">Days after
+                                        final payment
+                                    </th>
+                                    <th width="8%" th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">Min age</th>
+                                    <th width="8%" th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">Max age</th>
+                                    <th th:each="subcategory : ${subcategories}" th:text="${subcategory.subcategoryName}"></th>
+                                    <th width="8%" th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="value, row : ${policyMetaCategory.values}">
+                                    <td>
+                                        <input type="text" th:attr="class=${'form-control valueMask valueMask'+row.index}, data=${row.index}"
+                                               th:field="*{values[__${row.index}__].value}"/>
+                                    </td>
+                                    <td>
+                                        <select th:field="*{values[__${row.index}__].valueType}" id="type" th:attr="class=${'form-control valueType valueType'+row.index}, data=${row.index}">
+                                            <option th:each="type : ${T(com.travelinsurancemaster.model.dto.ValueType).values()}"
+                                                    th:value="${type}" th:text="${type.caption}"/>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" th:attr="class=${'form-control caption'+row.index}"
+                                               th:field="*{values[__${row.index}__].caption}"/>
+                                        <input type="hidden" th:field="*{values[__${row.index}__].sortOrder}"/>
+                                    </td>
+                                    <td class="apiValue">
+                                        <input type="text" class="form-control" readonly="readonly"
+                                               th:field="*{values[__${row.index}__].apiValue}"/>
+                                    </td>
+                                    <td class="fixedCost">
+                                        <input type="text" th:attr="class=${'form-control cost'+row.index}"
+                                               th:field="*{values[__${row.index}__].fixedCost}"/>
+                                    </td>
+                                    <td th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">
+                                        <input type="text" class="form-control numericValue"
+                                               th:field="*{values[__${row.index}__].daysAfterInitialDeposit}"/>
+                                    </td>
+                                    <td th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">
+                                        <input type="text" class="form-control numericValue"
+                                               th:field="*{values[__${row.index}__].daysAfterFinalPayment}"/>
+                                    </td>
+                                    <td th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">
+                                        <input type="text" class="form-control numericValue"
+                                               th:field="*{values[__${row.index}__].minAge}"/>
+                                    </td>
+                                    <td th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">
+                                        <input type="text" class="form-control numericValue"
+                                               th:field="*{values[__${row.index}__].maxAge}"/>
+                                    </td>
+                                    <td th:each="subcategory, subcategoryRow : ${subcategories}">
+                                        <input type="text" class="form-control"
+                                               th:field="*{values[__${row.index}__].subcategoryValuesList[__${subcategoryRow.index}__].subcategoryValue}"/>
+                                        <input type="hidden"
+                                               th:name="|values[__${row.index}__].subcategoryValuesList[__${subcategoryRow.index}__].subcategory.id|"
+                                               th:value="${subcategory.id}"/>
+                                    </td>
+                                    <td th:if="${policyMetaCategory.type.name() != 'SIMPLE'}">
+                                        <button name="removeValue" th:value="${row.index}"
+                                                onclick="return confirm('Confirm Delete?');"
+                                                class="pull-center btn btn-danger"
+                                                th:if="${row.size > 1}">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{policyMeta.id}" />
+                    <input type="hidden" th:field="*{policyMeta.uniqueCode}" />
+                    <input type="hidden" th:field="*{policyMeta.vendor.id}" />
+                    <input type="hidden" th:field="*{policyMeta.vendor.name}" />
+                    <div class="form-group">
+                        <a th:href="@{${backUrl}}" class="btn btn-default back-btn">Back</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        $(function() {
+            $('#type').change(function() {
+                $('#addValue, .apiValue, .fixedCost').toggle($('#type').val() != 'SIMPLE');
+            }).change();
+        });
+    </script>
+</div>
+</body>
+</html>

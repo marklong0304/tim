@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="plans purchasing">
+        <div class="plans-box plans-margin plans-address">
+            <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                Invalid username or password.
+            </div>
+            <div class="alert alert-info" role="alert" th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <form th:action="@{/login}" method="post">
+                <input type="hidden" name="remember-me" value="true"/>
+                <div class="row row-gutter">
+                    <div class="col-sm-5">
+                        <label> User Email : </label>
+                        <input type="email" name="username" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="row row-gutter">
+                    <div class="col-sm-5">
+                        <label> Password : </label>
+                        <input type="password" name="password" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="row row-gutter">
+                    <div class="col-sm-5">
+                        <input type="submit" value="Login" class="btn btnplan btn-green"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

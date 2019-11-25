@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/layout_default_new" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Filing claim detail</title>
+</head>
+<body>
+<div layout:fragment="content" class="bgF6F6F6">
+    <div class="container" id="searchResultContent">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <ul class="breadcrumb noPadding">
+                    <li><a th:href="@{/page/filingClaim}">Filing a claim</a></li>
+                    <li th:text="${filingClaimPage.vendorPage.caption}">CSA Travel Protection</li>
+                    <div class="pull-right panel-controls"
+                         sec:authorize="hasAnyRole('ROLE_CONTENT_MANAGER', 'ROLE_ADMIN')">
+                        <a id="edit" th:href="@{/cms/filing_claim_page/edit/{id}(id=${filingClaimPage.id})}"
+                           data-toggle="tooltip" data-placement="top" title="Edit filing claim page"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                    </div>
+                </ul>
+                <div class="table-title table">
+                    <div class="tr">
+                        <div class="td td-title">
+                            <h1 th:text="${filingClaimPage.vendorPage.caption}">CSA Travel Protection</h1>
+                        </div>
+                        <div class="td td-logo">
+                            <img alt="Logo Travel Protection" width="240" height=""
+                                 th:src="@{https://d3u70gwj4bg98w.cloudfront.net/vendorLogo/get/{code}.png(code=${filingClaimPage.vendorPage.vendor.code})}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 adressBlock"
+                 th:each="contact : ${contacts}"
+                 th:if="${!#lists.isEmpty(contacts)}">
+                <div class="topText">
+                    <b>For claims with the following plans:</b><br/>
+                    <th:block th:if="${policyMetaPagesCount == #lists.size(contact.policyMetaPages)}">
+                        All plans
+                    </th:block>
+                    <th:block th:unless="${policyMetaPagesCount == #lists.size(contact.policyMetaPages)}"
+                              th:each="policyMetaPage,iterationStatus : ${contact.policyMetaPages}"
+                              th:text="${policyMetaPage.caption} + (${iterationStatus.last==false} ? ', ' : '')">
+                    </th:block>
+                </div>
+                <div class="adressBlockRow">
+                    <div class="row" th:utext="${contact.content}"> content
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 adressBlock"
+                 th:if="${#lists.isEmpty(contacts)}">
+                <div class="topText">
+                    <b>No contacts available</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

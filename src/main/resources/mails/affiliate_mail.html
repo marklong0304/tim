@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Affiliate request:</h2>
+
+<div th:each="param : ${params}">
+    <span style="font-weight: bold;" th:text="${param.key + ' :'}">key</span>
+    <span th:text="${#lists.isEmpty(param.value) ? '' : param.value.get(0)}">value</span>
+</div>
+</body>
+</html>

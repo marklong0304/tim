@@ -1,0 +1,1189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by Mike Hudson (Mondial Assistance) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:accessamerica.services.insurance.travel" targetNamespace="urn:accessamerica.services.insurance.travel">
+	<wsdl:types>
+		<xs:schema targetNamespace="urn:accessamerica.services.insurance.travel" elementFormDefault="qualified">
+			<xs:element name="GetProductPrice">
+				<xs:annotation>
+					<xs:documentation>Root element for body of GetProductPrice request</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Partner" type="tns:Partner"/>
+						<xs:element name="ProductPriceRequest" type="tns:ProductPriceRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetProductPriceResponse">
+				<xs:annotation>
+					<xs:documentation>Root element for body of GetProductPrice response</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ProductPriceResponse" type="tns:ProductPriceResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SendPurchases">
+				<xs:annotation>
+					<xs:documentation>Root element for body of SendPurchases request</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Partner" type="tns:Partner"/>
+						<xs:element name="PurchasesRequest" type="tns:PurchasesRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SendPurchasesResponse">
+				<xs:annotation>
+					<xs:documentation>Root element for body of SendPurchases response</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PurchasesResponse" type="tns:PurchasesResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:simpleType name="Accam">
+				<xs:annotation>
+					<xs:documentation>AGA Company or Agency Identifier</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="AccessAmericaAccountUserType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A"/>
+					<xs:enumeration value="AGENT"/>
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="CONSUMER"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="InsuranceBookingStatus">
+				<xs:annotation>
+					<xs:documentation>Billing status for insurance bookings</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CASH WITHHELD"/>
+					<xs:enumeration value="CHARGED"/>
+					<xs:enumeration value="DECLINED"/>
+					<xs:enumeration value="DUPLICATE"/>
+					<xs:enumeration value="FAILED"/>
+					<xs:enumeration value="NEW"/>
+					<xs:enumeration value="PENDING"/>
+					<xs:enumeration value="PROCESSED"/>
+					<xs:enumeration value="REJECTED"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="InsuranceBookingType">
+				<xs:annotation>
+					<xs:documentation>Type of insurance booking</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD"/>
+					<xs:enumeration value="CANCEL"/>
+					<xs:enumeration value="CHANGE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ProductPriceType">
+				<xs:annotation>
+					<xs:documentation>Type of pricing for an insurance product.</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="FAMILY"/>
+					<xs:enumeration value="Family"/>
+					<xs:enumeration value="I"/>
+					<xs:enumeration value="INDIVIDUAL"/>
+					<xs:enumeration value="Individual"/>
+					<xs:enumeration value="M"/>
+					<xs:enumeration value="MULTI-INDIVIDUAL"/>
+					<xs:enumeration value="MultiIndividual"/>
+					<xs:enumeration value="Multi-individual"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="SequenceNumber">
+				<xs:annotation>
+					<xs:documentation>Unique sequential numeric identifier</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+			<xs:complexType name="ArrayOfItemsIncludedInPrice">
+				<xs:sequence>
+					<xs:element name="Item" maxOccurs="unbounded">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="air"/>
+								<xs:enumeration value="car"/>
+								<xs:enumeration value="cruise"/>
+								<xs:enumeration value="event"/>
+								<xs:enumeration value="hotel"/>
+								<xs:enumeration value="package"/>
+								<xs:enumeration value="rail"/>
+								<xs:enumeration value="tour"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfPolicyInsureds">
+				<xs:sequence>
+					<xs:element name="Insured" type="tns:PolicyInsured" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfProductIDs">
+				<xs:sequence>
+					<xs:element name="ProductID" type="xs:string" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Unique product identifer for the partner.  Value could be a product code or name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfProducts">
+				<xs:sequence>
+					<xs:element name="Product" type="tns:Product" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Insurance product information</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfProviders">
+				<xs:sequence>
+					<xs:element name="Provider" type="tns:Provider" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Travel provider or supplier.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfProductPolicies">
+				<xs:sequence>
+					<xs:element name="Product" type="tns:ProductPolicy" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfPurchaseStatuses">
+				<xs:sequence>
+					<xs:element name="Purchase" type="tns:PurchaseStatus" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfPurchases">
+				<xs:sequence>
+					<xs:element name="Purchase" type="tns:Purchase" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfTravelerPrices">
+				<xs:sequence>
+					<xs:element name="TravelerPrice" type="tns:IndividualTravelerPrice" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfTravelers">
+				<xs:sequence>
+					<xs:element name="Traveler" type="tns:Traveler" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="BillingAddress">
+				<xs:sequence>
+					<xs:element name="Street" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The billing street address.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Street2" type="xs:string" minOccurs="0"/>
+					<xs:element name="City" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The billing city.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Region" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The region is the code for the state, province, etc.  It is required for all U.S. and Canadian addresses.  It is only optional for international addresses that don't have a region.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PostalCode" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The billing zip code or postal code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Country" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The billing ISO country code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CreditCard">
+				<xs:sequence>
+					<xs:element name="CardholderName" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name that appears on the credit card.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpireMonth">
+						<xs:annotation>
+							<xs:documentation>The month the credit card expires.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:minInclusive value="1"/>
+								<xs:maxInclusive value="12"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="ExpireYear" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>The year the credit card expires.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CardNumber" type="xs:long">
+						<xs:annotation>
+							<xs:documentation>The credit card number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CardType">
+						<xs:annotation>
+							<xs:documentation>The credit card type.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="AE"/>
+								<xs:enumeration value="AO"/>
+								<xs:enumeration value="AX"/>
+								<xs:enumeration value="BL"/>
+								<xs:enumeration value="CA"/>
+								<xs:enumeration value="CB"/>
+								<xs:enumeration value="DC"/>
+								<xs:enumeration value="DS"/>
+								<xs:enumeration value="JC"/>
+								<xs:enumeration value="MC"/>
+								<xs:enumeration value="OC"/>
+								<xs:enumeration value="TP"/>
+								<xs:enumeration value="VI"/>
+								<xs:enumeration value="VS"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="SecurityCode" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The security or verification code that appears on the back of the credit card.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="IndividualTravelerPrice">
+				<xs:sequence>
+					<xs:element name="Sequence" type="tns:SequenceNumber">
+						<xs:annotation>
+							<xs:documentation>Traveler's sequence number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Price" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Price for traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AdminFee" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Admin fee included in the price for the traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="InsuranceBooking">
+				<xs:sequence>
+					<xs:element name="PurchaseDateTime" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Date and time that the insurance purchase was made.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Method" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Method by which the insurance purchase was made.  Valid values include 'ONLINE', 'PHONE', or an identifier for a particular  type of booking tool or software.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CoSourceID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The cosource id, marketing id, or banner id that resulted in insurance being purchased.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReferringURL" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The referring URL that is  related to insurance being purchased.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Status" type="tns:InsuranceBookingStatus">
+						<xs:annotation>
+							<xs:documentation>The billing status for this insurance booking.  Some of the valid values are 'NEW', 'PENDING', 'CHARGED', and 'DECLINED'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Type" type="tns:InsuranceBookingType">
+						<xs:annotation>
+							<xs:documentation>The transaction type for the insurance booking.  Valid values are 'ADD', 'CANCEL', and 'CHANGE'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Currency" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The ISO currency code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalCoverageAmount" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The total trip cost to be covered by the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPrice" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The total price for the insurance purchase including premium, taxes, and charitable contributions.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPremiumPrice" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The total premium for the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalTaxes" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total taxes for the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalCharitableContribution" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total charitable contributions for the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TaxRegion" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The tax region or code that identifies the tax rate that applies to this insurance booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PromotionCode" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The promotion code used to complete this insurance booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SubscribeToMarketing" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A flag that indicates whether or not the purchaser or partner would like marketing material sent from AGA to the purchaser.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Purchaser" type="tns:Purchaser">
+						<xs:annotation>
+							<xs:documentation>Purchaser's name and contact information.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FulfillmentMethod">
+						<xs:annotation>
+							<xs:documentation>Fulfillment method for insurance purchase.  Valid values include 'EMAIL', 'MAIL', and 'NONE'.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="EMAIL"/>
+								<xs:enumeration value="MAIL"/>
+								<xs:enumeration value="FAX"/>
+								<xs:enumeration value="NONE"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PaymentMethod">
+						<xs:annotation>
+							<xs:documentation>Payment method for insurance purchase.  Valid values include 'CC', 'CW', and 'BL'.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="CC"/>
+								<xs:enumeration value="CW"/>
+								<xs:enumeration value="BL"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PaymentTransactionID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Payment transaction id from payment processor.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PaymentReconciliationID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Payment reconciliation id from payment processor.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CreditCard" type="tns:CreditCard" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Purchaser's credit card information.  This is required if PaymentMethod value is 'CC'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelAgent" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier for the travel agent who assisted with the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AccountUserType" type="tns:AccessAmericaAccountUserType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The AGA or Access America acount user type.  An account is either for an agent (A) or consumer (C).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AccountUserName" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The AGA or Access America acount user name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Itinerary">
+				<xs:sequence>
+					<xs:element name="DepartureDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>The first date of travel.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReturnDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>The last date of travel.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RentalCarStartDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The first rental car date.  This date is required if a rental car is purchased and the rental car start and end dates differ from the departure and return dates.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RentalCarEndDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The last rental car date. This date is required if a rental car is purchased and the rental car start and end dates differ from the departure and return dates.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Origin" type="tns:TravelLocation" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The location from which travel begins.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Destination" type="tns:TravelLocation" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The location at which travel ends or the location that is the furthest from the origin.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Providers" type="tns:ArrayOfProviders" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>List of provider codes or names.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelReason" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reason for travel.  i.e. 'Business' or 'Leisure'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Partner">
+				<xs:annotation>
+					<xs:documentation>Partner Credentials</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="UserID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Partner's user id</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Password" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Partner's password</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PolicyInsured">
+				<xs:sequence>
+					<xs:element name="InsuredSequence" type="tns:SequenceNumber">
+						<xs:annotation>
+							<xs:documentation>Unique sequence number for this product and individual.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InsuredType">
+						<xs:annotation>
+							<xs:documentation>The type of insured.  Valid values include 'PRIMARY', 'OTHER', 'CHILD', and 'INFANT'.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="PRIMARY"/>
+								<xs:enumeration value="OTHER"/>
+								<xs:enumeration value="CHILD"/>
+								<xs:enumeration value="INFANT"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="FirstName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The first name of the insured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MiddleInitial" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The last name of the insured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LastName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The middle initial of the insured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Birthdate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date of birth of the insured.  This is required if the product is age-rated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InsuredAddress" type="tns:BillingAddress" minOccurs="0"/>
+					<xs:element name="PhoneNumber" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The phone number of the insured.  This is required for the primary insured only.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TripCost" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The individual trip cost for the insured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Miles" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The airline miles used to book a ticket for the insured. This information is revelent if a reward type of travel insurance product is purchased.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomerID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customer identifier, frequent flyer number, or membership number for this traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Beneficiary" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the beneficiary for this insured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Provider">
+				<xs:annotation>
+					<xs:documentation>An identifier or name of a company providing transportation, lodging, or some other service during a trip.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="Code" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Code for provider.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Name" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Name of providier.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Product">
+				<xs:sequence>
+					<xs:element name="Sequence" type="tns:SequenceNumber">
+						<xs:annotation>
+							<xs:documentation>Unique sequence number for this purchase and product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="QuoteID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The quote id is a value that is obtained from a quote response message from AGA that uniquely identifies a particular insurance product quote.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The identifier for the insurance product.  It may be a product name or code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PsProductID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier used internally by AGA for the insurance product in their back office system.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PsProgramID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier used internally by AGA for the insurance program in their back office system.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WebProductID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier used internally by AGA for the insurance product in their ecommerce system.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PriceType" type="tns:ProductPriceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The pricing or order type used internally by AGA for the insurance product.  Family, Individual, and MultiIndividual are examples of valid values.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InsuredDetails" type="tns:ArrayOfPolicyInsureds">
+						<xs:annotation>
+							<xs:documentation>Information about the individuals covered by the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CoverageAmount" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The trip cost to be covered by the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Price" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The price for the insurance product including premium, taxes, and charitable contributions.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PremiumPrice" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>The premium amount for the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Taxes" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The tax amount for the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CharitableContribution" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The charitable contribution amount for the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StartDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The first date of travel that is covered by the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EndDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The last date of travel that is covered by the insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductBookingID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The insurance product booking id or policy number.  This is only required if the partner is generating the policy number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductBooking">
+				<xs:sequence>
+					<xs:element name="ProductIdentifierType">
+						<xs:annotation>
+							<xs:documentation>Type of product ID specified in the product list.  This can be 'PRODUCTNAME' or 'PRODUCTID'.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="PRODUCTNAME"/>
+								<xs:enumeration value="PRODUCTID"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Products" type="tns:ArrayOfProductIDs"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductPolicy">
+				<xs:sequence>
+					<xs:element name="Sequence" type="tns:SequenceNumber">
+						<xs:annotation>
+							<xs:documentation>Unique sequence number for this purchase and product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier for the insurance product.  It may be a product name or code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductBookingID" type="xs:string" default="" nillable="true">
+						<xs:annotation>
+							<xs:documentation>The insurance product booking id or policy number.  This is only required if the product has been successfully processed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PolicyDateTime" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date and time the insurance product was successfully processed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductPrice">
+				<xs:sequence>
+					<xs:element name="QuoteID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The QuoteID generated by AGA for this ProductPrice.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPrice" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Total price for all travelers insured by this product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalAdminFee" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Total admin fee included in the total price for all travelers insured by this product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PriceType" type="tns:ProductPriceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The type of pricing for this product.  Valid values include 'Individual','MultiIndividual' and 'Family'</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IndividualPrices" type="tns:ArrayOfTravelerPrices" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>List of prices for each traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PerPersonPrice" type="xs:double" minOccurs="0"/>
+					<xs:element name="PerGroupPrice" type="xs:double" minOccurs="0"/>
+					<xs:element name="ProductName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>AGA's product name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductCode" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>AGA's product code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductDescription" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>AGA's product description.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductBenefitsURI" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>AGA's URI that contains product benefit information and/or more details about the product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductPriceRequest">
+				<xs:annotation>
+					<xs:documentation>Includes all the elements necessary to get a travel insurance quote.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="Accam" type="tns:Accam">
+						<xs:annotation>
+							<xs:documentation>AGA's company identifier for the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransactionID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for each XML transaction (request and response) that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BookingDetails" type="tns:TravelBooking">
+						<xs:annotation>
+							<xs:documentation>Contains travel booking information such as total trip cost, deposit date, booking path and method, etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelDetails" type="tns:Itinerary">
+						<xs:annotation>
+							<xs:documentation>Contains travel itinerary information such as departure and return dates, travel origin and destination, etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelerDetails" type="tns:Travelers">
+						<xs:annotation>
+							<xs:documentation>Contains information about the travelers such as address of the primary traveler, number of travelers, personal information for each traveler, etc.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductDetails" type="tns:ProductBooking" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Contains the information for the product(s) for which to get a price.  If empty, then the booking path is used to specify the product name for a single product to be priced.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductPriceResponse">
+				<xs:sequence>
+					<xs:element name="TransactionID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for each XML transaction (request and response) that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Status" type="tns:ResponseStatus"/>
+					<xs:element name="ProductPrice" type="tns:ProductPrice" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Purchase">
+				<xs:sequence>
+					<xs:element name="PartnerBookingID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for the travel booking and purchase date that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PartnerCompanyID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Partner's unique identifier for their company, agency, office, or branch through which this purchase was made.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InsuranceBookingDetails" type="tns:InsuranceBooking">
+						<xs:annotation>
+							<xs:documentation>Information about the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelBookingDetails" type="tns:TravelBooking">
+						<xs:annotation>
+							<xs:documentation>Information about the travel booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelDetails" type="tns:Itinerary">
+						<xs:annotation>
+							<xs:documentation>Travel or trip itinerary information.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductDetails" type="tns:ArrayOfProducts">
+						<xs:annotation>
+							<xs:documentation>Information about the insurance products for this purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="OrderID">
+					<xs:annotation>
+						<xs:documentation>AGA's unique identifier for the insurance purchase.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+			<xs:complexType name="PurchasesRequest">
+				<xs:sequence>
+					<xs:element name="Accam" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>AGA's company identifier for the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BusinessUnit" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>This is the business unit that processes the purchase request.  Examples include US, CA, UK, FR.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransactionID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for each XML transaction (request and response) that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Purchases" type="tns:ArrayOfPurchases"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PurchasesResponse">
+				<xs:sequence>
+					<xs:element name="TransactionID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for each XML transaction (request and response) that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Status" type="tns:ResponseStatus"/>
+					<xs:element name="Purchases" type="tns:ArrayOfPurchaseStatuses"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PurchaseStatus">
+				<xs:sequence>
+					<xs:element name="PartnerBookingID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Unique identifier for the travel booking and purchase date that is generated by the partner.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OrderID" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>AGA's unique identifier for the insurance purchase.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Status" type="tns:InsuranceBookingStatus">
+						<xs:annotation>
+							<xs:documentation>The billing status for this insurance booking.  Some of the valid values are 'NEW', 'PENDING', 'CHARGED', and 'DECLINED'.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProductDetails" type="tns:ArrayOfProductPolicies"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Purchaser">
+				<xs:annotation>
+					<xs:documentation>Purchaser's name and contact information.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="FirstName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Purchaser's first name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MiddleInitial" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Purchaser's middle initial.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LastName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Purchaser's last name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BillingAddress" type="tns:BillingAddress">
+						<xs:annotation>
+							<xs:documentation>Purchaser's billing address.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EmailAddress" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Purchaser's email address.  Required if fulfillment method is EMAIL.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SecondaryEmailAddress" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A second email address that fulfillment will be sent to on behalf of the purchaser if the fulfillment method is EMAIL.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PhoneNumber" type="xs:long" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Purchaser's phone number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FaxNumber" type="xs:long" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Purchaser's fax number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Residence">
+				<xs:sequence>
+					<xs:element name="City" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The city for the traveler's residence.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PostalCode" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The postal or zrip code for the traveler's residence.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Region" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The abbreviation or code for state, province, or region</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Country" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The ISO country code for the traveler's residence.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResponseStatus">
+				<xs:sequence>
+					<xs:element name="Code">
+						<xs:annotation>
+							<xs:documentation>Status code that indicates whether or the request was processed successfully.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="SUCCESS"/>
+								<xs:enumeration value="FAILURE"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Message" type="xs:string" minOccurs="0"/>
+					<xs:element name="Reason" type="xs:string" minOccurs="0"/>
+					<xs:element name="Source" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TravelBooking">
+				<xs:sequence>
+					<xs:element name="Currency" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The ISO currency code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalTripCost" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Total trip cost for all travelers in the booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalMiles" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The total airline miles used for the travel booking.  This information is revelent if a reward type travel insurance product is purchased.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TripCostIncludes" type="tns:ArrayOfItemsIncludedInPrice" minOccurs="0"/>
+					<xs:element name="Method" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Method by which the booking was made.  Valid values include 'ONLINE', 'PHONE', or an identifier for a particular type of booking software.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Path" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Identifier for the location in the partner's website or booking software where the booking is being made.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PNR" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The PNR value from a travel reservation or GDS system.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReservationSystem" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The name of the reservation or GDS system used to complete the travel booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DepositDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date the first payment for the booking is made by the customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FinalPaymentDate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The date the final payment for the booking is made by the customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomerID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customer identifier, frequent flyer number, or membership number for the customer who made the travel booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelAgent" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The identifier for the agent who completed the booking for the customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Language" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The ISO language code.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Traveler">
+				<xs:sequence>
+					<xs:element name="Sequence" type="tns:SequenceNumber">
+						<xs:annotation>
+							<xs:documentation>Sequence number for each traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FirstName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Traveler's first name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MiddleInitial" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Traveler's middle initial.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LastName" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Traveler's last name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Age" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Traveler's age.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Birthdate" type="xs:date" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Traveler's date of birth.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TripCost" type="xs:double" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Traveler's individual trip cost.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Miles" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The airline miles used to book a ticket for the individual traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomerID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The customer identifier, frequent flyer number, or membership number for this traveler.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Travelers">
+				<xs:sequence>
+					<xs:element name="NumberOfTravelers" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>The number of individuals who are part of the travel booking defined in this message and that desire to be covered by a travel insurance product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Address" type="tns:Residence">
+						<xs:annotation>
+							<xs:documentation>Address of the primary residence of the travelers.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TravelerList" type="tns:ArrayOfTravelers" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TravelLocation">
+				<xs:sequence>
+					<xs:element name="Code" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The airport code or other identifier for the location.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Region" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The abbreviation or code for state, province, or region.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Country" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>The ISO country code for the location.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getProductPriceRequest">
+		<wsdl:part name="parameters" element="tns:GetProductPrice"/>
+	</wsdl:message>
+	<wsdl:message name="getProductPriceResponse">
+		<wsdl:part name="parameters" element="tns:GetProductPriceResponse"/>
+	</wsdl:message>
+	<wsdl:message name="sendPurchasesRequest">
+		<wsdl:part name="parameters" element="tns:SendPurchases"/>
+	</wsdl:message>
+	<wsdl:message name="sendPurchasesResponse">
+		<wsdl:part name="parameters" element="tns:SendPurchasesResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ProductPricePort">
+		<wsdl:operation name="getProductPrice">
+			<wsdl:input message="tns:getProductPriceRequest"/>
+			<wsdl:output message="tns:getProductPriceResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="PurchasePort">
+		<wsdl:operation name="sendPurchases">
+			<wsdl:input message="tns:sendPurchasesRequest"/>
+			<wsdl:output message="tns:sendPurchasesResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ProductPriceBinding" type="tns:ProductPricePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getProductPrice">
+			<soap:operation soapAction="urn:accessamerica.services.insurance.travel/GetProductPrice" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>ConcentratorProperties
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="PurchaseBinding" type="tns:PurchasePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="sendPurchases">
+			<soap:operation soapAction="urn:accessamerica.services.insurance.travel/SendPurchases" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ProductPriceService">
+		<wsdl:port name="ProductPricePort" binding="tns:ProductPriceBinding">
+			<soap:address location="https://gateway.americas.allianz-assistance.com/services/productprice.asmx"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="PurchaseService">
+		<wsdl:port name="PurchasePort" binding="tns:PurchaseBinding">
+			<soap:address location="https://gateway.americas.allianz-assistance.com/servlet/SendPurchases"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
